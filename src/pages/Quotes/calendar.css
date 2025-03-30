@@ -1,0 +1,115 @@
+/* React Date Multi Select Lib */
+
+.rmdp-shadow {
+    box-shadow: none!important;
+  }
+  
+  .rmdp-day, .rmdp-week-day {
+    width: 40px!important;
+    height: 30px!important;
+  
+  }
+  
+  .sd {
+    border-radius:  20px!important;
+    user-select: none!important;
+  }
+  
+  .rmdp-day.rmdp-selected span:not(.highlight) {
+    background-color: #1570EF!important;
+    box-shadow: none!important;
+  }
+  
+  .rmdp-day.rmdp-today span {
+    background-color: none!important;
+  }
+  
+  .rmdp-day:not(.rmdp-disabled):not(.rmdp-day-hidden):not(.rmdp-selected) span:hover {
+    background-color: #E5E7EB!important;
+    color: black;
+  }
+  
+  .rmdp-week-day {
+    color: black!important;
+  }
+  
+  .rmdp-arrow-container {
+    padding-top: 2px!important;
+  }
+  .rmdp-arrow-container:hover {
+    background-color: #1570EF!important;
+  }
+  
+  .rmdp-header-values {
+    user-select: none!important;
+    font-weight: 500!important;
+  }
+  
+  .rmdp-day-picker {
+    user-select: none!important;
+  }
+  
+  .pac-container {
+    z-index: 1500;
+  }
+  
+  /* .rmdp-input {
+    border: none !important;
+    border-radius: 8px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    color: #101828 !important;
+    background: #fff !important;
+  } */
+  
+  
+  /* .rmdp-input:hover{
+   outline: none !important;
+    border: none !important;
+   
+  }
+  
+
+  
+  .rmdp-container:active{
+    outline: none !important;
+    border: none !important;
+   
+  }  */
+  
+  /* .date-picker .rmdp-calendar   {
+    border: 1px solid #E5E7EB !important;
+    border-radius: 8px !important;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;
+  } */
+  
+  
+
+  .rmdp-container{
+    width: 100%;
+  }
+
+  .rmdp-input{
+    width: 100%;
+    padding: 16.70px !important;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    color: #101828 !important;
+    background: #fff !important;
+    border-radius: 8px !important;
+  }
+
+  .rmdp-input:hover{
+    border: 1px solid #101828 !important;
+    box-shadow: none !important;
+  }
+
+  .rmdp-input:focus{
+    border: 2px solid #BB9337 !important;
+    box-shadow: none !important;
+  }
+
+ 

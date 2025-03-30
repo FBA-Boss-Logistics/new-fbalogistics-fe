@@ -1,0 +1,7 @@
+.btn-border-comp {
+    border: 2px solid transparent;
+    
+    border-radius: 50px;
+    padding: 2px;
+    transition: border 300ms ease-out;
+}

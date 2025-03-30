@@ -1,0 +1,119 @@
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.box {
+    border: 1px solid red;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.dark-placeholder {
+    opacity: 0.9;
+    transition: all 1s;
+}
+.dark-placeholder:hover {
+    opacity: 1;
+}
+
+.dark-placeholder:hover ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: black !important;
+    opacity: 1 !important; /* Firefox */
+}
+
+.dark-placeholder:hover :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: black !important;
+}
+
+.dark-placeholder:hover ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: black !important;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none !important;
+}
+.hide-scrollbar {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+}
+::-webkit-scrollbar {
+    width: 7px;
+    height: 10px;
+    cursor: grab;
+}
+
+/* Track */
+
+/* Toast Styles */
+
+.Toastify__toast-container {
+    border-radius: 0.5rem;
+    width: auto;
+    font-size: 14px;
+}
+.Toastify__toast {
+    min-height: 10rem;
+}
+.Toastify__toast-body {
+    padding: 0 0.375rem;
+    margin: 0;
+}
+.Toastify__toast--default {
+    background: #fff;
+    color: #aaa;
+}
+.Toastify__toast--info {
+    background: #3498db;
+}
+.Toastify__toast--success {
+    background: #07bc0c;
+}
+.Toastify__toast--warning {
+    background: #f1c40f;
+}
+.Toastify__toast--error {
+    background: #e74c3c;
+}
+
+#fileUpload {
+    display: none;
+}
+
+.pac-container {
+    z-index: 1500;
+}
+
+
+
+
+::-webkit-scrollbar {
+    width: 6px !important;
+    height: 6px !important;
+    background-color: transparent !important;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: transparent !important;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background-color: #95bcbd !important;
+  
+   
+  }
+
+  /* make a text blur */
+
+  .blur {
+    font-size: 15px;
+    color: black;
+    text-shadow: 0 0 8px #000;
+  }
