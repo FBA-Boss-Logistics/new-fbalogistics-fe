@@ -9,6 +9,7 @@ import NotFound from "pages/404";
 import MiniDrawer from "components/Layout";
 import { useIsMutating } from "@tanstack/react-query";
 import SellerTopNav from "pages/Seller/SellerTopNav";
+import NewDrawer from "components/Layout/NewDrawer";
 
 // import AppContainer from 'Pages/AppContainer';
 
@@ -25,9 +26,11 @@ const ProtectedRoutes = () => {
                 <Outlet />
             </>
         ) : (
-            <MiniDrawer>
+            // <MiniDrawer>
+            <NewDrawer> 
                 <Outlet />
-            </MiniDrawer>
+            </NewDrawer>
+            // </MiniDrawer>
         )
     ) : (
         <Navigate

@@ -30,6 +30,7 @@ import PendingOrders from "pages/Seller/Booking/PendingOrders";
 import SampleShipment from "pages/Seller/Booking/SampleShipment";
 import Annoucement from "pages/Seller/Announcement";
 import SampleShipmentTable from "pages/Shipper/Dashboard/SampleShipments";
+import NewDashboard from "pages/Shipper/Dashboard/New";
 
 const RouteConstants = {
     HOME: "/",
@@ -42,6 +43,10 @@ const RouteConstants = {
     BOOKING: "/booking",
     SELLERHOME: "/home",
     SELLERPROFILE: "/seller/profile",
+    // testing
+    NEWSHIPPERDASHBOARD: "/shipper/dashboard/new",
+
+
 };
 
 export const routes = {
@@ -57,6 +62,12 @@ export const routes = {
         isPublic: false,
 
         element: Dashboard,
+    },
+    NEWSHIPPERDASHBOARD: {
+        pathname: "/shipper/dashboard/new",
+        title: "Dashboard",
+        isPublic: false,
+        element: NewDashboard,
     },
     PLAYGROUND: {
         pathname: "/playground",
