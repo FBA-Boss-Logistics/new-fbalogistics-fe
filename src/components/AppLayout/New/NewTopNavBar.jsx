@@ -1,15 +1,23 @@
 import React from 'react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Bell, CreditCard, LogOut, Settings, User } from "lucide-react"
+import { Button } from 'components/ui/button'
+import NotificationItem from "@/components/New/NotificationItem"
 
 const NewTopNavBar = () => {
   return (
     <div>
       <header className="flex items-center justify-between p-4 bg-white border-b">
             <div className="w-72"></div>
-            <div className="flex items-center">
-                <button>
-                    sd
-                </button>
-              {/* <DropdownMenu>
+            <div className="flex gap-2 items-center">
+              <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative p-0 h-9 w-9">
                     <Bell className="h-5 w-5 text-gray-500" />
@@ -78,7 +86,7 @@ const NewTopNavBar = () => {
                     <span>Log out</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
-              </DropdownMenu> */}
+              </DropdownMenu>
             </div>
           </header>
     </div>
