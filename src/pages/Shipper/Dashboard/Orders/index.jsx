@@ -8,6 +8,7 @@ import { RemoveRedEyeOutlined } from "@mui/icons-material";
 import { FetchRecentOrderDetailApi } from "queries/Shipper";
 import ChatIconWithDot from "components/Comman/ChatWithGreenDot";
 import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
+import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 
 export default function Orders() {
     const navigate = useNavigate();
@@ -162,17 +163,20 @@ export default function Orders() {
                 tableData={userMessageNotification}
             />
 
-            <DataTableCustom
-                data={userMessageNotification}
-                columns={columns}
-                pageSize={10}
-                paginationFooter={true}
-                searchBar={true}
-                pageNumber={true}
-                updateFilters={setRecentOrderListPagination}
-                paginationData={paginationInformationShipment}
-                isLoading={isLoading}
-            />
+            <CardComponent>
+                <DataTableCustom
+                    data={userMessageNotification}
+                    columns={columns}
+                    pageSize={10}
+                    paginationFooter={true}
+                    searchBar={true}
+                    pageNumber={true}
+                    updateFilters={setRecentOrderListPagination}
+                    paginationData={paginationInformationShipment}
+                    isLoading={isLoading}
+                    heading="Current Shipments"
+                />
+            </CardComponent>
         </>
     );
 }

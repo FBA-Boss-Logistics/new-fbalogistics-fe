@@ -24,6 +24,8 @@ import { getLocalStorageItem } from "hooks";
 import { localStorageKeys } from "constants";
 import { fetchSellerShipmentNotificationsApi } from "queries/Seller";
 import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
+import { Bell, User } from "lucide-react";
+import MailIcon from '@mui/icons-material/Mail';
 
 const ProfileIcon = () => {
     const token = getLocalStorageItem(localStorageKeys.AUTH_TOKEN);
@@ -68,6 +70,7 @@ const ProfileIcon = () => {
 
     useEffect(() => {
         setUserInfo(userInfo?.data);
+        console.log(userInfo);
     }, [userInfo?.data]);
 
     const getUniqueNotifications = (dataList1 = [], dataList2 = []) => {
@@ -182,7 +185,7 @@ const ProfileIcon = () => {
 
     const theme = useTheme();
     const fullName = userInfo?.data.first_name + " " + userInfo?.data.last_name;
-    const notificationBellColor = isSeller ? "inherit" : "#4a148c";
+    const notificationBellColor = isSeller ? "inherit" : "";
 
     return (
         <div>
@@ -212,7 +215,7 @@ const ProfileIcon = () => {
                                         padding:'0px'
                                     }}
                                 >
-                                    <NotificationsIcon
+                                    <Bell
                                         style={{ color: notificationBellColor }}
                                     />
                                 </IconButton>
@@ -233,27 +236,51 @@ const ProfileIcon = () => {
                                     }
                                 />
                         )}
-                        <div onClick={handleClickMenu} className="flex">
-                            <Avatar
-                                sx={{
-                                    width: 44,
-                                    height: 44,
-                                    border: 1,
-                                    bgcolor: theme.palette.primary[100],
-                                    color: theme.palette.primary[800],
-                                    borderColor: theme.palette.primary[500],
-                                    fontWeight: 500,
-                                }}
-                                alt="Avatar"
-                                className={
-                                    location.pathname ===
-                                    ("/quotes" || "/booking")
-                                        ? "border border-solid w-11 h-11"
-                                        : ""
-                                }
-                            >
-                                {!isLoading ? formatName(fullName) : null}
-                            </Avatar>
+                        <div onClick={handleClickMenu} className="md:flex hidden">
+                            <div className="flex items-center gap-2">
+                            <Badge
+                                        anchorOrigin={{
+                                            vertical: 'bottom',
+                                            horizontal: 'right',
+                                        }}
+                                        color="success"
+                                        badgeContent=""
+                                        variant="dot"
+                                        
+                                        >
+                                    <Avatar
+                                        sx={{
+                                            width: 34,
+                                            height: 34,
+                                            border: 1,
+                                            bgcolor: theme.palette.primary[100],
+                                            color: theme.palette.primary[800],
+                                            borderColor: theme.palette.primary[500],
+                                            fontWeight: 500,
+                                        }}
+                                        alt="Avatar"
+                                        className={
+                                            location.pathname ===
+                                            ("/quotes" || "/booking")
+                                                ? "border border-solid w-11 h-11"
+                                                : ""
+                                        }
+                                    >
+                                        {!isLoading ? formatName(fullName) : null}
+                                    
+                                    </Avatar>
+
+                                </Badge>
+
+                             
+                                <div className="mr-2 text-left">
+                                    <div className="font-semibold">{userInfo?.data?.first_name} {userInfo?.data?.last_name}</div>
+                                    <div className="text-xs text-gray-500">{userInfo?.data?.groups}</div>
+                                </div>
+                           
+                            </div>
+                            <p>
+                            </p>
                             {!open ? (
                                 <IconButton size="small">
                                     <KeyboardArrowDownIcon
@@ -284,6 +311,10 @@ const ProfileIcon = () => {
             <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
                 open={open}
                 onClose={handleClose}
                 MenuListProps={{
@@ -300,31 +331,13 @@ const ProfileIcon = () => {
                     aria-labelledby="nested-list-subheader"
                 >
                     <ListItemButton onClick={handleClickProfile} key="1">
-                        <ListItemIcon>
-                            <Avatar
-                                sx={{
-                                    width: 44,
-                                    height: 44,
-                                    border: 1,
-                                    bgcolor: theme.palette.primary[100],
-                                    color: theme.palette.primary[800],
-                                    borderColor: theme.palette.primary[500],
-                                    fontWeight: 500,
-                                }}
-                            >
-                                {formatName(fullName)}
-                            </Avatar>
-                        </ListItemIcon>
-
-                        <ListItemText
-                            primary={`${userInfo?.data?.first_name} ${userInfo?.data?.last_name}`}
-                            secondary={`${userInfo?.data?.email}`}
-                        />
+                    <User className="mr-2 h-4 w-4" />
+                    <ListItemText primary="Profile" />
                     </ListItemButton>
                     <ListItemButton onClick={handleClickLogout} key="2">
-                        <ListItemIcon>
+                        {/* <ListItemIcon> */}
                             <img src={Logout} alt="svg image" />
-                        </ListItemIcon>
+                        {/* </ListItemIcon> */}
                         <ListItemText
                             className="text-error-600"
                             primary="Logout"

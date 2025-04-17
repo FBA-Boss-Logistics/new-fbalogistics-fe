@@ -11,6 +11,7 @@ import { FetchSampleShipmentDetailApi } from "queries/Seller";
 import { formatDate } from "utils";
 import ChatIconWithDot from "components/Comman/ChatWithGreenDot";
 import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
+import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 
 export default function SampleShipmentTable() {
     const navigate = useNavigate();
@@ -165,18 +166,20 @@ export default function SampleShipmentTable() {
             )} */}
 
             <InfoModal open={modalOpen} onClose={handleCloseModal} />
-
-            <DataTableCustom
-                data={userMessageNotification}
-                columns={columns}
-                pageSize={10}
-                paginationFooter={true}
-                searchBar={true}
-                pageNumber={true}
-                updateFilters={setSellerShipmentPagination}
-                paginationData={paginationInformationShipment}
-                isLoading={isLoading}
-            />
+            <CardComponent>
+                <DataTableCustom
+                    data={userMessageNotification}
+                    columns={columns}
+                    pageSize={10}
+                    paginationFooter={true}
+                    searchBar={true}
+                    pageNumber={true}
+                    updateFilters={setSellerShipmentPagination}
+                    paginationData={paginationInformationShipment}
+                    isLoading={isLoading}
+                    heading="Sample Shipment"
+                />
+            </CardComponent>
         </>
     );
 }

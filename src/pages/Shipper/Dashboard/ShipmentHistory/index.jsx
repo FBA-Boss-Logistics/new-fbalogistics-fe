@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import { RemoveRedEyeOutlined } from "@mui/icons-material";
 import { FetchShipmentHistoryDetailApi } from "queries/Shipper";
+import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 
 export default function ShipmentHistory() {
     const [pastOrderListPagination, setPastOrderListPagination] = useState({});
@@ -37,13 +38,19 @@ export default function ShipmentHistory() {
             Header: "Shipment ID",
             accessor: "id",
             width: 10,
+        Cell: ({ row: { original } }) => (
+            <Typography variant="subtitle2" color="natural.500">
+                {original.id}
+            </Typography>
+        ),
+
         },
         {
             Header: "Customer Name",
             accessor: "user__first_name",
             Cell: ({ row: { original } }) => (
                 <Typography
-                    variant="subtitle1"
+                    variant="subtitle2"
                     color="natural.500"
                     fontWeight={400}
                 >
@@ -60,7 +67,7 @@ export default function ShipmentHistory() {
                     href={original.tracking_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-natural-500"
+                    className="text-natural-500 "
                 >
                     {original.tracking_link}
                 </a>
@@ -69,7 +76,11 @@ export default function ShipmentHistory() {
         {
             Header: "Final Amount",
             accessor: "final_amount",
-            Cell: ({ row: { original } }) => "$" + original.final_amount,
+            Cell: ({ row: { original } }) => (
+                <h1 className="text-sm text-natural-500">
+                    {"$" + original.final_amount}
+                </h1>
+            ),
         },
 
         {
@@ -103,18 +114,21 @@ export default function ShipmentHistory() {
     return (
         <>
             <InfoModal open={modalOpen} onClose={handleCloseModal} />
+            <CardComponent>
 
-            <DataTableCustom
-                data={pastOrderListData}
-                columns={columns}
-                pageSize={10}
-                paginationFooter={true}
-                searchBar={true}
-                pageNumber={true}
-                updateFilters={setPastOrderListPagination}
-                paginationData={paginationInformationShipment}
-                isLoading={isLoading}
-            />
+                <DataTableCustom
+                    data={pastOrderListData}
+                    columns={columns}
+                    pageSize={10}
+                    paginationFooter={true}
+                    searchBar={true}
+                    pageNumber={true}
+                    updateFilters={setPastOrderListPagination}
+                    paginationData={paginationInformationShipment}
+                    isLoading={isLoading}
+                    heading="Shipments History"
+                    />
+            </CardComponent>
         </>
     );
 }

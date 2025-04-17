@@ -15,6 +15,9 @@ import { formatDate } from "utils";
 import useCountdownTimer from "./useCountdownTimer";
 import { convertIntoUnix } from "./utils";
 import { format } from "date-fns";
+import hammerIcon from 'assets/svg/hammer.svg' 
+import { Package} from "lucide-react"
+
 const Timer = memo(function Timer({ row, refetch, isLoading }) {
     const createdAtTimeStamp = convertIntoUnix(row.row.original.created_at);
     const { hours, minutes, seconds } = useCountdownTimer(createdAtTimeStamp);
@@ -28,13 +31,13 @@ const Timer = memo(function Timer({ row, refetch, isLoading }) {
         <div className="flex">
      
             <div className="border-natural-50 border-solid p-1">
-                <Typography color={"natural.700"}>{hours}h</Typography>
+                <Typography variant="subtitle2" fontWeight={400}  color={"natural.500"}>{hours}h</Typography>
             </div>
             <div className="border-natural-50 border-solid p-1">
-                <Typography color={"natural.700"}>{minutes}m</Typography>
+                <Typography variant="subtitle2" fontWeight={400} color={"natural.500"}>{minutes}m</Typography>
             </div>
             <div className="border-natural-50 border-solid p-1">
-                <Typography color={"natural.700"}>{seconds}s</Typography>
+                <Typography variant="subtitle2" fontWeight={400} color={"natural.500"}>{seconds}s</Typography>
             </div>
         </div>
     );
@@ -63,6 +66,7 @@ export default function Quotation() {
         }
         return { shipmentListData: [], paginationInformationShipment: {} };
     }, [dataUpdatedAt]);
+    
     const navigate = useNavigate();
     /** @type import('@tanstack/react-table').ColumnDef<any> */ //for autosuggestions
     const columns = [
@@ -77,10 +81,15 @@ export default function Quotation() {
             accessor: "product_name",
             footer: "Product Name",
             Cell: ({ row: { original } }) => (
-                <div className="flex items-center">
-                    <img src={ProductImage} alt="Product" />
-                    <span className="ml-1.5">{original.product_name}</span>
-                </div>
+               
+                 <Typography
+                 variant="subtitle2"
+                 color="natural.500"
+                 fontWeight={400}
+             >
+                    {original.product_name}
+             </Typography>
+
             ),
         },
 
@@ -89,7 +98,7 @@ export default function Quotation() {
             accessor: "shipment_ready_date",
             Cell: ({ row: { original } }) => (
                 <Typography
-                    variant="subtitle1"
+                    variant="subtitle2"
                     color="natural.500"
                     fontWeight={400}
                 >
@@ -102,7 +111,7 @@ export default function Quotation() {
             accessor: "pickup_location",
             Cell: ({ row: { original } }) => (
                 <Typography
-                    variant="subtitle1"
+                    variant="subtitle2"
                     color="natural.500"
                     fontWeight={400}
                 >
@@ -114,25 +123,41 @@ export default function Quotation() {
         {
             Header: "Action",
             Cell: ({ row: { original } }) => (
-                <Button
-                    variant="outlined"
-                    className="w-[75px] h-[32px] px-[12px] py-[6px] bg-natural-50"
-                    onClick={() => {
-                        const clickedShipmentId = original.id;
-                        navigate(`/shipper/bid/${clickedShipmentId}`);
-                    }}
-                >
-                    <Typography
-                        fontSize={12}
-                        fontWeight={500}
-                        color="natural.900"
-                    >
-                        BID
-                    </Typography>
+                // <Button
+                //     variant="outlined"
+                //     className="w-[75px] h-[32px] px-[12px] py-[6px] bg-natural-50"
+                //     onClick={() => {
+                //         const clickedShipmentId = original.id;
+                //         navigate(`/shipper/bid/${clickedShipmentId}`);
+                //     }}
+                // >
+                //     <Typography
+                //         fontSize={12}
+                //         fontWeight={500}
+                //         color="natural.900"
+                //     >
+                //         BID
+                //     </Typography>
+                // </Button>
+                <>
+                <img className="hidden md:block" src={hammerIcon} alt="" onClick={() => {
+                            const clickedShipmentId = original.id;
+                            navigate(`/shipper/bid/${clickedShipmentId}`);
+                }} />
+                <Button onClick={() => {
+                            const clickedShipmentId = original.id;
+                            navigate(`/shipper/bid/${clickedShipmentId}`);
+                }} className="block md:hidden w-full text-blue-600 bg-white hover:bg-gray-50 h-9" variant="outline">
+                    Bid
                 </Button>
+                </>
+                
+
             ),
         },
     ];
+
+    
     return (
         <>
             <DataTableCustom
@@ -147,6 +172,9 @@ export default function Quotation() {
                 date={true}
                 setSelectedDate={setSelectedShipmentDate}
                 selectedDate={selectedShipmentDate}
+                icon={<Package className="h-5 w-5" />}
+                heading={"Pending Quotations "}
+
             />
         </>
     );

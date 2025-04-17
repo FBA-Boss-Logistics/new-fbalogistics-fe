@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import { RemoveRedEyeOutlined } from "@mui/icons-material";
 import { FetchPastOrderDetailApi } from "queries/Shipper";
+import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 
 export default function PastOrders() {
     const [pastOrderListPagination, setPastOrderListPagination] = useState({});
@@ -37,6 +38,11 @@ export default function PastOrders() {
             Header: "Shipment ID",
             accessor: "id",
             width: 10,
+            Cell: ({ row: { original } }) => (
+                <Typography variant="subtitle1" color="natural.500" fontWeight={400}>
+                    {original.id}
+                </Typography>
+            ),
         },
         {
             Header: "Customer Name",
@@ -69,7 +75,11 @@ export default function PastOrders() {
         {
             Header: "Final Amount",
             accessor: "final_amount",
-            Cell: ({ row: { original } }) => "$" + original.final_amount,
+            Cell: ({ row: { original } }) =>(
+                <Typography variant="subtitle1" color="natural.500" fontWeight={400}>
+                    {original.final_amount}
+                </Typography>
+            ),
         },
 
         {
@@ -103,18 +113,20 @@ export default function PastOrders() {
     return (
         <>
             <InfoModal open={modalOpen} onClose={handleCloseModal} />
-
-            <DataTableCustom
-                data={pastOrderListData}
-                columns={columns}
-                pageSize={10}
-                paginationFooter={true}
-                searchBar={true}
-                pageNumber={true}
-                updateFilters={setPastOrderListPagination}
-                paginationData={paginationInformationShipment}
-                isLoading={isLoading}
-            />
+            <CardComponent>
+                <DataTableCustom
+                    data={pastOrderListData}
+                    columns={columns}
+                    pageSize={10}
+                    paginationFooter={true}
+                    searchBar={true}
+                    pageNumber={true}
+                    updateFilters={setPastOrderListPagination}
+                    paginationData={paginationInformationShipment}
+                    isLoading={isLoading}
+                    heading="Completed  Shipments"
+                />
+            </CardComponent>
         </>
     );
 }

@@ -26,11 +26,9 @@ const ProtectedRoutes = () => {
                 <Outlet />
             </>
         ) : (
-            // <MiniDrawer>
             <NewDrawer> 
                 <Outlet />
             </NewDrawer>
-            // </MiniDrawer>
         )
     ) : (
         <Navigate

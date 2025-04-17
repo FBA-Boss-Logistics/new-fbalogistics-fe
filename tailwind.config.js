@@ -12,7 +12,12 @@ export default {
     		lg: '1200px',
     		xl: '1536px'
     	},
+		fontFamily: {
+			sans: ['Sora', 'sans-serif'],
+			default: ['Sora', 'sans-serif'],
+	},
     	extend: {
+			
     		colors: {
     			primary: {
     				'50': '#FDF8EC',
