@@ -406,11 +406,9 @@ export default function DataTableCustom({
               {/* First Quotation */}
               <div className="bg-white border-b border-zinc-200">
                      {isLoading ? (
-                                <>
-                                    <div>
+                               
                                         <Loader data="Quotations" />
-                                    </div>
-                                </>
+                                
                             ) : 
                           
                 (
@@ -422,7 +420,7 @@ export default function DataTableCustom({
                                 console.log(cell.render("Header"))
                                 return(
                                 <>
-                                    <div key={cell.id} {...cell.getCellProps()} className="px-4 py-2.5 flex justify-between items-center">
+                                    <div key={cell.id} {...cell.getCellProps()} className="px-4 py-2.5 flex justify-between items-center flex-wrap">
                                         <span className="text-zinc-700 text-sm">{cell.render("Header")}</span>
                                         <span className="text-zinc-700 text-sm">{cell.render("Cell")}</span>
                                     </div>
@@ -432,8 +430,6 @@ export default function DataTableCustom({
                             })} 
 
                             {row.cells.filter((cell)=> cell.render("Header") == "Action").map((cell)=>{
-                                console.log('this is cell props')
-                                console.log(cell.render("Cell"))
                                 return(
                                     <>
                                         <div className="px-4 py-3 bg-slate-100">
@@ -456,10 +452,10 @@ export default function DataTableCustom({
                 <div
                     className={`flex justify-start gap-2 pt-2.5 ${
                         !pageNumber ? "border-t-0" : ""
-                    } px-6  overflow-hidden border-solid border-natural-200 rounded-b-xl`}
+                    } px-6  overflow-hidden border-solid   border-natural-200 rounded-b-xl`}
                 >
                     {pageNumber === true ? (
-                        <span className="flex  gap-1 pb-4 w-full flex-col justify-center align-middle ">
+                        <span className="md:flex hidden gap-1 pb-4 w-full flex-col justify-center align-middle ">
                             <div>
                                 <Typography fontWeight={500}>
                                     Page {paginationData.page ?? "1"} of{" "}
@@ -470,9 +466,9 @@ export default function DataTableCustom({
                     ) : null}
 
                     {paginationFooter === true ? (
-                         <div className="flex pb-4 gap-2 justify-end w-full">
-                         <div className="flex justify-start ml-12 mr-10">
-                             <span className="flex pt-1 gap-1 w-full flex-col justify-center align-middle mr-0">
+                         <div className="flex pb-4 gap-2 justify-between md:justify-end w-full">
+                         <div className="md:flex hidden justify-start ml-12 mr-10">
+                             <span className="md:flex hidden pt-1 gap-1 w-full flex-col justify-center align-middle mr-0">
                                      <Typography fontWeight={500} className="mr-[-40px]">
                                          Per Page
                                      </Typography>
@@ -498,6 +494,19 @@ export default function DataTableCustom({
                          >
                              <ChevronLeft />
                          </IconButton>
+                         <Select className="md:hidden"
+                                 value={pageFilters?.per_page}
+                                 onChange={(e)=> handleItemsPerPageChange(e)}
+                                 sx={{ 
+                                    width: 165,
+                                    height:40
+                                  }}
+                             >
+                                {pageNumbers.map((num)=>
+                                    <MenuItem key={num} value={num}> {num} </MenuItem>
+                                )}
+                                 
+                             </Select>
                          <IconButton
                              variant="outlined"
                              className="border border-natural-200 border-solid p-2 w-10 h-10 rounded-lg text-natural-900"
@@ -511,6 +520,14 @@ export default function DataTableCustom({
                      </div>
                     ) : null}
                 </div>
+                {pageNumber === true ? (
+                        <span className="md:hidden flex  gap-1 pb-4 w-full flex-col  text-center justify-center align-middle ">
+                                <Typography fontWeight={500}>
+                                    Page {paginationData.page ?? "1"} of{" "}
+                                    {paginationData.pages ?? "1"}
+                                </Typography>
+                        </span>
+                    ) : null}
         </>
     );
 }
