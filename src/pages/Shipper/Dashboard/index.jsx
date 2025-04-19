@@ -2,6 +2,7 @@ import { Card, CardContent } from "components/ui/card";
 import Quotation from "./Quotation";
 import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronRight, Package} from "lucide-react"
+import { routes } from "routes/RouteConstants";
 
 const Dashboard = () => {
     return (
@@ -9,7 +10,7 @@ const Dashboard = () => {
             <div className="block md:hidden">
                 <h1 className="text-2xl font-semibold text-zinc-800 mb-2">Pending Quotations</h1>
                 <div className="flex items-center text-sm mb-6">
-                <Link href="/dashboard" className="text-blue-600 hover:underline">
+                <Link to={routes.SHIPPERDASHBOARD.pathname} className="text-blue-600 hover:underline">
                     Dashboard
                 </Link>
                 <ChevronRight className="h-4 w-4 inline" />

@@ -2,13 +2,15 @@ import { useEffect, useMemo, useState } from "react";
 import DataTableCustom from "components/Table/DataTableCustom";
 import { Button, Typography } from "@mui/material";
 import InfoModal from "../Quotation/InfoModal";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { RemoveRedEyeOutlined } from "@mui/icons-material";
 import { FetchRecentOrderDetailApi } from "queries/Shipper";
 import ChatIconWithDot from "components/Comman/ChatWithGreenDot";
 import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
 import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
+import { ChevronRight } from "lucide-react";
+import { routes } from "routes/RouteConstants";
 
 export default function Orders() {
     const navigate = useNavigate();
@@ -108,8 +110,8 @@ export default function Orders() {
             Header: "Info",
             Cell: ({ row: { original } }) => (
                 <Button
-                    variant="outlined"
-                    className="w-[75px] h-[32px] px-[12px] py-[6px] bg-natural-50"
+                    variant="text"
+                    className="w-[75px] h-[32px] px-[12px] py-[6px] "
                     onClick={() => handleOpenModal(original)}
                 >
                     <Typography
@@ -162,6 +164,17 @@ export default function Orders() {
                 rowData={selectedrowData}
                 tableData={userMessageNotification}
             />
+
+            <div className="block md:hidden">
+                <h1 className="text-2xl font-semibold text-zinc-800 mb-2">Current Shipments</h1>
+                <div className="flex items-center text-sm mb-6">
+                <Link to={routes.SHIPPERDASHBOARD.pathname} className="text-blue-600 hover:underline">
+                    Dashboard
+                </Link>
+                <ChevronRight className="h-4 w-4 inline" />
+                <span className="text-gray-500">Current Shipments</span>
+                </div>
+            </div>
 
             <CardComponent>
                 <DataTableCustom

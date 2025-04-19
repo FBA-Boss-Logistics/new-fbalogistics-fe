@@ -1,11 +1,11 @@
 import { Card, CardContent } from 'components/ui/card'
 import React from 'react'
 
-const CardComponent = ({children}) => {
+const CardComponent = ({children, className}) => {
   return (
     <>
-        <Card className=" border-1 hidden md:block">
-            <CardContent className="px-4">
+        <Card className={` ${className}`}>
+            <CardContent className="pt-4 px-0">
                 {children}
             </CardContent>
         </Card>

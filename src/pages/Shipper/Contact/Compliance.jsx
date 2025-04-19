@@ -19,7 +19,7 @@ import { axios } from "service";
 export function Compliance({productDescription, shipmentGoods}) {
     return (
         <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4">
-            <div className="flex-col gap-2">
+            <div className="flex-col  gap-2">
                 <div className=" bg-natural-100 rounded-full border-4 border-natural-100 justify-center  gap-2 inline-flex">
                     <img src={ComplianceIcon} width={40} alt="compliance" />
                 </div>
@@ -28,8 +28,8 @@ export function Compliance({productDescription, shipmentGoods}) {
                     Compliance
                 </Typography>
             </div>
-            <div className="flex gap-2 justify-between mt-2">
-                <div className="bg-natural-25 w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
+            <div className="flex md:flex-row flex-col gap-2 justify-between mt-2">
+                <div className="bg-natural-25  p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
                     <Typography
                         color="natural.800"
                         variant="body2"
@@ -45,7 +45,7 @@ export function Compliance({productDescription, shipmentGoods}) {
                         {productDescription}
                     </Typography>
                 </div>
-                <div className="bg-natural-25 w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
+                <div className="bg-natural-25 lg:w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
                     <Typography
                         color="natural.800"
                         variant="body2"
@@ -54,7 +54,7 @@ export function Compliance({productDescription, shipmentGoods}) {
                         Shipment Contain Any of The Following Goods
                     </Typography>
 
-                    <div className="flex gap-2 flex-wrap">
+                    <div className="flex gap-2 flex-wrap ">
                         
                        {shipmentGoods.map(goods => <Chip
                             variant="outlined"

@@ -249,7 +249,9 @@ export default function SellerOrderStatus() {
                                     }
                                     packages={packages}
                                     asinNumber={asinNumber}
+                                    shipmentData={shipmentData?.data}
                                 />
+                                <p>Packages</p>
                             </div>
                         </div>
                         <Compliance

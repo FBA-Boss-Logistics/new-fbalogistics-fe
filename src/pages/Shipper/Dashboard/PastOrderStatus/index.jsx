@@ -8,6 +8,7 @@ import { FetchAllShipmentOrderDetailApi } from "queries/Shipper";
 import { formatDateString } from "utils";
 import ErrorUi from "pages/Seller/Booking/SellerOrderStatus/ErrorUi";
 import Loader from "components/Loader";
+import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 
 export default function PastOrderStatus() {
     const { id } = useParams();
@@ -34,6 +35,7 @@ export default function PastOrderStatus() {
                     <Loader />{" "}
                 </div>
             ) :(
+                <CardComponent className="pt-4">
                 <div className="flex flex-col gap-6 w-full">
                     <div className="flex justify-between ">
                         <OrderDate
@@ -64,6 +66,7 @@ export default function PastOrderStatus() {
                         <PastStatus status={OrderStatusData?.data?.status} />
                     </div>
                 </div>
+                </CardComponent>
             )}
         </>
     );

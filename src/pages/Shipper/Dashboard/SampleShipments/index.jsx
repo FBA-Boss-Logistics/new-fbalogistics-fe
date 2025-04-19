@@ -12,6 +12,9 @@ import { formatDate } from "utils";
 import ChatIconWithDot from "components/Comman/ChatWithGreenDot";
 import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
 import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
+import { ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { routes } from "routes/RouteConstants";
 
 export default function SampleShipmentTable() {
     const navigate = useNavigate();
@@ -164,7 +167,16 @@ export default function SampleShipmentTable() {
             {/* {makePayment && (
                 <MakePaymentModal open={makePayment} onClose={handleClose} />
             )} */}
-
+             <div className="block md:hidden">
+                <h1 className="text-2xl font-semibold text-zinc-800 mb-2">Sample Shipment</h1>
+                <div className="flex items-center text-sm mb-6">
+                <Link to={routes.SHIPPERDASHBOARD.pathname} className="text-blue-600 hover:underline">
+                    Dashboard
+                </Link>
+                <ChevronRight className="h-4 w-4 inline" />
+                <span className="text-gray-500">Sample Shipment</span>
+                </div>
+            </div>
             <InfoModal open={modalOpen} onClose={handleCloseModal} />
             <CardComponent>
                 <DataTableCustom

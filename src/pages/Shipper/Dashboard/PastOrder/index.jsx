@@ -1,14 +1,16 @@
 import { useMemo, useState } from "react";
 
 import DataTableCustom from "components/Table/DataTableCustom";
-import { IconButton, Typography } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 
 import InfoModal from "../Quotation/InfoModal";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { RemoveRedEyeOutlined } from "@mui/icons-material";
 import { FetchPastOrderDetailApi } from "queries/Shipper";
 import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
+import { ChevronRight } from "lucide-react";
+import { routes } from "routes/RouteConstants";
 
 export default function PastOrders() {
     const [pastOrderListPagination, setPastOrderListPagination] = useState({});
@@ -86,6 +88,7 @@ export default function PastOrders() {
             Header: "Action",
 
             Cell: ({ row: { original } }) => (
+                <>
                 <IconButton
                     onClick={() => {
                         const clickedOrderId = original?.id;
@@ -94,6 +97,7 @@ export default function PastOrders() {
                             `/shipper/dashboard/orders/pastorders/status/${clickedOrderId}/?src=accepted`
                         );
                     }}
+                    className="hidden md:block"
                 >
                     {" "}
                     <RemoveRedEyeOutlined
@@ -101,6 +105,13 @@ export default function PastOrders() {
                         color="secondary.100"
                     />
                 </IconButton>
+                <Button onClick={() => {
+                            const clickedShipmentId = original.id;
+                            navigate(`/shipper/dashboard/orders/pastorders/status/${clickedShipmentId}/?src=accepted`);
+                }} className="block md:hidden w-full text-blue-600  " variant="text">
+                    More info
+                </Button>
+                </>
             ),
         },
     ];
@@ -113,6 +124,16 @@ export default function PastOrders() {
     return (
         <>
             <InfoModal open={modalOpen} onClose={handleCloseModal} />
+            <div className="block md:hidden">
+                <h1 className="text-2xl font-semibold text-zinc-800 mb-2">Completed Shipments</h1>
+                <div className="flex items-center text-sm mb-6">
+                <Link to={routes.SHIPPERDASHBOARD.pathname} className="text-blue-600 hover:underline">
+                    Dashboard
+                </Link>
+                <ChevronRight className="h-4 w-4 inline" />
+                <span className="text-gray-500">Completed Shipments</span>
+                </div>
+            </div>
             <CardComponent>
                 <DataTableCustom
                     data={pastOrderListData}

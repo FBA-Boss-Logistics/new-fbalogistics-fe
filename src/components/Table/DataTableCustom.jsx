@@ -116,46 +116,6 @@ export default function DataTableCustom({
         }));
     };
 
-    // const [isLoading, setIsLoading] = useState(true)
-    const shipments = [
-      {
-        id: "SHP-1001",
-        destination: "Jakarta, Indonesia",
-        customer: "PT Maju Bersama",
-        date: "2023-04-10",
-        status: "delivered",
-      },
-      {
-        id: "SHP-1002",
-        destination: "Surabaya, Indonesia",
-        customer: "CV Sukses Mandiri",
-        date: "2023-04-11",
-        status: "in-transit",
-      },
-      {
-        id: "SHP-1003",
-        destination: "Bandung, Indonesia",
-        customer: "PT Teknologi Maju",
-        date: "2023-04-12",
-        status: "processing",
-      },
-      {
-        id: "SHP-1004",
-        destination: "Medan, Indonesia",
-        customer: "CV Abadi Jaya",
-        date: "2023-04-13",
-        status: "delivered",
-      },
-      {
-        id: "SHP-1005",
-        destination: "Makassar, Indonesia",
-        customer: "PT Samudera Biru",
-        date: "2023-04-14",
-        status: "in-transit",
-      },
-    ]
-  
-
     useEffect(() => {
         handlePageFilters("search", "");
     }, []);
@@ -412,37 +372,51 @@ export default function DataTableCustom({
                             ) : 
                           
                 (
-                    tableInstance.rows.map((row)=>{
-                        return(
-                        <>
-                            {row.cells.filter((cell)=> cell.render("Header") != "Action").map((cell)=>{
-                                console.log('this is cell data')
-                                console.log(cell.render("Header"))
-                                return(
-                                <>
-                                    <div key={cell.id} {...cell.getCellProps()} className="px-4 py-2.5 flex justify-between items-center flex-wrap">
-                                        <span className="text-zinc-700 text-sm">{cell.render("Header")}</span>
-                                        <span className="text-zinc-700 text-sm">{cell.render("Cell")}</span>
-                                    </div>
-                                    <div className="border-t border-zinc-100"></div>    
-                                </>
-                                )
-                            })} 
+                    tableInstance.rows?.length > 0 ? (
 
-                            {row.cells.filter((cell)=> cell.render("Header") == "Action").map((cell)=>{
-                                return(
+                        tableInstance.rows.map((row)=>{
+                            return(
+                            <>
+                                {row.cells.filter((cell)=> cell.render("Header") != "Action").map((cell)=>{
+                                    console.log('this is cell data')
+                                    console.log(cell.render("Header"))
+                                    return(
                                     <>
-                                        <div className="px-4 py-3 bg-slate-100">
-                                        <Button key={cell.id} {...cell.getCellProps()} className="w-full text-blue-600 bg-white hover:bg-gray-50 h-9" variant="outline">
-                                            {cell.render("Cell")}
-                                        </Button>
+                                        <div key={cell.id} {...cell.getCellProps()} className="px-4 py-2.5 flex justify-between items-center flex-wrap">
+                                            <span className="text-zinc-700 text-sm">{cell.render("Header")}</span>
+                                            <span className="text-zinc-700 text-sm">{cell.render("Cell")}</span>
                                         </div>
-                                    </>  
-                                )
-                            })} 
-                        </>
-                        )
-                    })
+                                        <div className="border-t border-zinc-100"></div>    
+                                    </>
+                                    )
+                                })} 
+    
+                                {row.cells.filter((cell)=> cell.render("Header") == "Action").map((cell)=>{
+                                    return(
+                                        <>
+                                            <div className="px-4 py-3 bg-slate-100">
+                                            <Button key={cell.id} {...cell.getCellProps()} className="w-full text-blue-600 bg-white hover:bg-gray-50 h-9" variant="outline">
+                                                {cell.render("Cell")}
+                                            </Button>
+                                            </div>
+                                        </>  
+                                    )
+                                })} 
+                            </>
+                            )
+                        })
+                    ):(
+                        <div className="flex flex-col items-center justify-center py-12 px-4">
+                        <div className="h-20 w-20 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                            <img src={EmptyIcon} alt="EMPTY ICON" />
+                        <PackageOpen className="h-10 w-10 text-slate-400" />
+                        </div>
+                        <h3 className="text-lg font-medium text-slate-900 mb-1">You have no order yet</h3>
+                        <p className="text-sm text-slate-500 text-center mb-6 max-w-md">
+                        Orders will appear here once they are placed. Check back later for updates.
+                        </p>
+                    </div>
+                    )
                 )}
 
               </div>

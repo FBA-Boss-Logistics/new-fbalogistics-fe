@@ -128,8 +128,7 @@ const NewSideNavBar = () => {
                         })
                         ?.map(({ icon, label, route, children }, i) => {
                           const isOpen = location.pathname.startsWith(route);
-                          console.log(label)
-                          console.log(isOpen)
+                        
                           return(
                           <>
                              <li>

@@ -24,6 +24,7 @@ import { formatDate } from "utils";
 import { routes } from "routes/RouteConstants";
 import PastStatus from "components/Dashboard/OrderStatus/PastStatus";
 import ErrorUi from "pages/Seller/Booking/SellerOrderStatus/ErrorUi";
+import { Card } from "components/ui/card";
 
 const { pickup_amount, fast_amount, normal_amount } = CommonFormValidations;
 const QuotationFormSchema = yup.object().shape({
@@ -141,8 +142,7 @@ export default function Contact() {
                     <Loader />{" "}
                 </div>
             ) : (
-                <div>
-                    <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4 w-[calc(100vw-380px)]">
+                <Card className="p-4">
                         <div className="flex justify-between ml-4 mr-4">
                             <div>
                                 <Chip
@@ -285,6 +285,7 @@ export default function Contact() {
                                     productName={
                                         shipmentData?.data?.product_name
                                     }
+                                    shipmentData={shipmentData?.data}
                                     packages={packages}
                                     asinNumber={asinNumber}
                                 />
@@ -437,8 +438,7 @@ export default function Contact() {
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
+                </Card>
             )}
         </>
     );

@@ -1,14 +1,16 @@
 import { useMemo, useState } from "react";
 
 import DataTableCustom from "components/Table/DataTableCustom";
-import { IconButton, Typography } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 
 import InfoModal from "../Quotation/InfoModal";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { RemoveRedEyeOutlined } from "@mui/icons-material";
 import { FetchShipmentHistoryDetailApi } from "queries/Shipper";
 import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
+import { routes } from "routes/RouteConstants";
+import { ChevronRight } from "lucide-react";
 
 export default function ShipmentHistory() {
     const [pastOrderListPagination, setPastOrderListPagination] = useState({});
@@ -87,6 +89,7 @@ export default function ShipmentHistory() {
             Header: "Action",
 
             Cell: ({ row: { original } }) => (
+                <>
                 <IconButton
                     onClick={() => {
                         const clickedOrderId = original?.id;
@@ -95,6 +98,7 @@ export default function ShipmentHistory() {
                             `/shipper/dashboard/orders/shipmenthistories/status/${clickedOrderId}/?src=accepted`
                         );
                     }}
+                    className="hidden md:block"
                 >
                     {" "}
                     <RemoveRedEyeOutlined
@@ -102,6 +106,13 @@ export default function ShipmentHistory() {
                         color="secondary.100"
                     />
                 </IconButton>
+                <Button onClick={() => {
+                            const clickedShipmentId = original.id;
+                            navigate(`/shipper/dashboard/orders/shipmenthistories/status/${clickedShipmentId}/?src=accepted`);
+                }} className="block md:hidden w-full text-blue-600 bg-white hover:bg-gray-50 h-9" variant="outline">
+                    More info
+                </Button>
+                </>
             ),
         },
     ];
@@ -113,6 +124,17 @@ export default function ShipmentHistory() {
     };
     return (
         <>
+
+            <div className="block md:hidden">
+                <h1 className="text-2xl font-semibold text-zinc-800 mb-2">Shipments History</h1>
+                <div className="flex items-center text-sm mb-6">
+                <Link to={routes.SHIPPERDASHBOARD.pathname} className="text-blue-600 hover:underline">
+                    Dashboard
+                </Link>
+                <ChevronRight className="h-4 w-4 inline" />
+                <span className="text-gray-500">Shipments History</span>
+                </div>
+            </div>
             <InfoModal open={modalOpen} onClose={handleCloseModal} />
             <CardComponent>
 

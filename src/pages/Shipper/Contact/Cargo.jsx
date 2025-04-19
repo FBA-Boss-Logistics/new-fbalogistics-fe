@@ -157,8 +157,117 @@
 
 import { Chip, Typography } from "@mui/material";
 import Truck from "assets/svg/truck.svg";
+import DataTableCustom from "components/Table/DataTableCustom";
+import { Package } from "lucide-react";
 
-export function Cargo({ productName, packages, asinNumber }) {
+const columns = [
+    {
+        Header: "Carton Dimensions (CM)",
+        accessor: "carton_dimensions_length",
+        footer: "Carton Dimensions (CM)",
+        Cell: ({ row: { original } }) => (
+           <div className="flex gap-2">
+                <Chip
+                    label={`L - ${original.carton_dimensions_length}`}
+                    className="bg-natural-700 text-primary-100"
+                />
+                <Chip
+                    label={`W - ${original.carton_dimensions_width}`}
+                    className="bg-natural-700 text-primary-100"
+                />
+                <Chip
+                    label={`H - ${original.carton_dimensions_height}`}
+                    className="bg-natural-700 text-primary-100"
+                />
+           </div>
+        ),
+    },
+    {
+        Header: "Weight Per Carton (KG)",
+        accessor: "weight_per_carton_kg",
+        footer: "Weight Per Carton (KG)",
+        Cell: ({ row: { original } }) => (
+            <div className="flex-grow p-2">
+            <Typography
+            color="natural.500"
+            fontWeight={400}
+            variant="body2"
+        >
+            {`${original.weight_per_carton_kg} kg`}
+        </Typography>
+        </div>
+        ),
+    },
+    {
+        Header: "Total Cost of Goods",
+        accessor: "total_cost_of_goods",
+        footer: "Total Cost of Goods",
+        Cell: ({ row: { original } }) => (
+            <div className="flex-grow p-2">
+            <Typography
+                variant="body2"
+                fontWeight={500}
+                color="natural.800"
+            >
+                {original.total_cost_of_goods}
+            </Typography>
+            </div>
+        ),
+    },
+    {
+        Header: "Number of Cartons",
+        accessor: "number_of_cartons",
+        footer: "Number of Cartons",
+        Cell: ({ row: { original } }) => (
+            <div className="flex-grow p-2">
+            <Typography
+                variant="body2"
+                fontWeight={500}
+                color="natural.800"
+            >
+                {original.number_of_cartons}
+            </Typography>
+            </div>
+        ),
+    },
+    {
+        Header: "Chargeable Weight",
+        accessor: "chargeable_weight",
+        footer: "Chargeable Weight",
+        Cell: ({ row: { original } }) => (
+            <div className="flex-grow p-2">
+            <Typography
+                variant="body2"
+                fontWeight={400}
+                color="natural.500"
+            >
+                {original.chargeable_weight}
+            </Typography>
+            </div>
+        ),
+    },
+    {
+        Header: "Delivery Location",
+        accessor: "delivery_location",
+        footer: "Delivery Location",
+        Cell: ({ row: { original } }) => (
+            <div className="flex-grow p-2">
+                <Typography
+                    variant="body2"
+                    fontWeight={400}
+                    color="natural.500"
+            >
+                {original.delivery_location}
+            </Typography>
+            </div>
+        ),
+    },
+
+]
+
+
+
+export function Cargo({ productName, packages,shipmentData, asinNumber }) {
     return (
         <div className="border-2 border-natural-100 border-solid p-4 rounded-xl m-4 flex-col gap-4 flex">
             <div className="flex-col gap-2">
@@ -211,7 +320,7 @@ export function Cargo({ productName, packages, asinNumber }) {
                     </div>
                 </div>
 
-                <table className="table">
+                {/* <table className="table-auto">
                     <thead>
                         <tr className="bg-natural-25">
                             <th className="flex-grow  p-2 ">
@@ -341,7 +450,18 @@ export function Cargo({ productName, packages, asinNumber }) {
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </table> */}
+
+                <DataTableCustom
+                data={shipmentData?.packages}
+                columns={columns}
+                paginationFooter={false}
+                searchBar={false}
+                pageNumber={false}
+                paginationData={shipmentData?.paginationInformationShipment}
+                date={false}
+            />
+
             </div>
         </div>
     );

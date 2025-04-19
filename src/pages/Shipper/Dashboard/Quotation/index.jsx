@@ -66,6 +66,12 @@ export default function Quotation() {
         }
         return { shipmentListData: [], paginationInformationShipment: {} };
     }, [dataUpdatedAt]);
+
+
+    useEffect(() => {
+        console.log('this is the shipmentListData')
+        console.log(shipmentListData)
+    }, [shipmentListData])
     
     const navigate = useNavigate();
     /** @type import('@tanstack/react-table').ColumnDef<any> */ //for autosuggestions
@@ -147,7 +153,7 @@ export default function Quotation() {
                 <Button onClick={() => {
                             const clickedShipmentId = original.id;
                             navigate(`/shipper/bid/${clickedShipmentId}`);
-                }} className="block md:hidden w-full text-blue-600 bg-white hover:bg-gray-50 h-9" variant="outline">
+                }} className="block md:hidden w-full text-blue-600  " variant="text">
                     Bid
                 </Button>
                 </>
