@@ -29,6 +29,7 @@ import CancelledOrders from "pages/Seller/Booking/CancelledOrders";
 import PendingOrders from "pages/Seller/Booking/PendingOrders";
 import SampleShipment from "pages/Seller/Booking/SampleShipment";
 import Annoucement from "pages/Seller/Announcement";
+import AnnouncementShipperDetail from "pages/Shipper/Dashboard/Announcement/AnnouncementDetail";
 import SampleShipmentTable from "pages/Shipper/Dashboard/SampleShipments";
 import NewDashboard from "pages/Shipper/Dashboard/New";
 
@@ -152,6 +153,12 @@ export const routes = {
         title: "Shipper Announcement",
         isPublic: false,
         element: AnnouncementShipper,
+    },
+    ANNOUNCEMENT_SHIPPER_DETAIL: {
+        pathname: "/shipper/dashboard/announcement/:id",
+        title: "Shipper Announcement Detail",
+        isPublic: false,
+        element: AnnouncementShipperDetail,
     },
     DEFAULT: {
         pathname: "/dashboard/orders/default",

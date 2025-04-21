@@ -16,13 +16,16 @@ function AnnouncementDataList({
    
 
   return (
-    <Container>
-        <Box sx={{ border: '1px solid #ccc', borderRadius: '8px', padding: 2, marginTop: 2 }}>
-            {announcementDataList?.map(({ message, sender, timestamp }) =>{
+    <>
+            <div  className='space-y-6'>
+            {announcementDataList?.map(({ message, sender, timestamp, id }) =>{
                 return(
-                    <AnnouncementCard key={timestamp} text={message} fullName={`${sender.first_name} ${sender.last_name}`} time={formatDateDivider(timestamp)}/>
+                    
+                    <AnnouncementCard key={timestamp} text={message} id={id} fullName={`${sender.first_name} ${sender.last_name}`} time={formatDateDivider(timestamp)}/>
+                   
                 )
             })}
+             </div>
             {paginationInformation && announcementDataList?.length > 0 && <div
                     className={`flex justify-start gap-2 pt-2.5 px-6 ml-4 overflow-hidden border-solid border-natural-200 rounded-xl`}
                 >
@@ -76,8 +79,8 @@ function AnnouncementDataList({
                          </IconButton>
                      </div>
             </div>}
-        </Box>
-  </Container>
+
+        </>
     
   )
 }

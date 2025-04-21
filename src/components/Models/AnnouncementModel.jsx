@@ -1,8 +1,8 @@
 import Close from "@mui/icons-material/Close";
-import { Avatar, Button, useTheme } from "@mui/material";
+import { Avatar, useTheme } from "@mui/material";
 import { useState } from "react";
 import { formatName } from "utils";
-
+import { Button } from "components/ui/button";
 export default function AnnouncementModel({
     openModel,
     SetOpenModel,
@@ -85,7 +85,7 @@ export default function AnnouncementModel({
                                     />
                                     <div className="flex gap-2">
                                         <Button
-                                            variant="outlined"
+                                           variant="outline"
                                             className="flex-1"
                                             onClick={() => {
                                                 SetOpenModel(false);

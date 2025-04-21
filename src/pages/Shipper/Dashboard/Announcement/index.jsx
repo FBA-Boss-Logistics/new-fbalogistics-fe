@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
 import Loader from "components/Loader";
 import AnnouncementModel from "components/Models/AnnouncementModel";
@@ -9,6 +8,12 @@ import {
 } from "queries/Shipper";
 import { useEffect, useMemo, useState } from "react";
 import AnnouncementDataList from "./AnnouncementDataList";
+import { ChevronRight, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
+import { routes } from "routes/RouteConstants";
+import { Card, CardContent, CardFooter, CardHeader } from "components/ui/card";
+import { Button } from "components/ui/button";
+
 
 export default function Index() {
     const [announcementListPagination, setAnnouncementListPagination] =
@@ -52,8 +57,37 @@ export default function Index() {
         setAnnouncementList(announcementDataList?.data);
     }, [announcementDataList]);
 
+    
     return (
         <>
+
+            <div className="mb-8">
+                <div className="flex items-center justify-between">
+                    <div>
+                    <h1 className="text-2xl font-bold text-gray-900">Announcements</h1>
+                    <div className="mt-1 flex items-center text-sm text-gray-500">
+                        <Link href="/dashboard" className="hover:text-blue-600">
+                        Dashboard
+                        </Link>
+                        <ChevronRight className="mx-2 h-4 w-4" />
+                        <span>Announcements</span>
+                    </div>
+                    </div>
+                    {announcementList?.length > 0 && (
+
+                    <Button
+                    onClick={() => {
+                        setOpen(true);
+                        setIsForm(true);
+                    }}
+                    className="">
+                    <Plus className="md:mr-2 " /> 
+                    <span className="hidden md:inline"> Create new announcement</span>
+                    </Button>
+                    )}
+                </div>
+            </div>
+            
             {announcementDataList?.data?.length === 0 && !isLoading && (
                 <div className="h-[calc(100vh_-64px)] w-full overflow-y-scroll flex items-center justify-center">
                     <div className="flex flex-col gap-6 items-center">
@@ -81,9 +115,9 @@ export default function Index() {
                     }
                 />
             )}
-            <div className="relative w-full h-[calc(100vh_-_110.8px)]">
+            <div className="relative w-full h-[calc(100vh_-_210.8px)] overflow-y-scroll">
                 {isLoading && <Loader />}
-                {announcementList?.length > 0 && (
+                {/* {announcementList?.length > 0 && (
                     <div className="absolute top-0 right-0 m-10">
                         <Button
                             onClick={() => {
@@ -94,10 +128,10 @@ export default function Index() {
                             Create New Announcement
                         </Button>
                     </div>
-                )}
+                )} */}
 
                 {announcementList?.length > 0 && (
-                    <div className="h-full overflow-y-scroll pt-1">
+                    // <div className="h-[calc(100vh_-_110.8px)] overflow-y-scroll pt-1">
                         <AnnouncementDataList
                             isLoading={isLoading}
                             announcementDataList={announcementList}
@@ -109,9 +143,10 @@ export default function Index() {
                                 announcementListPagination
                             }
                         />
-                    </div>
+                    // </div>
                 )}
             </div>
+        
         </>
     );
 }

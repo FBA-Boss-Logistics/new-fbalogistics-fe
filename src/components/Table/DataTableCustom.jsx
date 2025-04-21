@@ -378,8 +378,7 @@ export default function DataTableCustom({
                             return(
                             <>
                                 {row.cells.filter((cell)=> cell.render("Header") != "Action").map((cell)=>{
-                                    console.log('this is cell data')
-                                    console.log(cell.render("Header"))
+
                                     return(
                                     <>
                                         <div key={cell.id} {...cell.getCellProps()} className="px-4 py-2.5 flex justify-between items-center flex-wrap">
