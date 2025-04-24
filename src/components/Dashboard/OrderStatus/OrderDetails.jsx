@@ -30,14 +30,16 @@ export default function OrderDetails({
         {
             label: "Tracking Link",
             value: (
+                <div className="flex items-center gap-2">
                 <a
                     href={OrderStatusData?.tracking_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-natural-700"
+                    className="text-natural-700 text-sm"
                 >
-                    {OrderStatusData?.tracking_link}
+                    {OrderStatusData?.tracking_link ?? "N/A"}
                 </a>
+                </div>
             ),
         },
         { label: "Product", value: OrderStatusData?.product_name },

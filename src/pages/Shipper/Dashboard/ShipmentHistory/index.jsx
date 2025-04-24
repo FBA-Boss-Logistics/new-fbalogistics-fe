@@ -65,14 +65,16 @@ export default function ShipmentHistory() {
             Header: "Tracking Link",
             accessor: "alibaba_number",
             Cell: ({ row: { original } }) => (
-                <a
+                <div className="flex items-center gap-2">
+                    <a
                     href={original.tracking_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-natural-500 "
+                    className="text-natural-500 text-sm"
                 >
-                    {original.tracking_link}
+                    {original.tracking_link ?? "N/A"}
                 </a>
+                </div>
             ),
         },
         {

@@ -73,6 +73,15 @@ export default function Orders() {
             Header: "Shipment ID",
             accessor: "id",
             width: 10,
+            Cell: ({ row: { original } }) => (
+                <Typography
+                    variant="subtitle1"
+                    color="natural.500"
+                    fontWeight={400}
+                >
+                    {original.id}
+                </Typography>
+            ),
         },
         {
             Header: "Customer Name",
@@ -95,29 +104,38 @@ export default function Orders() {
                     href={original.tracking_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-natural-500"
+                    className="text-natural-500 text-sm"
                 >
-                    {original.tracking_link}
+                    {original.tracking_link ?? "N/A"}
                 </a>
             ),
         },
         {
             Header: "Final Amount",
             accessor: "final_amount",
-            Cell: ({ row: { original } }) => "$" + original.final_amount,
+            Cell: ({ row: { original } }) => (
+                <Typography
+                    variant="subtitle1"
+                    color="natural.500"
+                    fontWeight={400}
+                >
+                    ${original.final_amount}
+                </Typography>
+            ),
         },
         {
             Header: "Info",
             Cell: ({ row: { original } }) => (
                 <Button
                     variant="text"
-                    className="w-[75px] h-[32px] px-[12px] py-[6px] "
+                    className=" "
                     onClick={() => handleOpenModal(original)}
                 >
                     <Typography
-                        fontWeight={500}
-                        fontSize={12}
+                        fontWeight={400}
+                        variant="subtitle1"
                         color="natural.900"
+                        className="text-sm hover:underline"
                     >
                         Add info
                     </Typography>
@@ -128,7 +146,8 @@ export default function Orders() {
             Header: "Action",
             Cell: ({ row: { original } }) => {
                 return (
-                    <div className="flex gap-2 items-center">
+                    <>
+                    <div className=" gap-2 items-center hidden md:flex">
                         <RemoveRedEyeOutlined
                             fontSize="small"
                             color="secondary.100"
@@ -142,6 +161,40 @@ export default function Orders() {
                             />
                         )}
                     </div>
+                    <div className="flex gap-2 items-center md:hidden">
+                        <Typography
+                            variant="subtitle1"
+                            color="natural.500"
+                            fontWeight={400}
+                            className="cursor-pointer"
+                            onClick={() => handleClickRoute(original)}
+                        >
+                            View
+                        </Typography>
+                    </div>
+                    </>
+                );
+            },
+        },
+        {
+            Header: "Action2",
+            Cell: ({ row: { original } }) => {
+                return (
+                    <>
+                    <div className="flex gap-2 items-center md:hidden">
+                         {original.status === "Quotation Accepted" && (
+                            <Typography
+                                variant="subtitle1"
+                                color="natural.500"
+                                fontWeight={400}
+                                className="cursor-pointer"
+                                onClick={() => handleClickRoute(original)}
+                            >
+                                Chat
+                            </Typography>
+                        )}
+                    </div>
+                    </>
                 );
             },
         },

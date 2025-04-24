@@ -332,7 +332,7 @@ export default function Contact() {
                                 id="QuotationForm"
                                 onSubmit={handleSubmit(submitQuotationForm)}
                             >
-                                <div className="flex flex-col md:flex-row items-center align-bottom gap-2 w-full  ">
+                                <div className="flex flex-col md:flex-row items-center align-bottom gap-2 w-full mt-4  ">
                                     <div className=" flex-col gap-2.5 flex grow w-full  rounded-lg">
                                         <Typography
                                             color="natural.900"
