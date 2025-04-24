@@ -36,17 +36,15 @@ const AnnouncementCard = ({ time, fullName, text, id }) => {
             <h2 className="text-lg font-semibold text-gray-900">{fullName ?? "No Name"}</h2>
 
         </CardHeader>
-        <CardContent className="pb-2 pt-4">
+        <CardContent className="pb-4 pt-4">
             <p className="text-sm text-gray-600 line-clamp-1">{text}</p>
             <p className="mt-2 text-xs text-gray-500">{time}</p>
-        </CardContent>
-        <CardFooter className="border-t bg-gray-50 px-4 py-3">
-            <Button  size="sm" className="bg-primary-900 text-white " onClick={() => {
+            <Button  size="sm" className="mt-4" onClick={() => {
               navigate(`/shipper/dashboard/announcement/${id}`);
             }}>
             Read more
             </Button>
-        </CardFooter>
+        </CardContent>
       </Card>
   );
 }

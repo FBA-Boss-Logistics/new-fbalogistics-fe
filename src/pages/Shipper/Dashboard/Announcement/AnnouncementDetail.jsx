@@ -1,19 +1,39 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
-
+import { useNavigate, useParams } from 'react-router-dom';
+import { FetchAnnouncementDetailDataApi } from 'queries/Shipper';
+import { useState } from 'react';
+import { routes } from 'routes/RouteConstants';
+import { formatName } from "utils";
+import { Avatar, Badge, useTheme } from '@mui/material';
 export default function AnnouncementShipperDetail() {
+  const { id } = useParams();
+  const { data: announcementData, isLoading, error } = FetchAnnouncementDetailDataApi(id);
+  const [announcementDetailData, setAnnouncementDetailData] = useState(null);
+  useEffect(() => {
+    if (announcementData) {
+      console.log('announcementData')
+      console.log(announcementData);
+      setAnnouncementDetailData(announcementData?.data);
+    }
+  }, [announcementData]);
+  const navigate = useNavigate();
+  const theme = useTheme();
   return (
+
     <>
           <div className="container mx-auto">
       <div className="mb-8">
         <Button
-          variant="outline"
           size="sm"
-          className="flex items-center gap-2 bg-blue-600 text-white hover:bg-blue-700 hover:text-white"
+          className="flex items-center gap-2 text-white "
+          onClick={() => {
+            navigate(routes.ANNOUNCEMENT_SHIPPER.pathname);
+          }}
         >
           <ArrowLeft className="h-4 w-4" />
           Back to announcements
@@ -24,43 +44,19 @@ export default function AnnouncementShipperDetail() {
         <div className="md:col-span-2">
           <article className="space-y-6">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-              Was ist SEO? Google Suchmaschinenoptimierung in 2022
+              {announcementDetailData?.sender?.first_name} {announcementDetailData?.sender?.last_name}
             </h1>
 
             <div className="flex items-center text-sm text-yellow-500">
-              <span>Nov 15, 2024</span>
-              <span className="mx-2">•</span>
-              <span>2 min read</span>
+              <span>{announcementDetailData?.timestamp}</span>
+              {/* <span className="mx-2">•</span>
+              <span>{announcementDetailData?.created_at}</span> */}
             </div>
 
             <div className="prose max-w-none">
-              <p>
-                Dear FBA Boss Academy students, Hope you are all doing well. Here is the latest news regarding the
-                situation of Amazon warehouse over capacity in the USA: The following warehouses have had a serious
-                explosion of overcapacity, there will be delays in getting delivery appointments : ABQ2 PSC2 MIT2 GEU3
-                IUSP XLX7 ABE8 AVP1 CLT2 ORF2
-              </p>
+             
 
-              <p>
-                The impact of overcapacity, rejection on appointments, cancellation on appointments, and limited release
-                of appointments are increasing at the following warehouses: SBD1 LGB6 OVR2 GYR3 MDW2 CLT2 ABE8 AVP1 TEB9
-                FWA4 WBW2 LBE1 BDL6 RDU4 HIA1 PHL5 TTN2 HIA1 The current storage situation of ONT8 LGB8 and other
-                warehouses on releasing appointments is also not ideal With the arrival of the peak stocking period for
-                the big promotion, Amazon warehouses have also issued notices about slow stocking operations in
-                November.
-              </p>
-
-              <p>
-                It is foreseeable that Amazon warehouses will likely experience inventory shortages one after another.
-                During this period, our company will continue to rush making appointments, buying appointments, and
-                arrange for early delivery of goods. We also suggest that hot selling products that are about to be
-                shipped can be divided into several channels and delivery methods, such as arranging some fast ships,
-                some slow ships, some deliver by ups/FedEx, some deliver by truck, etc., to avoid stockouts! PS: If
-                there is an imminent shortage of goods, please contact us in advance to confirm the corresponding
-                solution for the order. Please note and arrange your shipments accordingly. Any needs just contact us.
-              </p>
-
-              <p>Angel</p>
+              <p>{announcementDetailData?.message}</p>
             </div>
           </article>
         </div>
@@ -68,10 +64,38 @@ export default function AnnouncementShipperDetail() {
         <div className="md:col-span-1">
           <Card className="border-0 shadow-none">
             <CardContent className="p-0 flex flex-col items-center text-center">
-              {/* <Avatar className="h-24 w-24 mb-4">
-                <AvatarImage src="/placeholder.svg?height=96&width=96" alt="Angel Zhuang" />
-                <AvatarFallback>AZ</AvatarFallback>
-              </Avatar> */}
+            <Badge
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    color="success"
+                    badgeContent=""
+                    variant="dot"
+                    
+                    >
+                <Avatar
+                    sx={{
+                        width: 34,
+                        height: 34,
+                        border: 1,
+                        bgcolor: theme.palette.primary[100],
+                        color: theme.palette.primary[800],
+                        borderColor: theme.palette.primary[500],
+                        fontWeight: 500,
+                    }}
+                    alt="Avatar"
+                    className={
+                        location.pathname ===
+                        ("/quotes" || "/booking")
+                            ? "border border-solid w-11 h-11"
+                            : ""
+                    }
+                >
+                    {!isLoading ? formatName(announcementDetailData?.sender?.first_name + " " + announcementDetailData?.sender?.last_name) : null}
+                
+                </Avatar>
+              </Badge>
               <h3 className="text-lg font-medium">Angel Zhuang</h3>
               <p className="text-sm text-gray-500 mt-1">
                 Contributing Writer

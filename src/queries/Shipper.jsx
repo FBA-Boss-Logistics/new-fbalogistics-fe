@@ -310,3 +310,27 @@ export const fetchAnnouncementDetailApi = (payload) => {
         }
     );
 };
+
+const fetchAnnouncementDetail = (id) => {
+    const method = "GET";
+    const url = `/announcement/${id}/`;
+    return axios({
+        method,
+        url,
+    });
+};
+
+export const FetchAnnouncementDetailDataApi = (id) => {
+    return useQuery(
+        [`FETCH_ANNOUNCEMENT_DETAIL_DATA_${id}`],
+        () => fetchAnnouncementDetail(id),
+        {
+            enabled: Boolean(localStorage.getItem("AUTH_TOKEN")),
+            onSuccess: () => null,
+            onError: (error) => {
+                console.log("Error occurred while fetching data", error);
+            },
+        }
+    );
+};
+

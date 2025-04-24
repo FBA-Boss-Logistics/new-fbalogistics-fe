@@ -14,13 +14,13 @@ import BorderButton from "components/BorderButton";
 import { useLocation, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { axios } from "service";
-
+import { Card } from "components/ui/card";
 
 export function Compliance({productDescription, shipmentGoods}) {
     return (
-        <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4">
-            <div className="flex-col  gap-2">
-                <div className=" bg-natural-100 rounded-full border-4 border-natural-100 justify-center  gap-2 inline-flex">
+        <Card className="p-4 space-y-4">
+            <div className="flex items-center flex-row  gap-2">
+                <div className="bg-natural-200 rounded-full w-[30px] ">
                     <img src={ComplianceIcon} width={40} alt="compliance" />
                 </div>
 
@@ -32,41 +32,41 @@ export function Compliance({productDescription, shipmentGoods}) {
                 <div className="bg-natural-25  p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
                     <Typography
                         color="natural.800"
-                        variant="body2"
+                        variant="body3"
                         fontWeight={500}
                     >
                         Product Description
                     </Typography>
                     <Typography
                         color="natural.500"
-                        variant="body2"
+                        variant="body3"
                         fontWeight={500}
                     >
                         {productDescription}
                     </Typography>
                 </div>
-                <div className="bg-natural-25 lg:w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
+                <div className="bg-natural-25 w-fit lg:w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
                     <Typography
                         color="natural.800"
-                        variant="body2"
+                        variant="body3"
                         fontWeight={500}
                     >
                         Shipment Contain Any of The Following Goods
                     </Typography>
 
-                    <div className="flex gap-2 flex-wrap ">
+                    <div className="flex gap-2 flex-wrap w-full">
                         
-                       {shipmentGoods.map(goods => <Chip
-                            variant="outlined"
-                            avatar={<img src={TICK} alt="Avatar" />}
-                            label={goods}
-                            className="text-success-500 text-sm font-normal leading-tight bg-natural-25 border-success-500"
-                        />)}
+                       {shipmentGoods.map(goods => <div
+                        key={goods}
+                        className="text-success-500 text-sm font-normal leading-tight bg-natural-25 border-success-500 underline"
+                        >
+                            {goods}
+                        </div>)}
                     </div>
 
                    
                 </div>
             </div>
-        </div>
+        </Card>
     );
 }

@@ -158,6 +158,7 @@
 import { Chip, Typography } from "@mui/material";
 import Truck from "assets/svg/truck.svg";
 import DataTableCustom from "components/Table/DataTableCustom";
+import { Card } from "components/ui/card";
 import { Package } from "lucide-react";
 
 const columns = [
@@ -166,18 +167,18 @@ const columns = [
         accessor: "carton_dimensions_length",
         footer: "Carton Dimensions (CM)",
         Cell: ({ row: { original } }) => (
-           <div className="flex gap-2">
+           <div className="flex gap-4 py-4  ">
                 <Chip
                     label={`L - ${original.carton_dimensions_length}`}
-                    className="bg-natural-700 text-primary-100"
+                    className="bg-natural-200 text-natural-400"
                 />
                 <Chip
                     label={`W - ${original.carton_dimensions_width}`}
-                    className="bg-natural-700 text-primary-100"
+                    className="bg-natural-200 text-natural-400"
                 />
                 <Chip
                     label={`H - ${original.carton_dimensions_height}`}
-                    className="bg-natural-700 text-primary-100"
+                    className="bg-natural-200 text-natural-400"
                 />
            </div>
         ),
@@ -269,19 +270,17 @@ const columns = [
 
 export function Cargo({ productName, packages,shipmentData, asinNumber }) {
     return (
-        <div className="border-2 border-natural-100 border-solid p-4 rounded-xl m-4 flex-col gap-4 flex">
+        <Card className="p-4 space-y-4">
             <div className="flex-col gap-2">
-                <div className="flex justify-between">
-                    <div className="w-8 h-8 p-1 bg-natural-100 rounded-full border-4 border-natural-100 justify-center gap-2 inline-flex">
-                        <div className="bg-natural-200 rounded-full">
+                <div className="flex items-center flex-row gap-2">
+                        <div className="bg-natural-200 rounded-full w-[30px]">
                             <img src={Truck} alt="truck" />
                         </div>
-                    </div>
-                </div>
-
                 <Typography color="natural.900" fontSize={18} fontWeight={500}>
                     Cargo
                 </Typography>
+                </div>
+
             </div>
             <div className="flex flex-col gap-2">
                 <div className="flex gap-4">
@@ -463,6 +462,6 @@ export function Cargo({ productName, packages,shipmentData, asinNumber }) {
             />
 
             </div>
-        </div>
+        </Card>
     );
 }

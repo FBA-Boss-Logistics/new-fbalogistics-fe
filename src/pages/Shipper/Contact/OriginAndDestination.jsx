@@ -18,14 +18,13 @@ export function OriginAndDestination({
     const [showMore, setShowMore] = useState(false);
 
     return (
-        <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4  flex-col gap-4 flex">
-            <div className="flex-col gap-2">
-                <div className="w-8 h-8 p-1 bg-natural-100 rounded-full border-4 border-natural-100 justify-center  gap-2 inline-flex">
+        <div>
+            <div className="flex items-center flex-row gap-2">
                     <div className="bg-natural-200 rounded-full">
                         <img src={Location} alt="location" />
                     </div>
-                </div>
-                <Typography fontSize={18} fontWeight={500} color="natural.900">
+              
+                <Typography fontSize={18} fontWeight={600} variant="body2" color="natural.900">
                     Origin and Destination
                 </Typography>
             </div>

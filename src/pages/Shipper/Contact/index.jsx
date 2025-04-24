@@ -97,7 +97,7 @@ export default function Contact() {
         data: shipmentData,
         dataUpdatedAt,
         isLoading,
-        error,
+        error, 
     } = FetchAllShipmentOrderDetailApi(id);
 
     
@@ -142,13 +142,19 @@ export default function Contact() {
                     <Loader />{" "}
                 </div>
             ) : (
-                <Card className="p-4">
-                        <div className="flex justify-between ml-4 mr-4">
+                <div className="space-y-4">
+                     <Card className="p-4 space-y-4">
+
+                        <div className="">
                             <div>
-                                <Chip
+                                {/* <Chip
                                     label={`Freight Booking Reference Number ${shipmentData?.data?.freight_booking_reference_number}`}
                                     className="bg-primary-200"
-                                />
+                                /> */}
+                                <p>
+                                Freight Booking Reference Number:
+                                 <span className="text-yellow-500"> {shipmentData?.data?.freight_booking_reference_number}</span>
+                                </p>
                             </div>
                             <div className="flex gap-4">
                                 {srcQueryParam === "phone" &&
@@ -167,7 +173,7 @@ export default function Contact() {
                                             Chat
                                         </div>
                                     )}
-                                <div className="flex items-center gap-2">
+                                {/* <div className="flex items-center gap-2">
                                     <Typography
                                         textAlign={"center"}
                                         variant="body1"
@@ -186,7 +192,7 @@ export default function Contact() {
                                                 ?.shipment_ready_date
                                         )}
                                     </Typography>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         {winBidAccepted && (
@@ -262,8 +268,9 @@ export default function Contact() {
                                 </div>
                             </div>
                         )}
-                        <div className="flex flex-col">
-                            <div>
+                                                                <div className="border-t border-zinc-100"></div>    
+
+                            <div >
                                 <OriginAndDestination
                                     supplierName={
                                         shipmentData?.data
@@ -279,6 +286,7 @@ export default function Contact() {
                                     supplierPhone={supplierPhone}
                                 />
                             </div>
+                    </Card>
 
                             <div>
                                 <Cargo
@@ -290,7 +298,6 @@ export default function Contact() {
                                     asinNumber={asinNumber}
                                 />
                             </div>
-                        </div>
                         <Compliance
                             productDescription={productDescription}
                             shipmentGoods={shipmentGoods}
@@ -307,13 +314,11 @@ export default function Contact() {
                                 />
                             </div>
                         )}
-                        <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4 flex-col gap-4 flex">
-                            <div className="flex-col gap-2">
-                                <div className="w-8 h-8 p-1 bg-natural-100 rounded-full border-4 border-natural-100 justify-center  gap-2 inline-flex">
-                                    <div className="bg-natural-200 rounded-full">
+                        <Card className="p-4">
+                            <div className="flex items-center flex-row gap-2">
+                                <div className="w-[30px] h-[30px]">
                                         <img src={Quotation} alt="quotation" />
                                     </div>
-                                </div>
 
                                 <Typography
                                     color="natural.900"
@@ -327,8 +332,8 @@ export default function Contact() {
                                 id="QuotationForm"
                                 onSubmit={handleSubmit(submitQuotationForm)}
                             >
-                                <div className="flex items-center align-bottom gap-4 justify-between ">
-                                    <div className="flex-col gap-2.5 flex">
+                                <div className="flex flex-col md:flex-row items-center align-bottom gap-2 w-full  ">
+                                    <div className=" flex-col gap-2.5 flex grow w-full  rounded-lg">
                                         <Typography
                                             color="natural.900"
                                             variant="body1"
@@ -359,7 +364,7 @@ export default function Contact() {
                                             }
                                         />
                                     </div>
-                                    <div className="flex-col gap-2.5 flex">
+                                    <div className="flex-col gap-2.5 flex  w-full   rounded-lg">
                                         <Typography
                                             color="natural.900"
                                             variant="body1"
@@ -388,7 +393,7 @@ export default function Contact() {
                                             className=" bg-white rounded-lg shadow border border-natural-200 justify-start items-center gap-3 inline-flex"
                                         />
                                     </div>
-                                    <div className="flex-col gap-2.5 flex">
+                                    <div className="flex-col gap-2.5 flex grow w-full  rounded-lg">
                                         <Typography
                                             color="natural.900"
                                             variant="body1"
@@ -420,13 +425,14 @@ export default function Contact() {
                                         />
                                     </div>
 
+                                </div>
                                     {isEmptyObject(quotation) ? (
-                                        <div className="mt-8 min-w-[200px]">
+                                        <div className="mt-8  items-end flex justify-end">
                                             <BorderButton
                                                 form="QuotationForm"
                                                 type="submit"
                                                 size="small"
-                                                fullWidth
+                                                fullWidth={false}
                                                 variant="contained-outlined"
                                             >
                                                 Submit
@@ -435,10 +441,10 @@ export default function Contact() {
                                     ) : (
                                         <></>
                                     )}
-                                </div>
                             </form>
-                        </div>
-                </Card>
+                        </Card>
+                {/* </Card> */}
+                </div>
             )}
         </>
     );
