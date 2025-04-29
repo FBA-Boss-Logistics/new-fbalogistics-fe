@@ -11,7 +11,14 @@ import { FetchUserDetailApi } from "queries/Auth";
 import { formatDate, formatName } from "utils";
 import { FetchSellerRecentOrderDetailApi } from "queries/Seller";
 import { format } from "date-fns";
-
+import NewDashboard from "./New";
+import { FetchSellerDashboardAnalyticsApi } from "queries/Seller";
+import ShipmentStat from 'components/New/ShipmentStat'
+import ShipmentCard from 'components/New/ShipmentCard'
+import CreateSampleShipment from "../Booking/SampleShipment/New/CreateSampleShipment";
+import { routes } from "routes/RouteConstants";
+import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 export default function SellerDashboard() {
     const [
         sellerHomeRecentOrderPagination,
@@ -46,6 +53,16 @@ export default function SellerDashboard() {
             paginationInformation: {},
         };
     }, [dataUpdatedAt]);
+
+    const [createSampleShipment, setCreateSampleShipment] = useState(false);
+
+    const createShipment = () => {
+        setCreateSampleShipment(true);
+    };
+
+    const handleCreateSampleShipment = () => {
+        setCreateSampleShipment(false);
+    };
 
     const theme = useTheme();
     const navigate = useNavigate();
@@ -125,10 +142,134 @@ export default function SellerDashboard() {
             ),
         },
     ];
+    const {data:sellerDashboardAnalytics} = FetchSellerDashboardAnalyticsApi()
+    const analytics = sellerDashboardAnalytics?.data
+
+    // useEffect(() => {
+    //     console.log("analytics", analytics)
+    //     console.log("sellerDashboardAnalytics", sellerDashboardAnalytics)
+    // }, [analytics])
 
     return (
-        <div>
-            <div className="flex justify-between items-start border-2  border-natural-200 border-solid p-4 rounded-xl m-4">
+        <>
+            {createSampleShipment && (
+                console.log("createSampleShipment", createSampleShipment),
+                <CreateSampleShipment
+                    isOpen={createSampleShipment}
+                    onClose={handleCreateSampleShipment}
+                    title="Create Sample Shipment"
+                    description="Create a sample shipment to test the shipment process."
+                >
+                         {/* Content */}
+                    <div className="p-6">
+                    <div className="space-y-4">
+                        <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                            Nama
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                        />
+                        </div>
+                        <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                        />
+                        </div>
+                    </div>
+                    </div>
+
+                    {/* Footer */}
+                    <div className="p-6 border-t flex justify-end space-x-3">
+                    <button
+                        onClick={() => onClose()}
+                        className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                    >
+                        Batal
+                    </button>
+                    <button className="px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
+                        Simpan perubahan
+                    </button>
+                    </div>
+                </CreateSampleShipment>
+            )}
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <ShipmentStat
+              title="Active Shipments"
+              count={analytics?.active_shipments || 0}
+              icon="active"
+              color="bg-orange-100"
+              textColor="text-orange-500"
+            />
+            <ShipmentStat
+              title="Sample Shipments"
+              count={analytics?.sample_shipments || 0}
+              icon="sample"
+              color="bg-amber-100"
+              textColor="text-amber-500"
+            />
+            <ShipmentStat
+              title="Complete Shipments"
+              count={analytics?.completed_shipments || 0}
+              icon="complete"
+              color="bg-rose-100"
+              textColor="text-rose-500"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <ShipmentCard
+              title="New Shipment"
+              description="Ready to get started with a new shipment? Click the button below to request a quote."
+              buttonText="New shipment"
+              imageType="new"
+              onClick={() => navigate(routes.QUOTES.pathname)}
+            />
+            <ShipmentCard
+              title="Sample Shipment"
+              description="Ready to get started with a new sample shipment? Click the button below to begin."
+              buttonText="Sample shipment"
+              imageType="sample"
+              onClick={createShipment}
+            />
+          </div>
+
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-medium">Announcements</h2>
+              <Button className="hidden md:block" onClick={() => navigate(routes.ANNOUNCEMENT.pathname)} >
+                View all announcements
+              </Button>
+              </div>
+          
+
+          <div className="bg-white rounded-lg p-6 border border-gray-200">
+            <h2 className="text-lg font-medium mb-4">Shipping Agent</h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Other FBA Boss Academy students, hope you are all doing well. Here is the latest news regarding the
+              situation of Amazon warehouse over capacity in the USA. The following warehouses have had a serious
+              explosion of requirements. There will be delays in getting delivery appointments. ABOUT FCFS MG2 (BDL1)
+              MG2 is not accepting any new shipments. FCFS is not accepting any new shipments. The following warehouses
+              are having serious delays and appointments are increasing at the following warehouses: ABE1 LGB7 DFW6 DFW8
+              MDW2 CLT2 ABE3 AVP1 TEB3 PHL4 MEM2 LBL1 BCL5 BDL1 BFL1 PHL5 PHL7 BFL1. The current storage situation of
+              OVER CUBE and other warehouses on receiving appointments is also not ideal. With the arrival of the peak
+              season ahead for the big promotion, Amazon warehouses have also issued notices about their working
+              operations in November.
+            </p>
+            <div className="text-xs text-gray-500 mb-4">December 1, 2023</div>
+            <Button variant="outline" className="text-blue-700 border-blue-700">
+              Read more
+            </Button>
+          </div>
+            {/* <NewDashboard/> */}
+            {/* <div className="flex justify-between items-start border-2  border-natural-200 border-solid p-4 rounded-xl m-4">
                 <div className="flex justify-center gap-8 pl-8 pr-8 items-center">
                     <div>
                         <Avatar
@@ -197,12 +338,12 @@ export default function SellerDashboard() {
                             </Typography>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 {/* <div className="flex gap-2">
                     <Typography>Edit</Typography>
                     <img src={EDITICON} alt="edit"/>
                 </div> */}
-            </div>
+            {/* </div>
 
             <div className="m-4">
                 <DataTableCustom
@@ -218,7 +359,7 @@ export default function SellerDashboard() {
                     setSelectedDate={setSelectedSellerHomeRecentOrderDate}
                     selectedDate={selectedSellerHomeRecentOrderDate}
                 />
-            </div>
-        </div>
+            </div> */}
+        </>
     );
 }

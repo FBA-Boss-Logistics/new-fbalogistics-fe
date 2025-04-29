@@ -357,3 +357,22 @@ export const UpdateQuotationStatusApi = () => {
         },
     });
 };
+// dashboard analytics
+
+const FetchSellerDashboardAnalytics = () => {
+    const method = "GET";
+    return axios({
+        method,
+        url: "seller/seller-dashboard/",
+    });
+};
+
+export const FetchSellerDashboardAnalyticsApi = () => {
+    return useQuery(["FETCH_SELLER_DASHBOARD_ANALYTICS"], () => FetchSellerDashboardAnalytics(), {
+        enabled: Boolean(localStorage.getItem("AUTH_TOKEN")),
+        onSuccess: () => null,
+        onError: (error) => {
+            console.log("Error occurred while fetching data", error);
+        },
+    });
+};

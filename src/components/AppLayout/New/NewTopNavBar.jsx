@@ -16,7 +16,7 @@ import LogoFBA from 'assets/images/logo.png'
 import { useLogOutApiQuery } from 'queries/Auth'
 import { useNavigate } from 'react-router-dom'
 import ProfileIcon from '../ProfileIcon';
-const NewTopNavBar = () => {
+const NewTopNavBar = ({menu}) => {
   const navigate = useNavigate();
 
   const { mutate: logoutApi } = useLogOutApiQuery();
@@ -39,7 +39,7 @@ const NewTopNavBar = () => {
             </button>
           </SheetTrigger>
           <SheetContent side="left" className="p-0 w-72">
-            <NewSideNavBar />
+            <NewSideNavBar menu={menu} />
           </SheetContent>
         </Sheet>
 

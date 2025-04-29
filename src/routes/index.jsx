@@ -10,6 +10,17 @@ import MiniDrawer from "components/Layout";
 import { useIsMutating } from "@tanstack/react-query";
 import SellerTopNav from "pages/Seller/SellerTopNav";
 import NewDrawer from "components/Layout/NewDrawer";
+import LogoFBA from 'assets/images/logo.png'
+import DocumentIcon from 'assets/svg/Documents.svg'
+import FeedIcon from 'assets/svg/Feed.svg'
+import HistoryIcon from 'assets/svg/History.svg'
+import CheckIcon from 'assets/svg/Check.svg'
+import sellerDashboard from 'assets/svg/dashboardIcon.svg'
+import activeShipment from 'assets/svg/activeShipmentIcon.svg'
+import sampleIcon from 'assets/svg/sampleIcon.svg'
+import completedShipment from 'assets/svg/box-tick.svg'
+import cancelledShipment from 'assets/svg/box-remove.svg'
+
 
 // import AppContainer from 'Pages/AppContainer';
 
@@ -17,16 +28,81 @@ const ProtectedRoutes = () => {
     const location = useLocation();
     const isLoggedIn = getLocalStorageItem(localStorageKeys.AUTH_TOKEN);
     const userRole = getLocalStorageItem("USER_DETAILS");
+   
+
+    const sellerMenu=[
+        {
+            icon: sellerDashboard,
+            label: "Dashboard",
+            route: routes.SELLERDASHBOARD.pathname,
+        },
+        {
+            icon: activeShipment,
+            label: "Active Shipments",
+            route: routes.BOOKING.pathname,
+        },
+        {
+            icon: sampleIcon,
+            label: "Sample Shipment",
+            route: routes.SELLERPASTORDERBOOKING.pathname,
+        },
+        {
+            icon: completedShipment,
+            label: "Completed Shipments",
+            route: routes.SELLERPASTORDERBOOKING.pathname,
+        },
+        {
+            icon: cancelledShipment,
+            label: "Cancelled Shipments",
+            route: routes.SELLERCANCELLEDORDERBOOKING.pathname,
+        },
+    ]
+
+    const shipperMenu=[
+        {
+            icon: DocumentIcon,
+            label: "Pending Quotations",
+            route: routes.SHIPPERDASHBOARD.pathname,
+        },
+        {
+            icon: CheckIcon,
+            label: "Current Shipments",
+            route: routes.SHIPPERORDERS.pathname,
+        },
+        {
+            icon: CheckIcon,
+            label: "Completed Shipments",
+            route: routes.SHIPPERPASTORDERS.pathname,
+        },
+        {
+            icon: HistoryIcon,
+            label: "Shipments History",
+            route: routes.SHIPPERSHIPMENTHISTORY.pathname,
+        },
+        {
+            icon: HistoryIcon,
+            label: "Sample Shipment",
+            route: routes.SHIPPERSAMPLESHIPMENT.pathname,
+        },
+        {
+            icon: FeedIcon,
+            label: "Announcement",
+            route: routes.ANNOUNCEMENT_SHIPPER.pathname,
+        },
+    ]
     return isLoggedIn ? (
         userRole?.groups === "Seller" ? (
             <>
-                <div className="py-4 border border-natural-100 border-solid border-x-0 border-t-0">
+                {/* <div className="py-4 border border-natural-100 border-solid border-x-0 border-t-0">
                     <SellerTopNav />
                 </div>
-                <Outlet />
+                <Outlet /> */}
+                <NewDrawer menu={sellerMenu}> 
+                    <Outlet />
+                </NewDrawer>
             </>
         ) : (
-            <NewDrawer> 
+            <NewDrawer menu={shipperMenu}> 
                 <Outlet />
             </NewDrawer>
         )

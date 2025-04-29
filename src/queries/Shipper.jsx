@@ -253,7 +253,7 @@ export const useCreateQuotationQuery = () => {
 function patchStatusUpdate(id, data) {
     return axios({
         method: "PATCH",
-        url: "/status-update/" + id,
+        url: "/status-update/" + id+"/",
         data,
     });
 }

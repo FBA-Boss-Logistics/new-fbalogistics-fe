@@ -30,7 +30,7 @@ import DOT from "assets/svg/statusdot.svg";
 
 import { FetchUserDetailApi, useLogOutApiQuery } from "queries/Auth";
 
-const NewSideNavBar = () => {
+const NewSideNavBar = ({menu}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState(location?.pathname);
@@ -59,38 +59,7 @@ const NewSideNavBar = () => {
   };
 
   const buttonsData = useMemo(
-      () => [
-          {
-              icon: DocumentIcon,
-              label: "Pending Quotations",
-              route: routes.SHIPPERDASHBOARD.pathname,
-          },
-          {
-              icon: CheckIcon,
-              label: "Current Shipments",
-              route: routes.SHIPPERORDERS.pathname,
-          },
-          {
-              icon: CheckIcon,
-              label: "Completed Shipments",
-              route: routes.SHIPPERPASTORDERS.pathname,
-          },
-          {
-              icon: HistoryIcon,
-              label: "Shipments History",
-              route: routes.SHIPPERSHIPMENTHISTORY.pathname,
-          },
-          {
-              icon: HistoryIcon,
-              label: "Sample Shipment",
-              route: routes.SHIPPERSAMPLESHIPMENT.pathname,
-          },
-          {
-              icon: FeedIcon,
-              label: "Announcement",
-              route: routes.ANNOUNCEMENT_SHIPPER.pathname,
-          },
-      ],
+      () =>menu,
       [location]
   );
 

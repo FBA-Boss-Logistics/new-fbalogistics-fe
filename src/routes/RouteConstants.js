@@ -32,6 +32,7 @@ import Annoucement from "pages/Seller/Announcement";
 import AnnouncementShipperDetail from "pages/Shipper/Dashboard/Announcement/AnnouncementDetail";
 import SampleShipmentTable from "pages/Shipper/Dashboard/SampleShipments";
 import NewDashboard from "pages/Shipper/Dashboard/New";
+import SellerDashboard from '../pages/Seller/Dashboard/index';
 
 const RouteConstants = {
     HOME: "/",
@@ -171,6 +172,12 @@ export const routes = {
         title: "seller booking",
         isPublic: false,
         element: Booking,
+    },
+    SELLERDASHBOARD: {
+        pathname: "/seller/dashboard",
+        title: "seller dashboard",
+        isPublic: false,
+        element: SellerDashboard,
     },
     SELLERBOOKINGSTATUS: {
         pathname: "/seller/booking/status",

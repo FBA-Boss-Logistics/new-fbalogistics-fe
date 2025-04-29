@@ -25,7 +25,7 @@
         "@mui/material": "^5.13.7",
         "@mui/styles": "^5.13.2",
         "@popperjs/core": "^2.11.8",
-        "@radix-ui/react-dialog": "^1.1.7",
+        "@radix-ui/react-dialog": "^1.1.11",
         "@radix-ui/react-dropdown-menu": "^2.1.7",
         "@radix-ui/react-slot": "^1.2.0",
         "@tanstack/react-query": "^4.29.7",
@@ -60,6 +60,7 @@
         "react-use-websocket": "^4.8.1",
         "tailwind-merge": "^3.2.0",
         "tailwindcss-animate": "^1.0.7",
+        "vaul": "^1.1.2",
         "yup": "^1.2.0"
     },
     "devDependencies": {

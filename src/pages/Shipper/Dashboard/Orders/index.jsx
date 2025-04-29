@@ -161,16 +161,13 @@ export default function Orders() {
                             />
                         )}
                     </div>
-                    <div className="flex gap-2 items-center md:hidden">
-                        <Typography
-                            variant="subtitle1"
-                            color="natural.500"
-                            fontWeight={400}
-                            className="cursor-pointer"
-                            onClick={() => handleClickRoute(original)}
-                        >
-                            View
-                        </Typography>
+                    <div className="flex gap-2 items-center justify-center md:hidden w-full">
+                 
+                        <Button onClick={() => {
+                            handleClickRoute(original)
+                    }} className="block md:hidden w-full text-blue-600  " variant="text">
+                        More info
+                    </Button>
                     </div>
                     </>
                 );
@@ -181,17 +178,15 @@ export default function Orders() {
             Cell: ({ row: { original } }) => {
                 return (
                     <>
-                    <div className="flex gap-2 items-center md:hidden">
+                    <div className="flex gap-2 items-center justify-center md:hidden w-full">
                          {original.status === "Quotation Accepted" && (
-                            <Typography
-                                variant="subtitle1"
-                                color="natural.500"
-                                fontWeight={400}
-                                className="cursor-pointer"
+                            <Button
+                                variant="text"
+                                className="block md:hidden w-full text-blue-600 " 
                                 onClick={() => handleClickRoute(original)}
                             >
                                 Chat
-                            </Typography>
+                            </Button>
                         )}
                     </div>
                     </>

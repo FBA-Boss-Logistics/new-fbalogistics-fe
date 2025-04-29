@@ -51,7 +51,7 @@ const SignIn = () => {
         } else {
             loginQuery(payloadSeller, {
                 onSuccess: () => {
-                    navigate(routes.BOOKING.pathname);
+                    navigate(routes.SELLERDASHBOARD.pathname);
                 },
                 onError: (err) => {
                     HandleErrorResponse(err, setError);

@@ -2,27 +2,30 @@ import React from 'react'
 import ShipmentStat from 'components/New/ShipmentStat'
 import ShipmentCard from 'components/New/ShipmentCard'
 import { Button } from "@/components/ui/button"
+import { FetchSellerDashboardAnalyticsApi } from 'queries/Seller'
 const NewDashboard = () => {
+  const {data:sellerDashboardAnalytics} = FetchSellerDashboardAnalyticsApi()
+  const analytics = sellerDashboardAnalytics?.data
   return (
-    <div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <ShipmentStat
               title="Active Shipments"
-              count={7}
+              count={analytics?.active_shipments}
               icon="active"
               color="bg-orange-100"
               textColor="text-orange-500"
             />
             <ShipmentStat
               title="Sample Shipments"
-              count={16}
+              count={analytics?.sample_shipments}
               icon="sample"
               color="bg-amber-100"
               textColor="text-amber-500"
             />
             <ShipmentStat
               title="Complete Shipments"
-              count={8}
+              count={analytics?.completed_shipments}
               icon="complete"
               color="bg-rose-100"
               textColor="text-rose-500"
@@ -44,7 +47,7 @@ const NewDashboard = () => {
             />
           </div>
 
-          <div className="bg-white rounded-lg p-6 mb-8">
+          {/* <div className="bg-white rounded-lg p-6 mb-8">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-medium">Announcements</h2>
               <Button variant="outline" className="text-blue-700 border-blue-700">
@@ -70,8 +73,8 @@ const NewDashboard = () => {
             <Button variant="outline" className="text-blue-700 border-blue-700">
               Read more
             </Button>
-          </div>
-    </div>
+          </div> */}
+    </>
   )
 }
 
