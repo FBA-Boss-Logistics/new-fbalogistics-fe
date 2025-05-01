@@ -1,6 +1,6 @@
 import { Avatar, IconButton, Typography, useTheme } from "@mui/material";
 
-// import EDITICON from "assets/svg/editicon.svg"
+import EDITICON from "assets/svg/editicon.svg"
 import ProductImage from "assets/images/testphoto12.png";
 
 import DataTableCustom from "components/Table/DataTableCustom";
@@ -264,12 +264,12 @@ export default function SellerDashboard() {
               operations in November.
             </p>
             <div className="text-xs text-gray-500 mb-4">December 1, 2023</div>
-            <Button variant="outline" className="text-blue-700 border-blue-700">
+            <Button >
               Read more
             </Button>
           </div>
             {/* <NewDashboard/> */}
-            {/* <div className="flex justify-between items-start border-2  border-natural-200 border-solid p-4 rounded-xl m-4">
+            <div className="flex justify-between items-start border-2  border-natural-200 border-solid p-4 rounded-xl m-4">
                 <div className="flex justify-center gap-8 pl-8 pr-8 items-center">
                     <div>
                         <Avatar
@@ -338,12 +338,12 @@ export default function SellerDashboard() {
                             </Typography>
                         </div>
                     </div>
-                </div> */}
-                {/* <div className="flex gap-2">
+                </div>
+                <div className="flex gap-2">
                     <Typography>Edit</Typography>
                     <img src={EDITICON} alt="edit"/>
-                </div> */}
-            {/* </div>
+                </div>
+            </div>
 
             <div className="m-4">
                 <DataTableCustom
@@ -359,7 +359,7 @@ export default function SellerDashboard() {
                     setSelectedDate={setSelectedSellerHomeRecentOrderDate}
                     selectedDate={selectedSellerHomeRecentOrderDate}
                 />
-            </div> */}
+            </div>
         </>
     );
 }

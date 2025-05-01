@@ -19,6 +19,13 @@ import { useCreateShipmentQuery } from "queries/Seller";
 import { format } from "date-fns";
 import HandleErrorResponse from "utils/HandleErrorResponse";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import { routes } from "routes/RouteConstants";
+import { ChevronRight, Plus, X } from "lucide-react";
+import { Button } from "components/ui/button";
+import Location from "assets/svg/location.svg";
+import Truck from "assets/svg/truck.svg";
+
 
 const {
     email,
@@ -371,13 +378,32 @@ const Quotes = () => {
         [email, first_name, last_name]
     );
 
-    return (
+    return (    
         <div>
             {/* <div className="py-4">
                 <TopNavBar />
             </div> */}
-
-            <div className="px-32 py-8 flex bg-natural-50 border border-solid border-natural-100 justify-center">
+            <div className="flex flex-row justify-between items-center">
+                <div>
+                    <h1 className="text-2xl font-semibold text-zinc-800 mb-2">New Shipment</h1>
+                    <div className="flex items-center text-sm">
+                    <Link to={routes.SELLERDASHBOARD.pathname} className="text-blue-600 hover:underline">
+                        Dashboard
+                    </Link>
+                    <ChevronRight className="h-4 w-4 inline" />
+                    <span className="text-gray-500">New Shipment</span>
+                    </div>
+                </div>
+                <div>
+                    <Button asChild variant="outline" className="border-2 font-semibold border-gray-400 text-gray-500">
+                        <Link to={routes.SELLERDASHBOARD.pathname}>
+                            <X className="h-4 w-4" />
+                            Cancel
+                        </Link>
+                    </Button>
+                </div>
+            </div>
+            {/* <div className="px-32 py-8 flex bg-natural-50 border border-solid border-natural-100 justify-center">
                 <div className="w-64">
                     <div
                         className={`h-1 bg-natural-200 mb-2.5 ${
@@ -477,18 +503,15 @@ const Quotes = () => {
                         Please provide your name and email
                     </Typography>
                 </div>
-            </div>
+            </div> */}
 
-            <div className="px-32 py-8 h-[calc(100vh_-_225px)] overflow-y-scroll">
-                <Typography variant="h5" fontWeight={400} fontFamily="Sora">
-                    Let us help you increase your margins!
-                </Typography>
+            <div className="">
                 <form onSubmit={handleSubmit(submitShipperFrom, handleErrors)}>
                     <div className=" border border-solid border-natural-200 overflow-y-auto rounded-xl mt-8 p-4 ">
                         <div className="bg-natural-25 p-4 rounded-xl">
                             <div>
                                 <div className="flex flex-col gap-8">
-                                    <div className="flex gap-4 mb-6 ">
+                                    <div className="flex gap-4 mb-6 font-semibold">
                                         <LabelledTextField
                                             label="Freight Booking Reference Number*"
                                             placeholder="This number is user assigned, IE: March 3 Jade Roller"
@@ -507,13 +530,12 @@ const Quotes = () => {
                                             }
                                         />
                                         <div className="w-full">
-                                            <Typography className="pb-[3px]">
-                                                When Will Your Shipment Be Ready
-                                                For Pickup?
+                                            <Typography className="pb-[3px]" fontWeight={600}>
+                                            Pick up date
                                             </Typography>
                                             <DatePicker
                                                 minDate={new Date()}
-                                                placeholder="Date"
+                                                placeholder="Enter Date"
                                                 format="MM/DD/YYYY"
                                                 onChange={(date) => {
                                                     handleChangeValue(
@@ -536,14 +558,14 @@ const Quotes = () => {
                                     </div>
 
                                     <div>
-                                        <Typography
-                                            variant="h5"
-                                            fontFamily="Sora"
-                                            fontWeight={400}
-                                            color="natural.800"
-                                        >
+                                    <div className="flex items-center flex-row gap-2">
+                                            <div className="bg-natural-200 rounded-full">
+                                                <img src={Location} alt="location" />
+                                            </div>
+                                        <Typography fontSize={18} fontWeight={600} variant="body2" color="natural.900">
                                             Origin and Destination
                                         </Typography>
+                                    </div>
 
                                         <div className="my-1">
                                             <LabelledTextField
@@ -595,14 +617,14 @@ const Quotes = () => {
                                         </div>
 
                                         <div className="mt-8">
-                                            <Typography
+                                            {/* <Typography
                                                 variant="h5"
                                                 fontFamily="Sora"
                                                 fontWeight={400}
                                                 color="natural.800"
                                             >
                                                 Delivery Location
-                                            </Typography>
+                                            </Typography> */}
                                             <div>
                                                 <div className="my-1">
                                                     <LabelledTextField
@@ -671,14 +693,16 @@ const Quotes = () => {
                                     </div>
 
                                     <div>
-                                        <Typography
-                                            variant="h5"
-                                            fontFamily="Sora"
-                                            fontWeight={400}
-                                            color="natural.800"
-                                        >
+                                    <div className="flex-col gap-2">
+                                        <div className="flex items-center flex-row gap-2">
+                                                <div className="bg-natural-200 rounded-full w-[30px]">
+                                                    <img src={Truck} alt="truck" />
+                                                </div>
+                                        <Typography color="natural.900" fontSize={18} fontWeight={500}>
                                             Cargo
                                         </Typography>
+                                        </div>
+                                    </div>
                                         <div className="flex gap-4 my-4 ">
                                             <LabelledTextField
                                                 label="Product Name*"
@@ -713,6 +737,42 @@ const Quotes = () => {
                                                 }
                                             />
                                         </div>
+
+                                        <div className="flex gap-4 my-4 w-1/2">
+                                                    <LabelledTextField
+                                                        label="Amazon Warehouse Address"
+                                                        placeholder="Enter Address"
+                                                        className="my-4 w-1/2"
+                                                        autoComplete="new-warehouse-address"
+                                                        error={Boolean(
+                                                            Array.isArray(
+                                                                errors?.delivery_location
+                                                            ) &&
+                                                                errors
+                                                                    .delivery_location[0]
+                                                                    ?.full_address
+                                                        )}
+                                                        helperText={
+                                                            Array.isArray(
+                                                                errors?.delivery_location
+                                                            ) &&
+                                                            errors
+                                                                .delivery_location[0]
+                                                                ?.full_address &&
+                                                            errors
+                                                                .delivery_location[0]
+                                                                ?.full_address
+                                                                .message
+                                                        }
+                                                        onChange={(e) =>
+                                                            handleAdditinalAddress(
+                                                                e.target.value,
+                                                                0
+                                                            )
+                                                        }
+                                                    />
+                                        </div>
+                                        
                                         {cargoSetFields?.map((field, index) => {
                                             return (
                                                 <div key={index}>
@@ -743,52 +803,7 @@ const Quotes = () => {
                                                             </div>
                                                         )}
 
-                                                    {index > 0 && (
-                                                        <div
-                                                            key={index}
-                                                            className="my-1"
-                                                        >
-                                                            <LabelledTextField
-                                                                label="Amazon Warehouse Address"
-                                                                placeholder="Ship to address from your amazon shipping plan, including warehouse number"
-                                                                className="my-4"
-                                                                autoComplete="new-warehouse-address"
-                                                                error={Boolean(
-                                                                    Array.isArray(
-                                                                        errors?.delivery_location
-                                                                    ) &&
-                                                                        errors
-                                                                            .delivery_location[
-                                                                            index
-                                                                        ]
-                                                                            ?.full_address
-                                                                )}
-                                                                helperText={
-                                                                    Array.isArray(
-                                                                        errors?.delivery_location
-                                                                    ) &&
-                                                                    errors
-                                                                        .delivery_location[
-                                                                        index
-                                                                    ]
-                                                                        ?.full_address &&
-                                                                    errors
-                                                                        .delivery_location[
-                                                                        index
-                                                                    ]
-                                                                        ?.full_address
-                                                                        .message
-                                                                }
-                                                                onChange={(e) =>
-                                                                    handleAdditinalAddress(
-                                                                        e.target
-                                                                            .value,
-                                                                        index
-                                                                    )
-                                                                }
-                                                            />
-                                                        </div>
-                                                    )}
+                                                   
                                                     <div className="flex gap-4 mt-8">
                                                         <LabelledTextField
                                                             label="Carton Dimensions (CM)"
@@ -956,6 +971,52 @@ const Quotes = () => {
                                                             }
                                                         />
                                                     </div>
+                                                     {index > 0 && (
+                                                        <div
+                                                            key={index}
+                                                            className="flex gap-4 my-4 w-1/2"
+                                                        >
+                                                            <LabelledTextField
+                                                                label="Amazon Warehouse Address"
+                                                                placeholder="Enter Address"
+                                                                className="my-4"
+                                                                autoComplete="new-warehouse-address"
+                                                                error={Boolean(
+                                                                    Array.isArray(
+                                                                        errors?.delivery_location
+                                                                    ) &&
+                                                                        errors
+                                                                            .delivery_location[
+                                                                            index
+                                                                        ]
+                                                                            ?.full_address
+                                                                )}
+                                                                helperText={
+                                                                    Array.isArray(
+                                                                        errors?.delivery_location
+                                                                    ) &&
+                                                                    errors
+                                                                        .delivery_location[
+                                                                        index
+                                                                    ]
+                                                                        ?.full_address &&
+                                                                    errors
+                                                                        .delivery_location[
+                                                                        index
+                                                                    ]
+                                                                        ?.full_address
+                                                                        .message
+                                                                }
+                                                                onChange={(e) =>
+                                                                    handleAdditinalAddress(
+                                                                        e.target
+                                                                            .value,
+                                                                        index
+                                                                    )
+                                                                }
+                                                            />
+                                                        </div>
+                                                    )}
 
                                                     <div className="flex gap-4 my-4 ">
                                                         <LabelledTextField
