@@ -159,46 +159,8 @@ export default function SellerDashboard() {
                     onClose={handleCreateSampleShipment}
                     title="Create Sample Shipment"
                     description="Create a sample shipment to test the shipment process."
-                >
-                         {/* Content */}
-                    <div className="p-6">
-                    <div className="space-y-4">
-                        <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                            Nama
-                        </label>
-                        <input
-                            type="text"
-                            id="name"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                        />
-                        </div>
-                        <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                        />
-                        </div>
-                    </div>
-                    </div>
-
-                    {/* Footer */}
-                    <div className="p-6 border-t flex justify-end space-x-3">
-                    <button
-                        onClick={() => onClose()}
-                        className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                        Batal
-                    </button>
-                    <button className="px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
-                        Simpan perubahan
-                    </button>
-                    </div>
-                </CreateSampleShipment>
+                />
+            
             )}
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -269,7 +231,7 @@ export default function SellerDashboard() {
             </Button>
           </div>
             {/* <NewDashboard/> */}
-            <div className="flex justify-between items-start border-2  border-natural-200 border-solid p-4 rounded-xl m-4">
+            {/* <div className="flex justify-between items-start border-2  border-natural-200 border-solid p-4 rounded-xl m-4">
                 <div className="flex justify-center gap-8 pl-8 pr-8 items-center">
                     <div>
                         <Avatar
@@ -359,7 +321,7 @@ export default function SellerDashboard() {
                     setSelectedDate={setSelectedSellerHomeRecentOrderDate}
                     selectedDate={selectedSellerHomeRecentOrderDate}
                 />
-            </div>
+            </div> */}
         </>
     );
 }

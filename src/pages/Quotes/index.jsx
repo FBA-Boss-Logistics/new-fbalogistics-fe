@@ -404,7 +404,7 @@ const Quotes = () => {
                     </div>
                 </div>
                 <div>
-                    <Button asChild variant="outline" className="border-2 font-semibold border-gray-400 text-gray-500">
+                    <Button asChild variant="outline" className="border-2 hidden lg:block font-semibold border-gray-400 text-gray-500">
                         <Link to={routes.SELLERDASHBOARD.pathname}>
                             <X className="h-4 w-4" />
                             Cancel
@@ -521,7 +521,7 @@ const Quotes = () => {
                         <div className="flex flex-col gap-6  font-semibold">
                             {/* Shipment Details Section */}
                             <CardComponent className="px-6 py-2">
-                                <div className="flex flex-wrap gap-4 mb-6 font-semibold">
+                                <div className="flex flex-wrap lg:flex-nowrap gap-4 mb-6 font-semibold">
                                     <LabelledTextField
                                         label="Freight Booking Reference Number*"
                                         placeholder="This number is user assigned, IE: March 3 Jade Roller"
@@ -595,7 +595,7 @@ const Quotes = () => {
                                             />
                                         </div>
 
-                                        <div className="flex gap-4 ">
+                                        <div className="flex flex-wrap lg:flex-nowrap gap-4 ">
                                             <LabelledTextField
                                                 label="Supplier Contact Name"
                                                 placeholder="Name"
@@ -648,7 +648,7 @@ const Quotes = () => {
                                     <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${cargoOpen ? "rotate-180" : ""}`} />
                                     </CollapsibleTrigger>
                                     <CollapsibleContent>
-                                    <div className="flex gap-4 my-4 ">
+                                    <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4 ">
                                         <LabelledTextField
                                             label="Product Name*"
                                             placeholder="Product name"
@@ -683,7 +683,7 @@ const Quotes = () => {
                                         />
                                     </div>
 
-                                    <div className="flex gap-4  w-1/2">
+                                    <div className="flex gap-4  lg:w-1/2">
                                                 <LabelledTextField
                                                     label="Amazon Warehouse Address"
                                                     placeholder="Enter Address"
@@ -750,10 +750,10 @@ const Quotes = () => {
                                                     )}
 
                                                 
-                                                <div className="flex gap-4 mt-8">
+                                                <div className="flex flex-wrap lg:flex-nowrap gap-4 mt-8">
                                                     <LabelledTextField
-                                                        label="Carton Dimensions (CM)"
-                                                        placeholder="Length"
+                                                        label="Carton Lenght"
+                                                        placeholder="CM"
                                                         type="number"
                                                         autoComplete="new-carton-dimensions-length"
                                                         onChange={(e) => {
@@ -793,9 +793,9 @@ const Quotes = () => {
                                                     />
 
                                                     <LabelledTextField
-                                                        label=" "
-                                                        placeholder="Width"
-                                                        className="  mt-6"
+                                                        label="Carton Width"
+                                                        placeholder="CM"
+                                                        className="6"
                                                         type="number"
                                                         onChange={(e) => {
                                                             handleCargoField(
@@ -835,10 +835,10 @@ const Quotes = () => {
                                                     />
 
                                                     <LabelledTextField
-                                                        label=" "
-                                                        placeholder="height"
+                                                        label="Carton Height"
+                                                        placeholder="CM"
                                                         type="number"
-                                                        className="  mt-6"
+                                                        className=""
                                                         onChange={(e) => {
                                                             handleCargoField(
                                                                 e,
@@ -877,7 +877,7 @@ const Quotes = () => {
                                                     />
 
                                                     <LabelledTextField
-                                                        label="Weight Per Carton (KG)"
+                                                        label="Carton Weigth"
                                                         placeholder="Kg"
                                                         type="number"
                                                         onChange={(e) => {
@@ -920,7 +920,7 @@ const Quotes = () => {
                                                     {index > 0 && (
                                                     <div
                                                         key={index}
-                                                        className="flex gap-4 my-4 w-1/2"
+                                                        className="flex gap-4 my-4 lg:w-1/2"
                                                     >
                                                         <LabelledTextField
                                                             label="Amazon Warehouse Address"
@@ -964,7 +964,7 @@ const Quotes = () => {
                                                     </div>
                                                 )}
 
-                                                <div className="flex gap-4 my-4 ">
+                                                <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4 ">
                                                     <LabelledTextField
                                                         label="Total Cost of Goods"
                                                         placeholder="$"
@@ -1094,7 +1094,7 @@ const Quotes = () => {
                                     <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${contactInfoOpen ? "rotate-180" : ""}`} />
                                     </CollapsibleTrigger>
                                     <CollapsibleContent>
-                                <div className="flex gap-4 my-4  font-semibold ">
+                                <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4  font-semibold ">
                                     <LabelledTextField
                                         label="First Name*"
                                         placeholder="Enter your first name"
@@ -1228,9 +1228,15 @@ const Quotes = () => {
                     </div>
                  
 
-                    <div className="my-8 text-center lg:text-right lg:items-end flex flex-col items-center ">
-                            <Button size="lg" className="rounded-full w-[242px]" >
+                    <div className="my-8 text-center lg:text-right lg:items-end flex flex-col gap-4 items-center ">
+                            <Button size="lg" className="rounded-full md:w-[242px] w-full" >
                                 Submit
+                            </Button>
+                            <Button asChild variant="outline" size="lg" className=" md:hidden rounded-full border-primary text-primary md:w-[242px] w-full">
+                                <Link to={routes.SELLERDASHBOARD.pathname}>
+                                <X className="h-4 w-4" />
+                                    Cancel
+                                </Link>
                             </Button>
 
                     </div>
