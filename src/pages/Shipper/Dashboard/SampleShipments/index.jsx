@@ -16,6 +16,7 @@ import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { routes } from "routes/RouteConstants";
 import { Button } from "components/ui/button";
+import ActionTable from "components/Table/ActionTable";
 
 export default function SampleShipmentTable() {
     const navigate = useNavigate();
@@ -144,46 +145,33 @@ export default function SampleShipmentTable() {
         {
             Header: "Action",
 
-            Cell: ({ row: { original } }) => (
-                <>
-                <div className=" gap-2 items-center hidden md:flex">
-                    <IconButton onClick={() => handleClick(original)}>
-                        <RemoveRedEyeOutlined
-                            fontSize="small"
-                            color="secondary.100"
-                        />
-                    </IconButton>
-                    <ChatIconWithDot handleClick={handleClick} original={original} /> 
-                </div>
-                <div className="flex gap-2 items-center justify-center md:hidden w-full">
-                 
-                   <Button onClick={() => {
-                       handleClick(original)
-               }} className="block md:hidden w-full text-blue-600  " variant="text">
-                   More info
-               </Button>
-               </div>
-               </>
-            ),
-        },
-        {
-            Header: "Action2",
             Cell: ({ row: { original } }) => {
-                return (
+                    const action = [
+                        {
+                            name: "View Shipment",
+                            onClick: () => handleClick(original),
+                            visible: true,
+                        },
+                        {
+                            name: "Open Chat",
+                            onClick: () => handleClick(original),
+                            visible: true,
+                        },
+                    ];
+                    return(
                     <>
-                    <div className="flex gap-2 items-center justify-center md:hidden w-full">
-                         {/* {original.status === "Quotation Accepted" && ( */}
-                            <Button
-                                variant="text"
-                                className="block md:hidden w-full text-blue-600 " 
-                                onClick={() => handleClick(original)}
-                            >
-                                Chat
-                            </Button>
-                        {/* )} */}
+                    <div className=" gap-2 items-center hidden md:flex">
+                        <IconButton onClick={() => handleClick(original)}>
+                            <RemoveRedEyeOutlined
+                                fontSize="small"
+                                color="secondary.100"
+                            />
+                        </IconButton>
+                        <ChatIconWithDot handleClick={handleClick} original={original} /> 
                     </div>
-                    </>
-                );
+                <ActionTable action={action} />
+                </>
+                )
             },
         },
         

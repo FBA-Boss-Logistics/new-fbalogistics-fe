@@ -17,6 +17,7 @@ import { convertIntoUnix } from "./utils";
 import { format } from "date-fns";
 import hammerIcon from 'assets/svg/hammer.svg' 
 import { Package} from "lucide-react"
+import ActionTable from "components/Table/ActionTable";
 
 const Timer = memo(function Timer({ row, refetch, isLoading }) {
     const createdAtTimeStamp = convertIntoUnix(row.row.original.created_at);
@@ -128,38 +129,33 @@ export default function Quotation() {
         },
         {
             Header: "Action",
-            Cell: ({ row: { original } }) => (
-                // <Button
-                //     variant="outlined"
-                //     className="w-[75px] h-[32px] px-[12px] py-[6px] bg-natural-50"
-                //     onClick={() => {
-                //         const clickedShipmentId = original.id;
-                //         navigate(`/shipper/bid/${clickedShipmentId}`);
-                //     }}
-                // >
-                //     <Typography
-                //         fontSize={12}
-                //         fontWeight={500}
-                //         color="natural.900"
-                //     >
-                //         BID
-                //     </Typography>
-                // </Button>
+            Cell: ({ row: { original } }) => {
+                const action = [
+                    {
+                        name: "Bid",
+                        onClick: () => {
+                            const clickedShipmentId = original.id;
+                            navigate(`/shipper/bid/${clickedShipmentId}`);
+                        },
+                        visible: true,
+                    },
+                ];
+                return (
                 <>
                 <img className="hidden md:block" src={hammerIcon} alt="" onClick={() => {
                             const clickedShipmentId = original.id;
                             navigate(`/shipper/bid/${clickedShipmentId}`);
                 }} />
-                <Button onClick={() => {
+                {/* <Button onClick={() => {
                             const clickedShipmentId = original.id;
                             navigate(`/shipper/bid/${clickedShipmentId}`);
                 }} className="block md:hidden w-full text-blue-600  " variant="text">
                     Bid
-                </Button>
+                </Button> */}
+                <ActionTable action={action} />
                 </>
-                
-
-            ),
+                );
+            },
         },
     ];
 

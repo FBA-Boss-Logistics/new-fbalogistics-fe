@@ -11,6 +11,7 @@ import { FetchPastOrderDetailApi } from "queries/Shipper";
 import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 import { ChevronRight } from "lucide-react";
 import { routes } from "routes/RouteConstants";
+import ActionTable from "components/Table/ActionTable";
 
 export default function PastOrders() {
     const [pastOrderListPagination, setPastOrderListPagination] = useState({});
@@ -89,32 +90,48 @@ export default function PastOrders() {
         {
             Header: "Action",
 
-            Cell: ({ row: { original } }) => (
-                <>
-                <IconButton
-                    onClick={() => {
-                        const clickedOrderId = original?.id;
+            Cell: ({ row: { original } }) => {
+                    const action = [
+                            {
+                            name: "More info",
+                            onClick: () => {
+                                const clickedOrderId = original?.id;
 
-                        navigate(
-                            `/shipper/dashboard/orders/pastorders/status/${clickedOrderId}/?src=accepted`
-                        );
-                    }}
-                    className="hidden md:block"
-                >
-                    {" "}
-                    <RemoveRedEyeOutlined
-                        fontSize="small"
-                        color="secondary.100"
-                    />
-                </IconButton>
-                <Button onClick={() => {
-                            const clickedShipmentId = original.id;
-                            navigate(`/shipper/dashboard/orders/pastorders/status/${clickedShipmentId}/?src=accepted`);
-                }} className="block md:hidden w-full text-blue-600  " variant="text">
-                    More info
-                </Button>
-                </>
-            ),
+                                navigate(
+                                    `/shipper/dashboard/orders/pastorders/status/${clickedOrderId}/?src=accepted`
+                                );
+                            },
+                            visible: true,
+                        },
+                    ];
+                    return(
+                    <>
+                    <IconButton
+                        onClick={() => {
+                            const clickedOrderId = original?.id;
+
+                            navigate(
+                                `/shipper/dashboard/orders/pastorders/status/${clickedOrderId}/?src=accepted`
+                            );
+                        }}
+                        className="hidden md:block"
+                    >
+                        {" "}
+                        <RemoveRedEyeOutlined
+                            fontSize="small"
+                            color="secondary.100"
+                        />
+                    </IconButton>
+                    {/* <Button onClick={() => {
+                                const clickedShipmentId = original.id;
+                                navigate(`/shipper/dashboard/orders/pastorders/status/${clickedShipmentId}/?src=accepted`);
+                    }} className="block md:hidden w-full text-blue-600  " variant="text">
+                        More info
+                    </Button> */}
+                    <ActionTable action={action} />
+                    </>
+                )
+            },
         },
     ];
 

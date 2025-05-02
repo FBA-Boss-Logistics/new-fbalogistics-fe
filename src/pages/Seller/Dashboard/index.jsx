@@ -19,6 +19,8 @@ import CreateSampleShipment from "../Booking/SampleShipment/New/CreateSampleShip
 import { routes } from "routes/RouteConstants";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
+import DashboardStats from "./dashboardStats";
+import ActionTable from "components/Table/ActionTable";
 export default function SellerDashboard() {
     const [
         sellerHomeRecentOrderPagination,
@@ -124,7 +126,21 @@ export default function SellerDashboard() {
         },
         {
             Header: "Action",
-            Cell: ({ row: { original } }) => (
+            Cell: ({ row: { original } }) => {
+                const action = [
+                    {
+                        name: "More info",
+                        onClick: () => {
+                            const Orderid = original.id;
+                            navigate(
+                                `/seller/booking/recentorderstatus/${Orderid}`
+                            );
+                        },
+                        visible: true,
+                    },
+                ];
+                return(
+                <>
                 <IconButton
                     onClick={() => {
                         const Orderid = original.id;
@@ -132,6 +148,7 @@ export default function SellerDashboard() {
                             `/seller/booking/recentorderstatus/${Orderid}`
                         );
                     }}
+                    className="hidden md:block"
                 >
                     {" "}
                     <RemoveRedEyeOutlined
@@ -139,7 +156,10 @@ export default function SellerDashboard() {
                         color="secondary.100"
                     />
                 </IconButton>
-            ),
+                <ActionTable action={action} />
+                </>
+            )
+        },
         },
     ];
     const {data:sellerDashboardAnalytics} = FetchSellerDashboardAnalyticsApi()
@@ -162,30 +182,9 @@ export default function SellerDashboard() {
                 />
             
             )}
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <ShipmentStat
-              title="Active Shipments"
-              count={analytics?.active_shipments || 0}
-              icon="active"
-              color="bg-orange-100"
-              textColor="text-orange-500"
-            />
-            <ShipmentStat
-              title="Sample Shipments"
-              count={analytics?.sample_shipments || 0}
-              icon="sample"
-              color="bg-amber-100"
-              textColor="text-amber-500"
-            />
-            <ShipmentStat
-              title="Complete Shipments"
-              count={analytics?.completed_shipments || 0}
-              icon="complete"
-              color="bg-rose-100"
-              textColor="text-rose-500"
-            />
-          </div>
+            {/*  */}
+            <DashboardStats/>
+       
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <ShipmentCard

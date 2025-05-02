@@ -8,6 +8,7 @@ import BookingsTopNav from "../BookingsTopNav";
 import { FetchSellerPastOrderDetailApi } from "queries/Seller";
 import { formatDate } from "utils";
 import { format } from "date-fns";
+import ActionTable from "components/Table/ActionTable";
 
 export default function PastOrderBooking() {
     const [
@@ -88,14 +89,25 @@ export default function PastOrderBooking() {
 
         {
             Header: "Action",
-            Cell: ({ row: { original } }) => (
-                <img
-                    src={EyeIcon}
-                    className="cursor-pointer"
+            Cell: ({ row: { original } }) => {
+                const action = [
+                    {
+                        name: "More info",
+                        onClick: () => handleClick(original.id),
+                        visible: true,
+                    },
+                ];
+                return(
+                    <>
+                    <img
+                        src={EyeIcon}
+                    className="cursor-pointer md:inline-block hidden"
                     onClick={() => handleClick(original.id)}
                     alt="EyeIcon"
                 />
-            ),
+                <ActionTable action={action} />
+                </>
+            )},
         },
     ];
 

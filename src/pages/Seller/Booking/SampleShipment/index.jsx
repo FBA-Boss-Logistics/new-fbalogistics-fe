@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import ChatIconWithDot from "components/Comman/ChatWithGreenDot";
 import { RemoveRedEyeOutlined } from "@mui/icons-material";
 import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
+import ActionTable from "components/Table/ActionTable";
 
 export default function SampleShipment() {
     const navigate = useNavigate();
@@ -115,9 +116,23 @@ export default function SampleShipment() {
         },
         {
             Header: "Action",
-            Cell: ({ row: { original } }) => (
-                <div className="flex gap-2 items-center">
-                    <IconButton onClick={() => handleClick(original)}>
+            Cell: ({ row: { original } }) => {
+                const action = [
+                    {
+                        name: "More info",
+                        onClick: () => handleClick(original),
+                        visible: true,
+                    },
+                    {
+                        name: "Open Chat",
+                        onClick: () => handleClick(original),
+                        visible: true,
+                    },
+                ];
+                return(
+                    <>
+                    <div className="md:flex hidden gap-2 items-center">
+                        <IconButton onClick={() => handleClick(original)}>
                         <RemoveRedEyeOutlined
                             fontSize="small"
                             color="secondary.100"
@@ -125,8 +140,11 @@ export default function SampleShipment() {
                     </IconButton>
                     <ChatIconWithDot handleClick={handleClick} original={original} /> 
                 </div>
-            ),
-        },
+
+                    <ActionTable action={action} />
+                </>
+            )},
+        }
     ];
 
     const handleClick = ({id}) => {

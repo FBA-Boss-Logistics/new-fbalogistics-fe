@@ -11,6 +11,7 @@ import { FetchShipmentHistoryDetailApi } from "queries/Shipper";
 import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 import { routes } from "routes/RouteConstants";
 import { ChevronRight } from "lucide-react";
+import ActionTable from "components/Table/ActionTable";
 
 export default function ShipmentHistory() {
     const [pastOrderListPagination, setPastOrderListPagination] = useState({});
@@ -89,8 +90,21 @@ export default function ShipmentHistory() {
 
         {
             Header: "Action",
+            Cell: ({ row: { original } }) => {
+                const action = [
+                    {
+                        name: "View shipment",
+                        onClick: () => {
+                            const clickedOrderId = original?.id;
 
-            Cell: ({ row: { original } }) => (
+                            navigate(
+                                `/shipper/dashboard/orders/shipmenthistories/status/${clickedOrderId}/?src=accepted`
+                            );
+                        },
+                        visible: true,
+                    },
+                ];
+                return (
                 <>
                 <IconButton
                     onClick={() => {
@@ -108,14 +122,16 @@ export default function ShipmentHistory() {
                         color="secondary.100"
                     />
                 </IconButton>
-                <Button onClick={() => {
+                {/* <Button onClick={() => {
                             const clickedShipmentId = original.id;
                             navigate(`/shipper/dashboard/orders/shipmenthistories/status/${clickedShipmentId}/?src=accepted`);
                 }} className="block md:hidden w-full text-blue-600 bg-white hover:bg-gray-50 h-9" variant="outline">
                     More info
-                </Button>
+                </Button> */}
+                <ActionTable action={action} />
                 </>
-            ),
+                );
+            },
         },
     ];
 

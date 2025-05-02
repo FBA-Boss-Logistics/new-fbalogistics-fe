@@ -11,6 +11,7 @@ import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
 import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 import { ChevronRight } from "lucide-react";
 import { routes } from "routes/RouteConstants";
+import ActionTable from "components/Table/ActionTable";
 
 export default function Orders() {
     const navigate = useNavigate();
@@ -145,6 +146,13 @@ export default function Orders() {
         {
             Header: "Action",
             Cell: ({ row: { original } }) => {
+                const action = [
+                    {
+                        name: "More info",
+                        onClick: () => handleClickRoute(original),
+                        visible: true,
+                    },
+                ];
                 return (
                     <>
                     <div className=" gap-2 items-center hidden md:flex">
@@ -161,14 +169,15 @@ export default function Orders() {
                             />
                         )}
                     </div>
-                    <div className="flex gap-2 items-center justify-center md:hidden w-full">
+                    {/* <div className="flex gap-2 items-center justify-center md:hidden w-full">
                  
                         <Button onClick={() => {
                             handleClickRoute(original)
                     }} className="block md:hidden w-full text-blue-600  " variant="text">
                         More info
                     </Button>
-                    </div>
+                    </div> */}
+                    <ActionTable action={action} />
                     </>
                 );
             },

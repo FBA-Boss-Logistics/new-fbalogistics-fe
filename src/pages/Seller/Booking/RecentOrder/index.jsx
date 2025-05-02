@@ -11,6 +11,7 @@ import { formatDate } from "utils";
 import { format } from "date-fns";
 import { Check } from "@mui/icons-material";
 import ClearIcon from "@mui/icons-material/Clear";
+import ActionTable from "components/Table/ActionTable";
 
 export default function RecentOrderBooking() {
     const [sellerRecentShipmentPagination, setSellerRecentShipmentPagination] =
@@ -99,13 +100,19 @@ export default function RecentOrderBooking() {
 
         {
             Header: "Action",
-            Cell: ({ row: { original } }) => (
-                <div className="flex gap-3">
-                    <img
-                        src={EyeIcon}
-                        className="cursor-pointer"
-                        onClick={() => handleClick(original.id)}
-                        alt="EyeIcon"
+            Cell: ({ row: { original } }) => {
+                const action = [
+                    {
+                        name: "More info",
+                        onClick: () => handleClick(original.id),
+                        visible: true,
+                    },
+                ];
+                return(
+                    <div className="md:flex hidden gap-3">
+                        <img
+                            src={EyeIcon}
+                            className="cursor-pointer"
                     />
                     {/* <img
                         src={ChatIcon}
@@ -113,8 +120,9 @@ export default function RecentOrderBooking() {
                         onClick={() => handleClick(original.id)}
                         alt="ChatIcon"
                     /> */}
+                    <ActionTable action={action} />
                 </div>
-            ),
+            )},
         },
     ];
 
