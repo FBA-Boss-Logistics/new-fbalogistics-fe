@@ -393,10 +393,10 @@ export default function DataTableCustom({
                                 {row.cells.filter((cell)=> cell.render("Header") == "Action" || cell.render("Header") == "Action2").map((cell)=>{
                                     return(
                                         <>
-                                            <div className="px-3  py-2 bg-slate-100">
-                                            <Button key={cell.id} {...cell.getCellProps()} className="w-full text-blue-600 bg-white hover:bg-gray-50 h-9" variant="outline">
+                                            <div key={cell.id} {...cell.getCellProps()} className="px-3  py-2 bg-slate-100">
+                                            {/* <Button  className="w-full text-primary border border-primary bg-white hover:bg-gray-50 h-9" variant="outline"> */}
                                                 {cell.render("Cell")}
-                                            </Button>
+                                            {/* </Button> */}
                                             </div>
                                         </>  
                                     )

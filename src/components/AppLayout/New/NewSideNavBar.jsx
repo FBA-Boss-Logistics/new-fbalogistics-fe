@@ -100,7 +100,7 @@ const NewSideNavBar = ({menu}) => {
                         
                           return(
                           <>
-                             <li>
+                             <li key={label}>
                                 <a
                                 key={label}
                                  onClick={() => {
