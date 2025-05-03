@@ -27,8 +27,11 @@ import shipmentHistorySvg from "assets/svg/shipmentHistorySvg.svg";
 import Shoppingbag from "assets/svg/shopping-bag-02.svg";
 import SmapleShipmentIcon from "assets/svg/shoppingbag02.svg";
 import DOT from "assets/svg/statusdot.svg";
+import AddCircleIcon from "assets/svg/AddCircle.svg";
 
 import { FetchUserDetailApi, useLogOutApiQuery } from "queries/Auth";
+import { useSeller } from 'pages/Seller/Context/SellerContext'
+import { useSidebar } from 'Context/SidebarContext'
 
 const NewSideNavBar = ({menu, dashboard}) => {
   const navigate = useNavigate();
@@ -64,6 +67,8 @@ const NewSideNavBar = ({menu, dashboard}) => {
   );
 
   const { data: userinfo } = FetchUserDetailApi();
+  const {setCreateSampleShipment} = useSeller();
+  const { setIsSidebarOpen } = useSidebar();
   
   return (
        <div className="w-full md:w-72 bg-white border-r h-screen sticky top-0 flex flex-col">
@@ -122,7 +127,29 @@ const NewSideNavBar = ({menu, dashboard}) => {
                         })
                       
                     }
+                
         </ul>
+        {dashboard === "seller" && (
+            <ul className='space-y-1  border-t mt-4'>
+                <li>
+                    <Link to={routes.QUOTES.pathname} onClick={() => setCurrentPath(routes.QUOTES.pathname)} className={`flex cursor-pointer items-center p-3 text-blue-900 ${ currentPath === routes.QUOTES.pathname?'bg-blue-50':''} rounded-md font-medium`}>
+                <img src={AddCircleIcon} className="mr-3 h-5 w-5" />
+                Add Shipment
+                </Link>
+                </li>
+                <li>
+                    <Link  onClick={() => {
+                      setCreateSampleShipment(true)
+                      setIsSidebarOpen(false)
+                    }} className={`flex cursor-pointer items-center p-3 text-blue-900 ${ currentPath === routes.SHIPPERPROFILE.pathname?'bg-blue-50':''} rounded-md font-medium`}>
+                <img src={AddCircleIcon} className="mr-3 h-5 w-5" />
+                Sample Shipment
+                </Link>
+                </li>
+
+                
+            </ul>
+        )}
       </nav>
         <div className="p-4 border-t">
             <ul className="space-y-1">

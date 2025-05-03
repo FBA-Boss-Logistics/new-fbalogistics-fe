@@ -10,7 +10,7 @@ const NewDrawer = ({ children, menu, dashboard }) => {
          <NewSideNavBar menu={menu} dashboard={dashboard} />
         </div>
         <div className="flex-1">
-        <NewTopNavBar menu={menu} />
+        <NewTopNavBar menu={menu} dashboard={dashboard} />
         <main className="p-6">
             {children}
         </main>

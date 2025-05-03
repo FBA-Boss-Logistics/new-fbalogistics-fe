@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import DashboardStats from "./dashboardStats";
 import ActionTable from "components/Table/ActionTable";
+import { SellerContext, useSeller } from "../Context/SellerContext";
 export default function SellerDashboard() {
     const [
         sellerHomeRecentOrderPagination,
@@ -56,7 +57,11 @@ export default function SellerDashboard() {
         };
     }, [dataUpdatedAt]);
 
-    const [createSampleShipment, setCreateSampleShipment] = useState(false);
+    // const [createSampleShipment, setCreateSampleShipment] = useState(false);
+    const {createSampleShipment, setCreateSampleShipment} = useSeller();
+    useEffect(() => {
+        console.log("sellerContext", createSampleShipment)
+    }, [createSampleShipment])
 
     const createShipment = () => {
         setCreateSampleShipment(true);
@@ -172,17 +177,14 @@ export default function SellerDashboard() {
 
     return (
         <>
-            {createSampleShipment && (
-                console.log("createSampleShipment", createSampleShipment),
+            {/* {createSampleShipment && (
                 <CreateSampleShipment
                     isOpen={createSampleShipment}
                     onClose={handleCreateSampleShipment}
                     title="Create Sample Shipment"
                     description="Create a sample shipment to test the shipment process."
                 />
-            
-            )}
-            {/*  */}
+            )} */}
             <DashboardStats/>
        
 

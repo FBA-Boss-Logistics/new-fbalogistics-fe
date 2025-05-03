@@ -404,9 +404,9 @@ const Quotes = () => {
                     </div>
                 </div>
                 <div>
-                    <Button asChild variant="outline" className="border-2 hidden lg:block font-semibold border-gray-400 text-gray-500">
+                    <Button asChild variant="outline" className=" border-2 hidden lg:flex font-semibold border-gray-400 text-gray-500">
                         <Link to={routes.SELLERDASHBOARD.pathname}>
-                            <X className="h-4 w-4" />
+                            <X className="h-4 w-4 " />
                             Cancel
                         </Link>
                     </Button>
@@ -1201,7 +1201,7 @@ const Quotes = () => {
 
                                             <LabelledTextField
                                                 placeholder="Add your comments"
-                                                className=" my-4"
+                                                className=""
                                                 multiline
                                                 rows={4}
                                                 inputRef={

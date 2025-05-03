@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { CommonFormValidations } from "components/Form/CommonFormValidations";
 import { usePostSampleShipmentDetail } from "queries/Seller";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSeller } from "pages/Seller/Context/SellerContext";
 
 const { productName, quantity, address } = CommonFormValidations;
 const SampleShipmentFormSchema = yup.object().shape({
@@ -23,6 +24,7 @@ const SampleShipmentFormSchema = yup.object().shape({
 export default function CreateSampleShipment({isOpen, onClose}) {
   const [isMobile, setIsMobile] = useState(false)
   const dialogRef = useRef(null)
+  const {setCreateSampleShipment} = useSeller();
 
   // Detect mobile screen
   useEffect(() => {
@@ -93,6 +95,9 @@ export default function CreateSampleShipment({isOpen, onClose}) {
   const submitHandlerError = (formData) => {
       console.log("form error :", formData);
   };
+  const handleClose = () => {
+    setCreateSampleShipment(false);
+};
   return (
     <>
 
@@ -115,7 +120,7 @@ export default function CreateSampleShipment({isOpen, onClose}) {
                     <img src={sampleShipment} alt="logo" className="w-10 h-10" />
                     <h2 className="text-mdb md:text-xl font-semibold text-gray-900">Sample Shipment</h2>
                 </div>
-                <button onClick={() => onClose()} className="text-gray-500 hover:text-gray-700">
+                <button onClick={() => handleClose()} className="text-gray-500 hover:text-gray-700">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"

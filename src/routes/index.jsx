@@ -20,6 +20,8 @@ import activeShipment from 'assets/svg/activeShipmentIcon.svg'
 import sampleIcon from 'assets/svg/sampleIcon.svg'
 import completedShipment from 'assets/svg/box-tick.svg'
 import cancelledShipment from 'assets/svg/box-remove.svg'
+import CreateSampleShipment from "pages/Seller/Booking/SampleShipment/New/CreateSampleShipment";
+import { useSeller } from "pages/Seller/Context/SellerContext";
 
 
 // import AppContainer from 'Pages/AppContainer';
@@ -90,6 +92,8 @@ const ProtectedRoutes = () => {
             route: routes.ANNOUNCEMENT_SHIPPER.pathname,
         },
     ]
+    const {createSampleShipment,setSampleShipment}=useSeller()
+
     return isLoggedIn ? (
         userRole?.groups === "Seller" ? (
             <>
@@ -97,6 +101,13 @@ const ProtectedRoutes = () => {
                     <SellerTopNav />
                 </div>
                 <Outlet /> */}
+                {createSampleShipment && (
+                <CreateSampleShipment
+                    isOpen={createSampleShipment}
+                    title="Create Sample Shipment"
+                    description="Create a sample shipment to test the shipment process."
+                />
+                 )}
                 <NewDrawer menu={sellerMenu} dashboard="seller"> 
                     <Outlet />
                 </NewDrawer>

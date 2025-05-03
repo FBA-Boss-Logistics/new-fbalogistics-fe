@@ -16,7 +16,8 @@ import LogoFBA from 'assets/images/logo.png'
 import { useLogOutApiQuery } from 'queries/Auth'
 import { useNavigate } from 'react-router-dom'
 import ProfileIcon from '../ProfileIcon';
-const NewTopNavBar = ({menu}) => {
+import { useSidebar } from 'Context/SidebarContext'
+const NewTopNavBar = ({menu, dashboard}) => {
   const navigate = useNavigate();
 
   const { mutate: logoutApi } = useLogOutApiQuery();
@@ -29,17 +30,18 @@ const NewTopNavBar = ({menu}) => {
           onError: () => {},
       });
   };
+  const { isSidebarOpen, setIsSidebarOpen } = useSidebar();
   return (
     <div>
        <header className="flex md:hidden items-center justify-between p-4 bg-white border-b">
-        <Sheet>
+        <Sheet open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
           <SheetTrigger asChild>
             <button className="p-2">
               <Menu className="h-5 w-5" />
             </button>
           </SheetTrigger>
           <SheetContent side="left" className="p-0 w-72">
-            <NewSideNavBar menu={menu} />
+            <NewSideNavBar menu={menu} dashboard={dashboard} />
           </SheetContent>
         </Sheet>
 
