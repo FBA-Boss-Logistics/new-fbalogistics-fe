@@ -41,7 +41,7 @@ export default function CreateSampleShipment({isOpen, onClose}) {
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape" && isOpen) {
-        onClose()
+        handleClose()
       }
     }
 
@@ -53,7 +53,7 @@ export default function CreateSampleShipment({isOpen, onClose}) {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dialogRef.current && !dialogRef.current.contains(e.target) && isOpen) {
-        onClose()
+        handleClose()
       }
     }
 
@@ -88,7 +88,7 @@ export default function CreateSampleShipment({isOpen, onClose}) {
       postSampleShipmentDetail(data, {
           onSuccess: () => {
               queryClient.invalidateQueries("FETCH_SAMPLE_SHIPMENTS");
-              onClose();
+              handleClose();
           },
       });
   };
@@ -105,13 +105,12 @@ export default function CreateSampleShipment({isOpen, onClose}) {
 
       {isOpen && (
         <div
-          className={`fixed z-50 inset-x-0   bottom-0 animate-slide-up md:inset-0 md:flex md:items-center md:justify-center md:animate-fade-in`}
+          className={`fixed z-50 inset-x-0   bottom-0 ${isMobile ? "animate-slide-up" : "animate-fade-in"} md:inset-0 md:flex md:items-center md:justify-center `}
         >
           <div
             ref={dialogRef}
-            className={`bg-white rounded-lg shadow-xl ${
-              isMobile ? "w-full rounded-t-xl max-h-[90vh] overflow-auto" : "max-w-xl w-full mx-3"
-            }`}
+          
+            className={`bg-white rounded-lg shadow-xl w-full rounded-t-xl max-h-[90vh] overflow-auto md:max-w-xl md:w-full md:mx-3`}
           >
             {/* Header */}
             <div className="p-6 border-b">
