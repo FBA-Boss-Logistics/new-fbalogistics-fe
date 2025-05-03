@@ -30,7 +30,7 @@ import DOT from "assets/svg/statusdot.svg";
 
 import { FetchUserDetailApi, useLogOutApiQuery } from "queries/Auth";
 
-const NewSideNavBar = ({menu}) => {
+const NewSideNavBar = ({menu, dashboard}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState(location?.pathname);
@@ -85,7 +85,7 @@ const NewSideNavBar = ({menu}) => {
         {buttonsData?.filter((item) => {
                             if (item.label === "Sample Shipment") {
                                 if (
-                                    userinfo?.data?.email ===
+                                    dashboard === "seller" || userinfo?.data?.email ===
                                     import.meta.env
                                         .VITE_REACT_APP_SAMPLE_SHIPPER_EMAIL
                                 ) {
@@ -94,6 +94,7 @@ const NewSideNavBar = ({menu}) => {
                                 return false;
                             }
                             return true;
+                            
                         })
                         ?.map(({ icon, label, route, children }, i) => {
                           const isOpen = location.pathname.startsWith(route);

@@ -188,7 +188,7 @@ export default function DataTableCustom({
                                   )}
                               </div> */}
                               <div className="flex gap-2 justify-center items-center">
-                            {icon}
+                            {/* {icon} */}
                               <h2 className="font-semibold text-xl">
                               {heading}
                                 </h2> 

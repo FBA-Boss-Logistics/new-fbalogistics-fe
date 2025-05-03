@@ -12,6 +12,9 @@ import ChatIconWithDot from "components/Comman/ChatWithGreenDot";
 import { RemoveRedEyeOutlined } from "@mui/icons-material";
 import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
 import ActionTable from "components/Table/ActionTable";
+import DashboardStats from "pages/Seller/Dashboard/dashboardStats";
+import HeaderPage from "components/HeaderPage";
+import { Card } from "components/ui/card";
 
 export default function SampleShipment() {
     const navigate = useNavigate();
@@ -72,46 +75,55 @@ export default function SampleShipment() {
             Header: "Shipment ID",
             accessor: "id",
             width: 10,
+            Cell: ({ row: { original } }) => (
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
+                    {original?.id}
+                </Typography>
+            ),
+        },
+        {
+            Header: "Sample Amount",
+            accessor: "quantity",
+            Cell: ({ row: { original } }) => (
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
+                    {original?.quantity}
+                </Typography>
+            ),
+        },
+        {
+            Header: "Delivery Address",
+            accessor: "address",
+            Cell: ({ row: { original } }) => (
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
+                    {original?.address}
+                </Typography>
+            ),
         },
         {
             Header: "Product Name",
             accessor: "product_name",
             Cell: ({ row: { original } }) => (
-                <div className="flex items-center">
-                    <img src={ProductImage} alt="Product" />
-                    <span className="ml-1.5">{original?.product_name}</span>
-                </div>
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
+                    {original?.product_name}
+                </Typography>
             ),
         },
         {
             Header: "Shipment Date",
             accessor: "shipment_ready_date",
             Cell: ({ row: { original } }) => (
-                <Typography>
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
                     {formatDate(original?.created_at?.split("T")?.[0])}
                 </Typography>
-            ),
-        },
-        {
-            Header: "Amount of Samples",
-            accessor: "pickup_location",
-            Cell: ({ row: { original } }) => (
-                <Typography>{original?.quantity}</Typography>
-            ),
-        },
-
-        {
-            Header: "Sample Delivery Address",
-            accessor: "address",
-            Cell: ({ row: { original } }) => (
-                <Typography>{original?.address}</Typography>
             ),
         },
         {
             Header: "Status",
             accessor: "status",
             Cell: ({ row: { original } }) => (
-                <Typography>{original?.status}</Typography>
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
+                    {original?.status}
+                </Typography>
             ),
         },
         {
@@ -168,36 +180,26 @@ export default function SampleShipment() {
             {makePayment && (
                 <PaymentModal open={makePayment} onClose={handleClose} />
             )}
-            <div>
-                {/* <div className="py-4 border border-natural-100 border-solid border-x-0 border-t-0">
-                <SellerTopNav />
-            </div> */}
-                <div className="px-4 bg-natural-25 h-[calc(100vh_-_76.8px)] overflow-y-scroll">
-                    <BookingsTopNav />
-                    <Typography
-                        variant="h6"
-                        color="natural.900"
-                        fontWeight={500}
-                        className="pb-4"
-                    >
-                        Sample Shipments
-                    </Typography>
+            <DashboardStats/>
 
-                    <DataTableCustom
-                        data={userMessageNotification}
-                        columns={columns}
-                        paginationFooter={true}
-                        searchBar={true}
-                        updateFilters={setSellerShipmentPagination}
-                        paginationData={paginationInformation}
-                        isLoading={isLoading}
-                        pageNumber={true}
-                        date={true}
-                        setSelectedDate={setSelectedSellerShipmentDate}
-                        selectedDate={selectedSellerShipmentDate}
-                    />
-                </div>
-            </div>
+            <HeaderPage title="Sample Shipments" home="seller" pathname="Sample Shipments" />
+
+            <Card className="mt-6 overflow-hidden"> 
+            <DataTableCustom
+                data={userMessageNotification}
+                columns={columns}
+                paginationFooter={true}
+                searchBar={true}
+                updateFilters={setSellerShipmentPagination}
+                paginationData={paginationInformation}
+                isLoading={isLoading}
+                pageNumber={true}
+                    date={true}
+                    setSelectedDate={setSelectedSellerShipmentDate}
+                    selectedDate={selectedSellerShipmentDate}
+                    heading="Sample Shipments"
+                />
+            </Card>
         </>
     );
 }

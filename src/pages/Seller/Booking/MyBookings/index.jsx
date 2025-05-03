@@ -160,7 +160,6 @@ export default function MyBooking() {
         {
             Header: "Action",
             Cell: ({ row: { original } }) => {
-                console.log(original.status)
                 const action = [
                     {
                         name: "View shipment",
@@ -213,7 +212,7 @@ export default function MyBooking() {
                     pageNumber={true}
                     setSelectedDate={setSelectedSellerShipmentListDate}
                     selectedDate={selectedSellerShipmentListDate}
-                    heading="Current Shipments"
+                    heading="Top Selling Products"
                 />
                 </Card>
         </div>

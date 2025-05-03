@@ -79,6 +79,15 @@ export default function SampleShipmentTable() {
             Header: "S No.",
             accessor: "id",
             width: 10,
+            Cell: ({ row: { original } }) => (
+                <Typography
+                    variant="subtitle1"
+                    color="natural.500"
+                    fontWeight={400}
+                >
+                    {original?.id}
+                </Typography>
+            ),
         },
         {
             Header: "Seller ID",

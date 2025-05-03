@@ -8,7 +8,7 @@ const HeaderPage = ({title, pathname,home}) => {
     <div>
     <h1 className="text-2xl font-semibold text-zinc-800 mb-2">{title}</h1>
     <div className="flex items-center text-sm">
-    <Link to={home=='shipment' ? routes.SHIPPERDASHBOARD.pathname : routes.SELLERDASHBOARD.pathname} className="text-blue-600 hover:underline">
+    <Link to={home=='shipment' ? routes.SHIPPERDASHBOARD.pathname : routes.SELLERDASHBOARD.pathname} className="text-primary hover:underline">
         Dashboard
     </Link>
     <ChevronRight className="h-4 w-4 inline" />

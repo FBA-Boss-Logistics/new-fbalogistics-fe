@@ -44,7 +44,7 @@ const ProtectedRoutes = () => {
         {
             icon: sampleIcon,
             label: "Sample Shipment",
-            route: routes.SELLERPASTORDERBOOKING.pathname,
+            route: routes.SELLERSAMPLESHIPMENT.pathname,
         },
         {
             icon: completedShipment,
@@ -97,12 +97,12 @@ const ProtectedRoutes = () => {
                     <SellerTopNav />
                 </div>
                 <Outlet /> */}
-                <NewDrawer menu={sellerMenu}> 
+                <NewDrawer menu={sellerMenu} dashboard="seller"> 
                     <Outlet />
                 </NewDrawer>
             </>
         ) : (
-            <NewDrawer menu={shipperMenu}> 
+            <NewDrawer menu={shipperMenu} dashboard="shipper"> 
                 <Outlet />
             </NewDrawer>
         )
