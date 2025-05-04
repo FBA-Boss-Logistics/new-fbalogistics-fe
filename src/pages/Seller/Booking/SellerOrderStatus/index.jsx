@@ -94,10 +94,10 @@ export default function SellerOrderStatus() {
                 </div>
             ) : (
                 <div>
-                    <div className="flex  flex-row-reverse gap-4">
+                    <div className="flex flex-col md:flex-row-reverse gap-4">
                         {srcQueryParam === "pendingorders" && (
                             
-                            <div className="w-full">
+                            <div className="w-full md:max-w-[300px] ">
                                 <ShippingAmount
                                     shippingAmount={
                                         shipmentData?.data?.quotation
@@ -130,7 +130,7 @@ export default function SellerOrderStatus() {
                                 </Typography>
                              </div>
                         </div> */}
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 w-full ">
                         {winBidAccepted && (
                             <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4 flex-col gap-4 flex">
                                 <div className="flex-col gap-2">

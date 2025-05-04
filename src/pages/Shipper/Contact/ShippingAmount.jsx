@@ -58,7 +58,7 @@ const navigate = useNavigate();
                     </li>
                     <li className="flex justify-between items-center border-b py-4">
                       <span className="text-sm">Shipping Agent</span>
-                      <span className="font-medium">{shipmentData?.user?.first_name} {shipmentData?.user?.last_name}</span>
+                      <span className="font-medium">{shipmentData?.user?.first_name}</span>
                     </li>
                   </ul>
                 </CardContent>
