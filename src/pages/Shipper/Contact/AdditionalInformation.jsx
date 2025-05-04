@@ -16,12 +16,16 @@ import { useQuery } from "@tanstack/react-query";
 import { axios } from "service";
 import Note from "assets/svg/notes.svg";
 import { Card } from "components/ui/card";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
+import { ChevronDown } from "lucide-react";
 export function AdditionalInformation({additionalNotes}) {
+    const [showMore, setShowMore] = useState(true);
 
     if(!additionalNotes) return <></>
     return (
         <Card className="p-4 space-y-4">
-            <div className="bg-natural-25 p-2 flex-col justify-start items-start gap-2 flex">
+            <Collapsible open={showMore} onOpenChange={setShowMore}>
+            <CollapsibleTrigger className="flex items-center w-full mb-6">
                 <div className="flex items-center flex-row gap-2">
                     <div className="bg-natural-200 rounded-full w-[30px]">
                         <img src={Note} alt="note" />
@@ -34,14 +38,20 @@ export function AdditionalInformation({additionalNotes}) {
                     Additional Notes
                 </Typography>
                 </div>
+         
+            
+            <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${showMore ? "rotate-180" : ""}`} />
+            </CollapsibleTrigger>
+                <CollapsibleContent className=" p-2 flex-col justify-start items-start gap-2 flex">
                 <Typography
-                    color="natural.500"
-                    variant="body2"
-                    fontWeight={500}
-                >
-                    {additionalNotes}
-                </Typography>
-            </div>
+                        color="natural.500"
+                        variant="body2"
+                        fontWeight={500}
+                    >
+                        {additionalNotes}
+                    </Typography>
+                </CollapsibleContent>
+            </Collapsible>
         </Card>
     );
 }

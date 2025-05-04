@@ -156,10 +156,12 @@
 // }
 
 import { Chip, Typography } from "@mui/material";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import Truck from "assets/svg/truck.svg";
 import DataTableCustom from "components/Table/DataTableCustom";
 import { Card } from "components/ui/card";
-import { Package } from "lucide-react";
+import { ChevronDown, Package } from "lucide-react";
+import { useState } from "react";
 
 const columns = [
     {
@@ -266,22 +268,24 @@ const columns = [
 
 ]
 
-
-
 export function Cargo({ productName, packages,shipmentData, asinNumber }) {
+    const [cargoOpen, setCargoOpen] = useState(true);
     return (
         <Card className="p-4 space-y-4">
-            <div className="flex-col gap-2">
-                <div className="flex items-center flex-row gap-2">
+            <Collapsible open={cargoOpen} onOpenChange={setCargoOpen}>
+            <CollapsibleTrigger className="flex items-center w-full mb-6">
+           
+                <div className="flex items-center flex-row gap-2 w-full">
                         <div className="bg-natural-200 rounded-full w-[30px]">
                             <img src={Truck} alt="truck" />
                         </div>
                 <Typography color="natural.900" fontSize={18} fontWeight={500}>
                     Cargo
                 </Typography>
+                <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${cargoOpen ? "rotate-180" : ""}`} />
                 </div>
-
-            </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
             <div className="flex flex-col gap-2">
                 <div className="flex gap-4">
                     <div className="bg-natural-25 p-2 flex-col gap-2 flex w-1/2 rounded-lg">
@@ -462,6 +466,8 @@ export function Cargo({ productName, packages,shipmentData, asinNumber }) {
             />
 
             </div>
+            </CollapsibleContent>
+            </Collapsible>
         </Card>
     );
 }

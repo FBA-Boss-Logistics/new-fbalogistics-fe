@@ -1144,83 +1144,82 @@ const Quotes = () => {
                             <CardComponent className="px-6 py-2">
                                 {/* collapsable section */}
                                 <Collapsible open={complianceOpen} onOpenChange={setComplianceOpen}>
-                                <CollapsibleTrigger className="flex items-center w-full  text-left  rounded-md">
-                                        <div className="flex-col gap-2 ">
-                                            <div className="flex items-center flex-row gap-2">
-                                                    <div className="bg-natural-200 rounded-full w-[30px]">
-                                                        <img src={Truck} alt="truck" />
-                                                    </div>
-                                            <Typography color="natural.900" fontSize={18} fontWeight={600}>
-                                                Complience
-                                            </Typography>
+                                    <CollapsibleTrigger className="flex items-center w-full  text-left  rounded-md">
+                                            <div className="flex-col gap-2 ">
+                                                <div className="flex items-center flex-row gap-2">
+                                                        <div className="bg-natural-200 rounded-full w-[30px]">
+                                                            <img src={Truck} alt="truck" />
+                                                        </div>
+                                                <Typography color="natural.900" fontSize={18} fontWeight={600}>
+                                                    Complience
+                                                </Typography>
+                                                </div>
                                             </div>
-                                        </div>
-                                    <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${complianceOpen ? "rotate-180" : ""}`} />
+                                        <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${complianceOpen ? "rotate-180" : ""}`} />
                                     </CollapsibleTrigger>
                                     <CollapsibleContent>
-
-                                    <LabelledTextField
-                                        label="Detailed product description"
-                                        placeholder="Product description will be used to ensure proper tariff calculation and import rates."
-                                        className=" my-4"
-                                        multiline
-                                        rows={3}
-                                        inputRef={refDetailedDescription}
-                                        {...RegisterDetailedDescription}
-                                        error={Boolean(
-                                            errors.detailed_product_description
-                                        )}
-                                        autoComplete="new-detailed-description"
-                                        helperText={
-                                            errors.detailed_product_description &&
-                                            errors
-                                                .detailed_product_description
-                                                .message
-                                        }
-                                    />
-
-                                    <div>
-                                        <Typography
-                                            variant="h6"
-                                            fontFamily="Sora"
-                                            color="natural.800"
-                                            fontWeight={600}
-                                        >
-                                            Does your shipment contain any
-                                            of the following goods?
-                                        </Typography>
-
-                                        <div className="flex flex-col">
-                                            <ComplianceCheckboxes
-                                                options={complianceOptions}
-                                                setValue={setValue}
-                                                compliance={compliance}
-                                                errors={errors}
-                                                trigger={trigger}
-                                            />
-
                                             <LabelledTextField
-                                                placeholder="Add your comments"
-                                                className=""
+                                                label="Detailed product description"
+                                                placeholder="Product description will be used to ensure proper tariff calculation and import rates."
+                                                className=" my-4"
                                                 multiline
-                                                rows={4}
-                                                inputRef={
-                                                    refAdditionalNotes
+                                                rows={3}
+                                                inputRef={refDetailedDescription}
+                                                {...RegisterDetailedDescription}
+                                                error={Boolean(
+                                                    errors.detailed_product_description
+                                                )}
+                                                autoComplete="new-detailed-description"
+                                                helperText={
+                                                    errors.detailed_product_description &&
+                                                    errors
+                                                        .detailed_product_description
+                                                        .message
                                                 }
-                                                {...RegisterAdditionalNotes}
-                                                // error={Boolean(
-                                                //     errors.additional_notes
-                                                // )}
-                                                autoComplete="new-additional-notes"
-                                                // helperText={
-                                                //     errors.additional_notes &&
-                                                //     errors.additional_notes
-                                                //         .message
-                                                // }
                                             />
-                                        </div>
-                                    </div>
-                                </CollapsibleContent>
+
+                                            <div>
+                                                <Typography
+                                                    variant="h6"
+                                                    fontFamily="Sora"
+                                                    color="natural.800"
+                                                    fontWeight={600}
+                                                >
+                                                    Does your shipment contain any
+                                                    of the following goods?
+                                                </Typography>
+
+                                                <div className="flex flex-col">
+                                                    <ComplianceCheckboxes
+                                                        options={complianceOptions}
+                                                        setValue={setValue}
+                                                        compliance={compliance}
+                                                        errors={errors}
+                                                        trigger={trigger}
+                                                    />
+
+                                                    <LabelledTextField
+                                                        placeholder="Add your comments"
+                                                        className=""
+                                                        multiline
+                                                        rows={4}
+                                                        inputRef={
+                                                            refAdditionalNotes
+                                                        }
+                                                        {...RegisterAdditionalNotes}
+                                                        // error={Boolean(
+                                                        //     errors.additional_notes
+                                                        // )}
+                                                        autoComplete="new-additional-notes"
+                                                        // helperText={
+                                                        //     errors.additional_notes &&
+                                                        //     errors.additional_notes
+                                                        //         .message
+                                                        // }
+                                                    />
+                                                </div>
+                                            </div>
+                                    </CollapsibleContent>
                                 </Collapsible>
                             </CardComponent>
                           

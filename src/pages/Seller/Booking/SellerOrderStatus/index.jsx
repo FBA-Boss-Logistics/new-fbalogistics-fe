@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import ShipperBid from "./shipperBid";
 import ShippingAmount from "pages/Shipper/Contact/ShippingAmount";
 import ErrorUi from "./ErrorUi";
+import { Card, CardContent, CardHeader } from "components/ui/card";
 
 const { pickup_amount, fast_amount, normal_amount } = CommonFormValidations;
 const QuotationFormSchema = yup.object().shape({
@@ -88,66 +89,48 @@ export default function SellerOrderStatus() {
         <>
             {isLoading ? (
                 <div className="flex justify-center items-center">
-                    {" "}
-                    <Loader />{" "}
+                  
+                    <Loader />
                 </div>
             ) : (
                 <div>
-                    <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4">
+                    <div className="flex  flex-row-reverse gap-4">
                         {srcQueryParam === "pendingorders" && (
-                            <div className="border-2  border-natural-100 border-solid rounded-xl m-4 flex-col gap-4 flex">
+                            
+                            <div className="w-full">
                                 <ShippingAmount
                                     shippingAmount={
                                         shipmentData?.data?.quotation
                                             ?.total_amount
                                     }
+                                    shipmentData={shipmentData?.data?.quotation}
                                     quotationId={
                                         shipmentData?.data?.quotation?.id
                                     }
                                 />
                             </div>
                         )}
-                        <div className="flex justify-between ml-4 mr-4">
-                            <div>
-                                <Chip
-                                    label={`Freight Booking Reference Number ${shipmentData?.data?.freight_booking_reference_number}`}
-                                    className="bg-primary-200"
-                                />
-                            </div>
-                            {!srcQueryParam &&
-                                shipmentData?.data?.status ===
-                                    "Quotation Accepted" && (
-                                    <div
-                                        title="chat"
-                                        onClick={handleClick}
-                                        className="flex items-center gap-2 cursor-pointer border-2 font-light border-solid py-1 px-3 rounded-lg border-natural-100"
-                                    >
-                                        <img
-                                            src={ChatIcon}
-                                            className="opacity-70"
-                                            alt="ChatIcon"
-                                        />
-                                        Chat
-                                    </div>
-                                )}
-                            {/* <div className="flex gap-4">
-                        <Typography
-                            textAlign={"center"}
-                            variant="body1"
-                            fontWeight={500}
-                            color="natural.900"
-                        >
-                            Pickup Date
-                        </Typography>
-                        <Typography
-                            color="natural.900"
-                            variant="body1"
-                            fontWeight={600}
-                        >
-                            {shipmentData?.data?.shipment_ready_date}
-                        </Typography>
-                    </div> */}
-                        </div>
+                        {/* <Card> */}
+                        {/* <div className="flex justify-between ml-4 mr-4">
+                            <div className="flex gap-4">
+                                <Typography
+                                    textAlign={"center"}
+                                    variant="body1"
+                                    fontWeight={500}
+                                    color="natural.900"
+                                >
+                                    Pickup Date
+                                </Typography>
+                                <Typography
+                                    color="natural.900"
+                                    variant="body1"
+                                    fontWeight={600}
+                                >
+                                    {shipmentData?.data?.shipment_ready_date}
+                                </Typography>
+                             </div>
+                        </div> */}
+                        <div className="flex flex-col gap-4">
                         {winBidAccepted && (
                             <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4 flex-col gap-4 flex">
                                 <div className="flex-col gap-2">
@@ -221,9 +204,20 @@ export default function SellerOrderStatus() {
                                 </div>
                             </div>
                         )}
-                        <div className="flex flex-col">
-                            <div>
-                                <OriginAndDestination
+                        <div className="flex flex-col gap-4">
+                            <Card >
+                                <CardHeader>
+                                <div className="border-b border-natural-100 ">
+                                <Typography
+                                        label={``}
+                                        className="mb-4"
+                                    >
+                                        Freight Booking Reference Number : <span className="text-primary-500 font-medium ">{shipmentData?.data?.freight_booking_reference_number}</span>
+                                    </Typography>
+                                </div>
+                                </CardHeader>
+                                <CardContent>
+                                    <OriginAndDestination
                                     supplierName={
                                         shipmentData?.data
                                             ?.supplier_contact_name
@@ -240,7 +234,8 @@ export default function SellerOrderStatus() {
                                             ?.supplier_contact_phone
                                     }
                                 />
-                            </div>
+                            </CardContent>
+                            </Card>
 
                             <div>
                                 <Cargo
@@ -251,7 +246,6 @@ export default function SellerOrderStatus() {
                                     asinNumber={asinNumber}
                                     shipmentData={shipmentData?.data}
                                 />
-                                <p>Packages</p>
                             </div>
                         </div>
                         <Compliance
@@ -346,12 +340,13 @@ export default function SellerOrderStatus() {
                         <div>
                             <PastStatus status={status} />
                         </div>
-                    </div>
                     {srcQueryParam === "newshipment" && (
-                        <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4">
+                        
                             <ShipperBid created_at={created_at} />
-                        </div>
+                      
                     )}
+                    </div>
+                    </div>
                 </div>
             )}
         </>

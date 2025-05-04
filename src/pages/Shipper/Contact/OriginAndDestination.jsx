@@ -1,9 +1,10 @@
 import { Typography } from "@mui/material";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import Location from "assets/svg/location.svg";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { showAddress } from "utils";
-
+import { ChevronDown } from "lucide-react";
 export function OriginAndDestination({
     supplierName,
     pickupLocation,
@@ -15,10 +16,12 @@ export function OriginAndDestination({
 
     const currentUrl = useLocation().pathname;
 
-    const [showMore, setShowMore] = useState(false);
+    const [showMore, setShowMore] = useState(true);
 
     return (
         <div>
+            <Collapsible open={showMore} onOpenChange={setShowMore}>
+            <CollapsibleTrigger className="flex items-center w-full mb-6">
             <div className="flex items-center flex-row gap-2">
                     <div className="bg-natural-200 rounded-full">
                         <img src={Location} alt="location" />
@@ -28,6 +31,9 @@ export function OriginAndDestination({
                     Origin and Destination
                 </Typography>
             </div>
+            <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${showMore ? "rotate-180" : ""}`} />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
             <div className="flex flex-col gap-2">
                 <div className="flex w-full justify-between gap-4">
                     <div className="bg-natural-25 p-2 flex-col gap-2 flex rounded-lg w-1/2">
@@ -106,6 +112,8 @@ export function OriginAndDestination({
                     </div>
                 </div> */}
             </div>
+            </CollapsibleContent>
+            </Collapsible>
         </div>
     );
 }

@@ -1,7 +1,8 @@
-import { Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { Chip, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import StepIcon from "assets/svg/stepicon.svg";
 import LastStepIcon from "assets/svg/laststepicon.svg";
 import { useLocation } from "react-router-dom";
+import { Card, CardHeader } from "components/ui/card";
 
 function PastStatusConnector() {
     return <div className="h-6 w-[2px] rounded-s-sm bg-[#E9B744] ml-4"></div>;
@@ -61,13 +62,17 @@ export default function PastStatus({ status }) {
     ];
 
     return (
-        <div className="w-full border-1 border-natural-100 border-solid rounded-xl bg-natural-25">
-            <div className="bg-natural-100 border-natural-100 border-solid rounded-t-xl pt-2 pb-2 pr-3 pl-3 ">
-                <Typography color="primary.900" fontWeight={600}>
-                    Status
-                </Typography>
-            </div>
-            <div className="p-3 flex flex-col ">
+        <div >
+            <Card className="w-full p-6">
+                {/* <CardHeader> */}
+                <div className="flex flex-row justify-between">
+                    <Typography color="primary.900" fontWeight={600}>
+                        Shipment Status
+                    </Typography>
+                    <Chip label={status} color="primary" variant="outlined" />
+                </div>
+                {/* </CardHeader> */}
+            <div className="flex flex-col ">
                 <Stepper
                     activeStep={3}
                     orientation="vertical"
@@ -115,6 +120,7 @@ export default function PastStatus({ status }) {
                     )}
                 </Stepper>
             </div>
+            </Card>
         </div>
     );
 }

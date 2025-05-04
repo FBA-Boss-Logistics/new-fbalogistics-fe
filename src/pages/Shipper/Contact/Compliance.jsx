@@ -15,10 +15,15 @@ import { useLocation, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { axios } from "service";
 import { Card } from "components/ui/card";
+import { ChevronDown } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 
 export function Compliance({productDescription, shipmentGoods}) {
+    const [showMore, setShowMore] = useState(true);
     return (
         <Card className="p-4 space-y-4">
+            <Collapsible open={showMore} onOpenChange={setShowMore}>
+            <CollapsibleTrigger className="flex items-center w-full mb-6">
             <div className="flex items-center flex-row  gap-2">
                 <div className="bg-natural-200 rounded-full w-[30px] ">
                     <img src={ComplianceIcon} width={40} alt="compliance" />
@@ -28,6 +33,9 @@ export function Compliance({productDescription, shipmentGoods}) {
                     Compliance
                 </Typography>
             </div>
+            <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${showMore ? "rotate-180" : ""}`} />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
             <div className="flex md:flex-row flex-col gap-2 justify-between mt-2">
                 <div className="bg-natural-25  p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
                     <Typography
@@ -67,6 +75,8 @@ export function Compliance({productDescription, shipmentGoods}) {
                    
                 </div>
             </div>
+            </CollapsibleContent>
+            </Collapsible>
         </Card>
     );
 }

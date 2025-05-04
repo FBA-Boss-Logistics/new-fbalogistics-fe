@@ -51,7 +51,7 @@ export default function DataTableCustom({
     date,
     isLoading,
     icon=<Package className="h-6 w-6" />,
-    heading="Data"
+heading="Data"
 
 }) {
     const [searchKeyword, setSearchKeyword] = useState(null);
@@ -150,6 +150,7 @@ export default function DataTableCustom({
                     ? searchBar && (
                           <div className="border-1 overflow-hidden border-solid  px-4  border-natural-200  justify-items-end rounded-xl mb-4 py-4 flex flex-row-reverse justify-between  gap-3 ">
                               <div>
+                                {!shipperBid && (
                                   <TextField
                                       placeholder="Search"
                                       className="w-[300px] "
@@ -171,6 +172,7 @@ export default function DataTableCustom({
                                           ),
                                       }}
                                   />
+                                )}
                               </div>
 
                               {/* <div className="flex gap-4">
@@ -316,16 +318,17 @@ export default function DataTableCustom({
                                 <tr>
                                     <td colSpan={columns.length}>
                                         {shipperBid ? (
-                                            <div className="text-center my-10">
-                                                <Typography
-                                                    fontFamily="Sora"
-                                                    fontSize={28}
-                                                    fontWeight={400}
-                                                    color="natural.900"
-                                                >
-                                                    You have no Bids yet!
-                                                </Typography>
-                                            </div>
+                                               <div className="flex flex-col items-center justify-center py-12 px-4">
+                                                    <div className="h-20 w-20 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                                                        <img src={EmptyIcon} alt="EMPTY ICON" />
+                                                        <PackageOpen className="h-10 w-10 text-slate-400" />
+                                                    </div>
+                                                    <h3 className="text-lg font-medium text-slate-900 mb-1">You have no bid yet</h3>
+                                                    <p className="text-sm text-slate-500 text-center mb-6 max-w-md">
+                                                    Bids will appear here once you place a bid. Check back later for updates.
+                                                    </p>
+                                                </div>
+                                               
                                         ) : (
                                             // <div className="flex flex-col justify-center text-center  m-12  items-center gap-8  ">
                                             //     <img
@@ -364,7 +367,7 @@ export default function DataTableCustom({
             {/* card mobile */}
             <div className="md:hidden flex-1 overflow-auto ">
               {/* First Quotation */}
-              <div className="bg-white border-b border-zinc-200">
+              <div className="bg-white  border-zinc-200">
                      {isLoading ? (
                                
                                         <Loader data="Quotations" />
@@ -389,6 +392,7 @@ export default function DataTableCustom({
                                     </>
                                     )
                                 })} 
+                                {row.cells.filter((cell)=> cell.render("Header") == "Action" || cell.render("Header") == "Action2").length > 0 && (
                                 <div className="  py-2 bg-slate-100">
                                 {row.cells.filter((cell)=> cell.render("Header") == "Action" || cell.render("Header") == "Action2").map((cell)=>{
                                     return(
@@ -402,6 +406,7 @@ export default function DataTableCustom({
                                     )
                                 })} 
                                 </div>
+                                )}
                             </>
                             )
                         })
