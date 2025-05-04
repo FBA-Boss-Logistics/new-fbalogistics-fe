@@ -117,7 +117,7 @@ export default function CancelledOrders() {
     return (
         <div>
             <DashboardStats />
-            <HeaderPage title="Cancelled Shipments" home="shipment" pathname="Cancelled Shipments" />
+            <HeaderPage title="Cancelled Shipments" home="seller" pathname="Cancelled Shipments" />
             <Card className="mt-6 overflow-hidden">
                 <DataTableCustom
                     data={sellerShipmentListData}
