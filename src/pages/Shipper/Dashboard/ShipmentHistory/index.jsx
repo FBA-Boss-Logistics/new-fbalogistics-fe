@@ -12,6 +12,7 @@ import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 import { routes } from "routes/RouteConstants";
 import { ChevronRight } from "lucide-react";
 import ActionTable from "components/Table/ActionTable";
+import { Card } from "components/ui/card";
 
 export default function ShipmentHistory() {
     const [pastOrderListPagination, setPastOrderListPagination] = useState({});
@@ -154,21 +155,21 @@ export default function ShipmentHistory() {
                 </div>
             </div>
             <InfoModal open={modalOpen} onClose={handleCloseModal} />
-            <CardComponent>
+            <Card className="overflow-hidden">
 
                 <DataTableCustom
                     data={pastOrderListData}
                     columns={columns}
                     pageSize={10}
                     paginationFooter={true}
-                    searchBar={true}
+                    headerGroup={true}
                     pageNumber={true}
                     updateFilters={setPastOrderListPagination}
                     paginationData={paginationInformationShipment}
                     isLoading={isLoading}
                     heading="Shipments History"
                     />
-            </CardComponent>
+            </Card>
         </>
     );
 }

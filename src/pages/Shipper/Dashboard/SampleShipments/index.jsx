@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { routes } from "routes/RouteConstants";
 import { Button } from "components/ui/button";
 import ActionTable from "components/Table/ActionTable";
+import { Card } from "components/ui/card";
 
 export default function SampleShipmentTable() {
     const navigate = useNavigate();
@@ -206,20 +207,20 @@ export default function SampleShipmentTable() {
                 </div>
             </div>
             <InfoModal open={modalOpen} onClose={handleCloseModal} />
-            <CardComponent>
+            <Card className="overflow-hidden">
                 <DataTableCustom
                     data={userMessageNotification}
                     columns={columns}
                     pageSize={10}
                     paginationFooter={true}
-                    searchBar={true}
+                    headerGroup={true}
                     pageNumber={true}
                     updateFilters={setSellerShipmentPagination}
                     paginationData={paginationInformationShipment}
                     isLoading={isLoading}
                     heading="Sample Shipment"
                 />
-            </CardComponent>
+            </Card>
         </>
     );
 }

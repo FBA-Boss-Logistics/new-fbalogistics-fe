@@ -12,6 +12,7 @@ import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 import { ChevronRight } from "lucide-react";
 import { routes } from "routes/RouteConstants";
 import ActionTable from "components/Table/ActionTable";
+import { Card } from "components/ui/card";
 
 export default function Orders() {
     const navigate = useNavigate();
@@ -246,20 +247,20 @@ export default function Orders() {
                 </div>
             </div>
 
-            <CardComponent>
+            <Card className="overflow-hidden">
                 <DataTableCustom
                     data={userMessageNotification}
                     columns={columns}
                     pageSize={10}
                     paginationFooter={true}
-                    searchBar={true}
+                    headerGroup={true}
                     pageNumber={true}
                     updateFilters={setRecentOrderListPagination}
                     paginationData={paginationInformationShipment}
                     isLoading={isLoading}
                     heading="Current Shipments"
                 />
-            </CardComponent>
+            </Card>
         </>
     );
 }

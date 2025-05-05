@@ -12,6 +12,7 @@ import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 import { ChevronRight } from "lucide-react";
 import { routes } from "routes/RouteConstants";
 import ActionTable from "components/Table/ActionTable";
+import { Card } from "components/ui/card";
 
 export default function PastOrders() {
     const [pastOrderListPagination, setPastOrderListPagination] = useState({});
@@ -153,20 +154,20 @@ export default function PastOrders() {
                 <span className="text-gray-500">Completed Shipments</span>
                 </div>
             </div>
-            <CardComponent>
+            <Card className="overflow-hidden">
                 <DataTableCustom
                     data={pastOrderListData}
                     columns={columns}
                     pageSize={10}
                     paginationFooter={true}
-                    searchBar={true}
+                    headerGroup={true}
                     pageNumber={true}
                     updateFilters={setPastOrderListPagination}
                     paginationData={paginationInformationShipment}
                     isLoading={isLoading}
                     heading="Completed  Shipments"
                 />
-            </CardComponent>
+            </Card>
         </>
     );
 }
