@@ -148,10 +148,15 @@ export default function Orders() {
             Cell: ({ row: { original } }) => {
                 const action = [
                     {
-                        name: "More info",
-                        onClick: () => handleClickRoute(original),
+                        name: "View Shipment",
+                        onClick: () => handleDetailShipment(original.id),
                         visible: true,
                     },
+                    {
+                        name: "Open Chat",
+                        onClick: () => handleClickRoute(original),
+                        visible: true,
+                    }
                 ];
                 return (
                     <>
@@ -160,7 +165,7 @@ export default function Orders() {
                             fontSize="small"
                             color="secondary.100"
                             className="cursor-pointer"
-                            onClick={() => handleClickRoute(original)}
+                            onClick={() => handleDetailShipment(original.id)}
                         />
                         {original.status === "Quotation Accepted" && (
                             <ChatIconWithDot
@@ -182,26 +187,26 @@ export default function Orders() {
                 );
             },
         },
-        {
-            Header: "Action2",
-            Cell: ({ row: { original } }) => {
-                return (
-                    <>
-                    <div className="flex gap-2 items-center justify-center md:hidden w-full">
-                         {original.status === "Quotation Accepted" && (
-                            <Button
-                                variant="text"
-                                className="block md:hidden w-full text-blue-600 " 
-                                onClick={() => handleClickRoute(original)}
-                            >
-                                Chat
-                            </Button>
-                        )}
-                    </div>
-                    </>
-                );
-            },
-        },
+        // {
+        //     Header: "Action2",
+        //     Cell: ({ row: { original } }) => {
+        //         return (
+        //             <>
+        //             <div className="flex gap-2 items-center justify-center md:hidden w-full">
+        //                  {original.status === "Quotation Accepted" && (
+        //                     <Button
+        //                         variant="text"
+        //                         className="block md:hidden w-full text-blue-600 " 
+        //                         onClick={() => handleClickRoute(original)}
+        //                     >
+        //                         Chat
+        //                     </Button>
+        //                 )}
+        //             </div>
+        //             </>
+        //         );
+        //     },
+        // },
     ];
 
     const handleOpenModal = (original) => {
@@ -211,6 +216,14 @@ export default function Orders() {
 
     const handleCloseModal = () => {
         setModalOpen(false);
+    };
+
+    const handleDetailShipment = (id) => {
+        // if (srcQueryParam === "accepted") {
+            navigate(`/shipper/bid/${id}/?src=phone`);
+        // } else {
+        //     navigate(`/shipper/bid/${id}`);
+        // }
     };
 
     return (

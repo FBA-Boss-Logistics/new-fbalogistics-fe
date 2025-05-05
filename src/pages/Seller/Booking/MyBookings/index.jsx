@@ -85,7 +85,10 @@ export default function MyBooking() {
             );
         }
     };
- 
+
+    const handleDetailShipment = (id) => {
+        navigate(`/seller/booking/order/status/${id}`);
+    }
     /** @type import('@tanstack/react-table').ColumnDef<any> */ //for autosuggestions
     const columns = [
         {
@@ -163,7 +166,7 @@ export default function MyBooking() {
                 const action = [
                     {
                         name: "View shipment",
-                        onClick: () => handleClick(original),
+                        onClick: () => handleDetailShipment(original.id),
                         visible: true,
                     },
                     {
@@ -178,7 +181,7 @@ export default function MyBooking() {
                         <img
                             src={EyeIcon}
                             className="cursor-pointer "
-                            onClick={() => handleClick(original)}
+                            onClick={() => handleDetailShipment(original.id)}
                             alt="EyeIcon"
                         />
                         {original.status === "Quotation Accepted" && (

@@ -131,7 +131,7 @@ export default function SampleShipment() {
             Cell: ({ row: { original } }) => {
                 const action = [
                     {
-                        name: "More info",
+                        name: "View Shipment",
                         onClick: () => handleClick(original),
                         visible: true,
                     },

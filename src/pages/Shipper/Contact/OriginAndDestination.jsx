@@ -36,7 +36,7 @@ export function OriginAndDestination({
             <CollapsibleContent>
             <div className="flex flex-col gap-2">
                 <div className="flex w-full justify-between gap-4">
-                    <div className="bg-natural-25 p-2 flex-col gap-2 flex rounded-lg w-1/2">
+                    <div className="p-2 flex-col gap-2 flex rounded-lg w-1/2">
                         <Typography
                             variant="body2"
                             fontWeight={500}
@@ -55,7 +55,7 @@ export function OriginAndDestination({
                     {(currentUrl.includes("/booking/order/status") ||
                         srcQueryParam === "past order" ||
                         srcQueryParam === "phone") && (
-                        <div className="bg-natural-25 p-2 flex-col gap-2 flex w-1/2">
+                        <div className="p-2 flex-col gap-2 flex w-1/2">
                             <Typography
                                 variant="body2"
                                 fontWeight={500}
@@ -73,7 +73,7 @@ export function OriginAndDestination({
                         </div>
                     )}
                 </div>
-                <div className="bg-natural-25 p-2 flex-col gap-2 flex rounded-lg">
+                <div className="p-2 flex-col gap-2 flex rounded-lg">
                     <Typography
                         variant="body2"
                         fontWeight={500}

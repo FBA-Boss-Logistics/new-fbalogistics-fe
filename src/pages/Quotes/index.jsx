@@ -1084,7 +1084,7 @@ const Quotes = () => {
                                         <div className="flex-col gap-2 ">
                                             <div className="flex items-center flex-row gap-2">
                                                 <div className="bg-natural-200 rounded-full w-[30px]">
-                                                    <img src={Truck} alt="truck" />
+                                                    <img src={Location} alt="truck" />
                                                 </div>
                                         <Typography color="natural.900" fontSize={18} fontWeight={600}>
                                             Contact Information

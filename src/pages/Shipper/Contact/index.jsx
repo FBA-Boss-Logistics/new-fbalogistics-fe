@@ -151,12 +151,13 @@ export default function Contact() {
                                     label={`Freight Booking Reference Number ${shipmentData?.data?.freight_booking_reference_number}`}
                                     className="bg-primary-200"
                                 /> */}
-                                <p>
+                              
+                            </div>
+                            <div className="flex items-center justify-between gap-4">
+                            <p>
                                 Freight Booking Reference Number:
                                  <span className="text-yellow-500"> {shipmentData?.data?.freight_booking_reference_number}</span>
                                 </p>
-                            </div>
-                            <div className="flex gap-4">
                                 {srcQueryParam === "phone" &&
                                     shipmentData.data.status ===
                                         "Quotation Accepted" && (
