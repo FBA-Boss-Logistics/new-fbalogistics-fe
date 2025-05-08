@@ -314,7 +314,7 @@ export default function SellerDashboard() {
                     columns={columns}
                     updateFilters={setSellerHomeRecentOrderPagination}
                     paginationFooter={true}
-                    searchBar={true}
+                    headerGroup={true}
                     pageNumber={true}
                     paginationData={paginationInformation}
                     isLoading={isLoading}

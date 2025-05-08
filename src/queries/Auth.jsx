@@ -52,7 +52,7 @@ const FetchUserDetail = () => {
     const method = "GET";
     return axios({
         method,
-        url: "auth/me/",
+        url: "auth/v1/me/",
     });
 };
 
@@ -143,11 +143,14 @@ export const useLogOutApiQuery = () => {
 // update profile api
 const UpdateProfile = (data) => {
     const method = "PATCH";
-    const url = `auth/update-profile/`;
+    const url = `auth/v1/update-profile/`;
     return axios({
         method,
         url,
         data,
+        headers: {
+            'Content-Type': 'multipart/form-data', 
+        }
     });
 };
 
@@ -158,6 +161,9 @@ export const UpdateProfileApi = () => {
         onSuccess: (response) => {
             HandleSuccessResponse(response);
             queryClient.invalidateQueries(["FETCH_LOGIN_USER_INFO"]);
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
         },
     });
 };

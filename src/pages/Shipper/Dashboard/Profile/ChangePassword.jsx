@@ -73,8 +73,8 @@ const ChangePassword = () => {
 
     return (
         <>
-            <Grid container spacing={2} sx={{ marginTop: 1 }}>
-                <Grid item xs={12} sm={4} md={4} lg={4}>
+            {/* <Grid container spacing={2} sx={{ marginTop: 1 }}> */}
+                {/* <Grid item xs={12} sm={4} md={4} lg={4}>
                     <Box variant="div" sx={{ width: "90%" }}>
                         <Typography
                             variant="body1"
@@ -92,19 +92,15 @@ const ChangePassword = () => {
                             Logistics
                         </Typography>
                     </Box>
-                </Grid>
+                </Grid> */}
 
                 {/* Change Password Form Placed Here  */}
-                <Grid item xs={12} sm={8} md={8} lg={8}>
+                <div className="w-full">
                     <form
                         id="change-password"
-                        className={`flex flex-col gap-6 ${
-                            isMobileDevice ? "w-full" : "w-4/5"
-                        }`}
+                        className={`flex flex-col gap-6 $`}
                         onSubmit={handleSubmit(submitChangePassword)}
                     >
-                        <Grid item container className="justify-between">
-                            <Grid xs={12} md={6} lg={6}>
                                 <PasswordField
                                     label="Current Password"
                                     type="password"
@@ -119,10 +115,8 @@ const ChangePassword = () => {
                                         errors.current_password?.message
                                     }
                                 />
-                            </Grid>
-                        </Grid>
-                        <Grid item container className="justify-between">
-                            <Grid xs={12} md={6} lg={6}>
+                       
+                    
                                 <PasswordField
                                     label="New Password"
                                     type="password"
@@ -134,10 +128,8 @@ const ChangePassword = () => {
                                     error={Boolean(errors.new_password)}
                                     helperText={errors.new_password?.message}
                                 />
-                            </Grid>
-                        </Grid>
-                        <Grid item container className="justify-between mb-4">
-                            <Grid xs={12} md={6} lg={6}>
+                  
+                      
                                 <PasswordField
                                     label="Confirm Password"
                                     type="password"
@@ -151,11 +143,10 @@ const ChangePassword = () => {
                                         errors.confirm_password?.message
                                     }
                                 />
-                            </Grid>
-                        </Grid>
+                    
                     </form>
-                </Grid>
-            </Grid>
+                </div>
+            {/* </Grid> */}
             {/* <Divider className="py-2 mb-4" /> */}
             <Box variant="div" sx={{ textAlign: "end" }} className="py-2">
                 <Button

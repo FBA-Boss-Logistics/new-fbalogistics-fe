@@ -166,7 +166,7 @@ export default function Quotation() {
                 data={shipmentListData}
                 columns={columns}
                 paginationFooter={true}
-                searchBar={true}
+                headerGroup={true}
                 pageNumber={true}
                 paginationData={paginationInformationShipment}
                 isLoading={isLoading}

@@ -195,7 +195,7 @@ export default function ShipperBid({ created_at }) {
                 data={quotationListData}
                 columns={columns}
                 paginationFooter={true}
-                searchBar={true}
+                headerGroup={true}
                 pageNumber={true}
                 isLoading={isLoading}
                 paginationData={paginationInformation}

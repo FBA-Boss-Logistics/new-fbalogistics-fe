@@ -459,7 +459,7 @@ export function Cargo({ productName, packages,shipmentData, asinNumber }) {
                 data={shipmentData?.packages}
                 columns={columns}
                 paginationFooter={false}
-                searchBar={false}
+                headerGroup={false}
                 pageNumber={false}
                 paginationData={shipmentData?.paginationInformationShipment}
                 date={false}

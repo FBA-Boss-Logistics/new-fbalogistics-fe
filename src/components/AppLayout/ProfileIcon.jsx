@@ -9,6 +9,7 @@ import {
     ListItemButton,
     useTheme,
     Badge,
+    styled,
 } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -238,7 +239,7 @@ const ProfileIcon = () => {
                         )}
                         <div onClick={handleClickMenu} className="md:flex hidden">
                             <div className="flex items-center gap-2">
-                            <Badge
+                            <Badge 
                                         anchorOrigin={{
                                             vertical: 'bottom',
                                             horizontal: 'right',
@@ -246,16 +247,19 @@ const ProfileIcon = () => {
                                         color="success"
                                         badgeContent=""
                                         variant="dot"
+                                        width={10}
+                                        height={10}
+                                        overlap="circular"
                                         
                                         >
                                     <Avatar
                                         sx={{
-                                            width: 34,
-                                            height: 34,
+                                            width: 36,
+                                            height: 36,
                                             border: 1,
                                             bgcolor: theme.palette.primary[100],
-                                            color: theme.palette.primary[800],
-                                            borderColor: theme.palette.primary[500],
+                                            color: theme.palette.primary[500],
+                                            borderColor: theme.palette.primary[100],
                                             fontWeight: 500,
                                         }}
                                         alt="Avatar"
@@ -266,7 +270,13 @@ const ProfileIcon = () => {
                                                 : ""
                                         }
                                     >
-                                        {!isLoading ? formatName(fullName) : null}
+                                        {!isLoading ? (
+                                            userInfo?.data?.image ? (
+                                                <img src={userInfo?.data?.image} alt="Avatar" />
+                                            ) : (
+                                                formatName(fullName)
+                                            )
+                                        ): null}
                                     
                                     </Avatar>
 

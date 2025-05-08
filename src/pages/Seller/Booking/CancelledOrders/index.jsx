@@ -123,7 +123,7 @@ export default function CancelledOrders() {
                     data={sellerShipmentListData}
                     columns={columns}
                     paginationFooter={true}
-                    searchBar={true}
+                    headerGroup={true}
                     updateFilters={setSellerShipmentPagination}
                     paginationData={paginationInformation}
                     isLoading={isLoading}

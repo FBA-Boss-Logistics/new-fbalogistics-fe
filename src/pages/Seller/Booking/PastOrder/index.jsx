@@ -158,7 +158,7 @@ export default function PastOrderBooking() {
                     columns={columns}
                     paginationFooter={true}
                     pageNumber={true}
-                    searchBar={true}
+                    headerGroup={true}
                     paginationData={paginationInformation}
                     isLoading={isLoading}
                     updateFilters={setSellerPastShipmentListPagination}

@@ -42,7 +42,7 @@ export default function DataTableCustom({
     columns,
     setSelectedDate,
     selectedDate,
-    searchBar,
+    headerGroup=true,
     paginationFooter,
     updateFilters = () => {},
     pageNumber,
@@ -147,7 +147,7 @@ heading="Data"
             </style>
             <div className="w-full hidden md:block h-[100%]no-scrollbar">
                 {data
-                    ? searchBar && (
+                    ? headerGroup && (
                           <div className="border-1 overflow-hidden border-solid  px-4  border-natural-200  justify-items-end rounded-xl mb-4 py-4 flex flex-row-reverse justify-between  gap-3 ">
                               <div>
                                 {!shipperBid && (

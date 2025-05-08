@@ -86,8 +86,14 @@ export default function MyBooking() {
         }
     };
 
-    const handleDetailShipment = (id) => {
-        navigate(`/seller/booking/order/status/${id}`);
+    const handleDetailShipment = (original) => {
+        if(original.status === "Quotation Approved"){
+            navigate(`/seller/booking/order/status/${original.id}/?src=pendingorders`);
+        }else if(original.status === "Quotation Accepted"){
+            navigate(`/seller/booking/order/status/${original.id}/?src=phone`);
+        }else{
+            navigate(`/seller/booking/order/status/${original.id}/?src=newshipment`);
+        }
     }
     /** @type import('@tanstack/react-table').ColumnDef<any> */ //for autosuggestions
     const columns = [
@@ -166,7 +172,7 @@ export default function MyBooking() {
                 const action = [
                     {
                         name: "View shipment",
-                        onClick: () => handleDetailShipment(original.id),
+                        onClick: () => handleDetailShipment(original),
                         visible: true,
                     },
                     {
@@ -181,7 +187,7 @@ export default function MyBooking() {
                         <img
                             src={EyeIcon}
                             className="cursor-pointer "
-                            onClick={() => handleDetailShipment(original.id)}
+                            onClick={() => handleDetailShipment(original)}
                             alt="EyeIcon"
                         />
                         {original.status === "Quotation Accepted" && (
@@ -207,7 +213,7 @@ export default function MyBooking() {
                     data={userMessageNotification}
                     columns={columns}
                     paginationFooter={true}
-                    searchBar={true}
+                    headerGroup={true}
                     paginationData={paginationInformation}
                     isLoading={isLoading}
                     updateFilters={setSellerShipmentListPagination}

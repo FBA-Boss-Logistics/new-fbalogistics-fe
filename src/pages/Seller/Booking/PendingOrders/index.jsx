@@ -132,7 +132,7 @@ export default function PendingOrders() {
                     data={sellerShipmentListData}
                     columns={columns}
                     paginationFooter={true}
-                    searchBar={true}
+                    headerGroup={true}
                     paginationData={paginationInformation}
                     isLoading={isLoading}
                     updateFilters={setSellerShipmentListPagination}
