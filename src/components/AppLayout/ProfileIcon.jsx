@@ -272,7 +272,7 @@ const ProfileIcon = () => {
                                     >
                                         {!isLoading ? (
                                             userInfo?.data?.image ? (
-                                                <img src={userInfo?.data?.image} alt="Avatar" />
+                                                <img src={userInfo?.data?.image} className="w-full h-full object-cover" alt="Avatar" />
                                             ) : (
                                                 formatName(fullName)
                                             )
