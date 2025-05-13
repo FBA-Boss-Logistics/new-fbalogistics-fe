@@ -171,7 +171,7 @@ const NewSideNavBar = ({menu, dashboard}) => {
                 </Link>
             </li>
             <li>
-                <Link to={routes.SHIPPERPROFILE.pathname} className="flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-md">
+                <Link to={isSeller ? routes.SELLERPROFILE.pathname : routes.SHIPPERPROFILE.pathname} className="flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-md">
                 <Settings className="mr-3 h-5 w-5" />
                 Settings
                 </Link>
