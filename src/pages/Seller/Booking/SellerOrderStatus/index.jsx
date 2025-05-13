@@ -21,6 +21,7 @@ import { Card, CardContent, CardHeader } from "components/ui/card";
 import Location from "assets/svg/location.svg";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import { ChevronDown } from "lucide-react";
+import HeaderPage from "components/HeaderPage";
 const { pickup_amount, fast_amount, normal_amount } = CommonFormValidations;
 const QuotationFormSchema = yup.object().shape({
     pickup_amount,
@@ -98,7 +99,8 @@ export default function SellerOrderStatus() {
                 </div>
             ) : (
                 <div>
-                    <div className="flex flex-col md:flex-row-reverse gap-4">
+                    <HeaderPage title="Active Shipment" home="seller" pathname={'Active Shipment'} />
+                    <div className="flex flex-col md:flex-row-reverse gap-4 mt-4">
                         {srcQueryParam === "pendingorders" && (
                             
                             <div className="w-full md:max-w-[300px] ">

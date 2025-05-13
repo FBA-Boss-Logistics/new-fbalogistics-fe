@@ -69,14 +69,16 @@ const NewSideNavBar = ({menu, dashboard}) => {
   const { data: userinfo } = FetchUserDetailApi();
   const {setCreateSampleShipment} = useSeller();
   const { setIsSidebarOpen } = useSidebar();
-  
+  const { data: userInfo } = FetchUserDetailApi();
+  const isSeller = userInfo?.data?.groups === "Seller";
   return (
        <div className="w-full md:w-72 bg-white border-r h-screen sticky top-0 flex flex-col">
         <div className="p-6 border-b border-natural-100 ">
             <div className="flex items-center">
             <span className="text-xl font-bold text-blue-900">
             <img
-             onClick={() => navigate(routes.SHIPPERDASHBOARD.pathname)}
+
+             onClick={() => isSeller ? navigate(routes.SELLERDASHBOARD.pathname) : navigate(routes.SHIPPERDASHBOARD.pathname)}
 
              src={LogoFBA} width={'70%'} alt="plane moving" />
 
@@ -85,8 +87,6 @@ const NewSideNavBar = ({menu, dashboard}) => {
         </div>
         <nav className="flex-1 p-4">
         <ul className="space-y-1">
-
-                        
         {buttonsData?.filter((item) => {
                             if (item.label === "Sample Shipment") {
                                 if (
@@ -127,7 +127,6 @@ const NewSideNavBar = ({menu, dashboard}) => {
                         })
                       
                     }
-                
         </ul>
         {dashboard === "seller" && (
             <ul className='space-y-1  border-t mt-4'>

@@ -97,7 +97,7 @@ const messageHistoryReducer = (state, action) => {
                 ...state,
                 data: {
                     ...state.data,
-                    messages: state.data.messages.map((msg) => {
+                    messages: state.data.messages?.map((msg) => {
                         if (
                             !msg.is_read ||
                             msg.read_by?.includes(userRole.id)

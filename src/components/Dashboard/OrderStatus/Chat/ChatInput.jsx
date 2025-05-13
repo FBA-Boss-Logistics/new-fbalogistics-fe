@@ -80,6 +80,7 @@ const ChatInput = ({
         }
 
     return (
+        <>
         <Box
             component="form"
             onSubmit={handleSubmit(handleSendMessage)}
@@ -112,7 +113,6 @@ const ChatInput = ({
                             </>
                         )}
                     </div>}
-
                     <IconButton
                         size="small"
                         style={{
@@ -251,6 +251,7 @@ const ChatInput = ({
 
             {showEmojiPicker && <EmojiPicker onSelect={addEmoji} />}
         </Box>
+        </>
     );
 };
 

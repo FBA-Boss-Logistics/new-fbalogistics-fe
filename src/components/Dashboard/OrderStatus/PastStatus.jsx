@@ -5,19 +5,19 @@ import { useLocation } from "react-router-dom";
 import { Card, CardHeader } from "components/ui/card";
 
 function PastStatusConnector() {
-    return <div className="h-6 w-[2px] rounded-s-sm bg-[#E9B744] ml-4"></div>;
+    return <div className="h-6   border-dashed border-l-2 border-primary-500 ml-4"></div>;
 }
 
 function BookingPastStatusConnector() {
-    return <div className="h-6 w-[2px] rounded-s-sm bg-success-500 ml-4"></div>;
+    return <div className="h-6 border-dashed border-l-2  ml-3"></div>;
 }
 
 function PastStatusIcon() {
-    return <img src={StepIcon} alt="icon" />;
+    return <img src={StepIcon} alt="icon" width={32} />;
 }
 
 export function CompleteStepIcon() {
-    return <img src={LastStepIcon} alt="icon" />;
+    return <img src={LastStepIcon} alt="icon" width={32} />;
 }
 
 export default function PastStatus({ status }) {
@@ -69,7 +69,7 @@ export default function PastStatus({ status }) {
                     <Typography color="primary.900" fontWeight={600}>
                         Shipment Status
                     </Typography>
-                    <Chip label={status} color="primary" variant="outlined" />
+                    <Chip label={status} className="bg-primary-200 text-primary-600 border-none font-semibold " variant="outlined" />
                 </div>
                 {/* </CardHeader> */}
             <div className="flex flex-col ">
@@ -112,7 +112,7 @@ export default function PastStatus({ status }) {
                                                         : "grey",
                                             }}
                                         >
-                                            {el.label}
+                                            {el.label} 
                                         </span>
                                     </StepLabel>
                                 </Step>

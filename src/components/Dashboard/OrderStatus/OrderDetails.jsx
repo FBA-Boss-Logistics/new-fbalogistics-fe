@@ -1,14 +1,20 @@
-import { Typography } from "@mui/material";
+import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import Loader from "components/Loader";
+import { Button } from "components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "components/ui/card";
+import { Info, MoreVerticalIcon } from "lucide-react";
 
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { formatDate, formatDateString } from "utils";
 import { formatLongDate } from "utils/format";
 export default function OrderDetails({
     OrderStatusData,
     isLoading,
     isQuotationDeclined,
+    handleClick,
+    handleStatusChange=null,
+    quotationID
 }) {
     const currentUrl = useLocation().pathname;
     const searchParams = new URLSearchParams(window.location.search);
@@ -64,9 +70,54 @@ export default function OrderDetails({
     ];
 
     const sections = srcQueryParam === "sampleShipments" ? section2 : section1;
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
-        <div className="w-full h-full border-1 flex flex-col border-natural-100 border-solid p-3 rounded-xl  justify-between ">
+        <Card className="w-full h-full border-1 flex flex-col border-natural-100 border-solid rounded-xl  justify-between ">
+         <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-medium">Shipment Details</h3>
+                        {srcQueryParam !== "sampleShipments" && handleStatusChange!==null ? (
+                            <>
+                            <IconButton
+                                    aria-label="more"
+                                    aria-controls="message-menu"
+                                    aria-haspopup="true"
+                                    onClick={(e) => { handleClose();
+                                        setAnchorEl(e.currentTarget);
+                                    }}
+                                    className=""
+                                    sx={{ marginLeft: "auto" }}
+                                >
+                                    <MoreVerticalIcon />
+                                </IconButton>
+                                <Menu
+                                    id="basic-menu"
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                    MenuListProps={{
+                                    'aria-labelledby': 'basic-button',
+                                    }}
+                                >
+                                    <MenuItem onClick={()=>{
+                                        handleStatusChange(quotationID, false)
+                                        handleClose()
+                                    }}>Cancel Winning Bid</MenuItem>
+                                </Menu>
+                        </>
+                        ) : (
+                            <></>
+                        )}
+                  </div>
+                  <CardDescription>Sales performance by location</CardDescription>
+        </CardHeader>
+        <CardContent>
+        <div className="w-full h-full border-1 flex flex-col border-natural-100 border-solid rounded-xl  justify-between  ">
             {!isLoading ? (
                 sections.map((section, index) => (
                     <React.Fragment key={index}>
@@ -77,7 +128,7 @@ export default function OrderDetails({
                                 </Typography>
                             </div>
 
-                            <div className="flex items-start w-1/2">
+                            <div className="flex items-start justify-end w-full ">
                                 <Typography
                                     textAlign={"start"}
                                     color="natural.700"
@@ -92,12 +143,22 @@ export default function OrderDetails({
                             <hr className="mt-3 mb-3 bg-natural-200 border-natural-200 border-solid" />
                         )}
                     </React.Fragment>
-                ))
+                )
+            )
             ) : (
                 <div className="flex items-center w-full justify-center h-full">
                     <Loader />
                 </div>
             )}
         </div>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+            <Button  variant="outline" size="lg"className="rounded-full border-2 border-primary" onClick={handleClick}>
+                {/* <   className="text-primary"> */}
+                    View details
+                {/* </Link> */}
+            </Button>
+        </CardFooter>
+        </Card>
     );
 }
