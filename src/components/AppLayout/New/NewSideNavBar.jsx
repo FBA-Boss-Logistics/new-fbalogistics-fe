@@ -152,12 +152,12 @@ const NewSideNavBar = ({menu, dashboard}) => {
       </nav>
         <div className="p-4 border-t">
             <ul className="space-y-1">
-        <li className='block md:hidden'>
+        {/* <li className='block md:hidden'>
                 <Link to={routes.SHIPPERPROFILE.pathname} className="flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-md">
                 <User className="mr-3 h-5 w-5" />
                 Profile
                 </Link>
-            </li>
+            </li> */}
             <li className='block md:hidden'>
                 <a onClick={handleClickLogout} className="flex cursor-pointer items-center p-3 text-gray-700 hover:bg-gray-100 rounded-md">
                 <LogOut  className="mr-3 h-5 w-5" />
@@ -171,9 +171,9 @@ const NewSideNavBar = ({menu, dashboard}) => {
                 </Link>
             </li>
             <li>
-                <Link href="#" className="flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-md">
+                <Link to={routes.SHIPPERPROFILE.pathname} className="flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-md">
                 <Settings className="mr-3 h-5 w-5" />
-                Setting
+                Settings
                 </Link>
             </li>
             </ul>
