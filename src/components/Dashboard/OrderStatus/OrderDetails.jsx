@@ -1,5 +1,6 @@
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import Loader from "components/Loader";
+import ModalComponent from "components/New/ModalComponent";
 import { Button } from "components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "components/ui/card";
 import { Info, MoreVerticalIcon } from "lucide-react";
@@ -19,6 +20,7 @@ export default function OrderDetails({
     const currentUrl = useLocation().pathname;
     const searchParams = new URLSearchParams(window.location.search);
     const srcQueryParam = searchParams.get("src");
+    const [cancelReason, setCancelReason] = useState("");
 
     const section1 = [
         { label: "Order Id", value: OrderStatusData?.id },
@@ -75,8 +77,44 @@ export default function OrderDetails({
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpenModal = () => {
+        setOpenModal(true);
+    };
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
 
     return (
+        <>
+
+        {/* modal cancel winning bid */}
+        <ModalComponent open={openModal} onClose={handleCloseModal} title="Cancel Winning Bid">
+            <div className="flex flex-col  items-end justify-end h-full gap-4">
+                {/* <textarea value={cancelReason} onChange={(e)=>setCancelReason(e.target.value)} className="w-full h-full border-1 border-natural-100 border-solid rounded-xl"></textarea> */}
+                
+                <textarea
+                                        value={cancelReason}
+                                        onChange={(e) =>
+                                            setCancelReason(e.target.value)
+                                        }
+                                        rows={7}
+                                        placeholder="Enter your Cancel Reason"
+                                        className="border border-solid border-[#00000050] outline-none w-full p-4 rounded-md"
+                                    />
+                <div className="flex flex-col md:flex-row-reverse gap-2 w-full h-['20ox'] ">
+                    <Button className="rounded-full border-2 border-primary md:flex-1" size="lg" onClick={()=>{
+                        console.log(cancelReason)
+                        handleStatusChange(quotationID, false, cancelReason)
+                        handleCloseModal()
+                    }}>Cancel Winning Bid</Button>
+                    <Button className="rounded-full border-2 border-primary md:flex-1" variant="outline" size="lg" onClick={()=>{
+                        handleCloseModal()
+                    }}>Cancel</Button>
+                </div>
+            </div>
+        </ModalComponent>
+       
         <Card className="w-full h-full border-1 flex flex-col border-natural-100 border-solid rounded-xl  justify-between ">
          <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
@@ -105,7 +143,8 @@ export default function OrderDetails({
                                     }}
                                 >
                                     <MenuItem onClick={()=>{
-                                        handleStatusChange(quotationID, false)
+                                        // handleStatusChange(quotationID, false)
+                                        handleOpenModal()
                                         handleClose()
                                     }}>Cancel Winning Bid</MenuItem>
                                 </Menu>
@@ -153,12 +192,13 @@ export default function OrderDetails({
         </div>
         </CardContent>
         <CardFooter className="flex justify-end">
-            <Button  variant="outline" size="lg"className="rounded-full border-2 border-primary" onClick={handleClick}>
-                {/* <   className="text-primary"> */}
+            <Button  variant="outline" size="lg"className="rounded-full border-2 border-primary text-primary" onClick={handleClick}>
+                <span  className="text-primary">
                     View details
-                {/* </Link> */}
+                </span>
             </Button>
         </CardFooter>
         </Card>
+        </>
     );
 }

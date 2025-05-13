@@ -67,7 +67,7 @@ export default function PastOrderStatus() {
                             isLoading={isLoading}
                         />
                     </div>
-                    <ShippingAddress OrderStatusData={OrderStatusData?.data} />
+                    {/* <ShippingAddress OrderStatusData={OrderStatusData?.data} /> */}
                     <div className="w-full flex gap-4">
                         <div className="w-full">
                             <OrderDetails

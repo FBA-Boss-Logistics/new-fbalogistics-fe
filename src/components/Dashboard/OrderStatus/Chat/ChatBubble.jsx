@@ -461,7 +461,7 @@ export default function ChatBubble({
                                 return (
                                     <div key={message?.id}>
                                         {showDateDivider && (
-                                            <div className="text-center my-1 ">
+                                            <div className="text-center my-1 mb-6 ">
                                                 <Typography
                                                     color="natural.800"
                                                     variant="subtitle2"

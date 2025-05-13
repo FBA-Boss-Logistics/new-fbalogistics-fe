@@ -13,6 +13,7 @@ import { localStorageKeys } from "constants";
 import useChatWebSocket from "hooks/useWebSocket";
 import { Card, CardContent, CardFooter, CardHeader } from "components/ui/card";
 import { Avatar, Typography, useTheme } from "@mui/material";
+import { MessageCircle, PackageOpen } from "lucide-react";
 
 const fileType =['jpeg', 'jpg', 'gif', 'png', 'webp', 'bmp', 'svg+xml']
 
@@ -196,7 +197,7 @@ export default function ChatWindow() {
 
 
     return (
-        <Card className="w-2/3 flex flex-col border-solid border-natural-100 rounded-xl h-full">
+        <Card className="w-full flex flex-col border-solid border-natural-100 rounded-xl h-full">
             <CardHeader className="flex flex-row gap-2 items-center  p-0 m-4">
             <Avatar
                                         sx={{
@@ -246,6 +247,7 @@ export default function ChatWindow() {
             <CardContent>
 
             <div className="flex flex-wrap overflow-hidden ">
+                {messageData?.data?.messages?.length > 0 ? (
                 <ChatBubble
                     messageData={messageData.data}
                     isLoading={isLoading}
@@ -256,6 +258,19 @@ export default function ChatWindow() {
                     replyMessageHandler={replyMessageHandler}
                     isReply={reply.isReply}
                 />
+                ) : (
+                    <div className="flex flex-col items-center justify-center py-12 px-4 w-full">
+                    <div className="h-20 w-20 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                        {/* <img src={EmptyIcon} alt="EMPTY ICON" /> */}
+                      {/* <PackageOpen className="h-10 w-10 text-slate-400" /> */}
+                      <MessageCircle className="h-10 w-10 text-slate-400" />
+                    </div>
+                    <h3 className="text-lg font-medium text-slate-900 mb-1">No messages yet</h3>
+                    <p className="text-sm text-slate-500 text-center mb-6 max-w-md">
+                    Messages will appear here once they are placed. Check back later for updates.
+                    </p>
+                  </div>
+                )}
             </div>
              
             </CardContent>

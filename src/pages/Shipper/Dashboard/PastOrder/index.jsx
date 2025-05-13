@@ -144,6 +144,7 @@ export default function PastOrders() {
     return (
         <>
             <InfoModal open={modalOpen} onClose={handleCloseModal} />
+          
             <div className="block md:hidden">
                 <h1 className="text-2xl font-semibold text-zinc-800 mb-2">Completed Shipments</h1>
                 <div className="flex items-center text-sm mb-6">

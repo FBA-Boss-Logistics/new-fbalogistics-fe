@@ -69,12 +69,13 @@ export default function SellerRecentOrderStatus() {
         navigate(`/seller/booking/order/status/${id}`);
     };
 
-    const handleStatusChange = (id, status) => {
+    const handleStatusChange = (id, status, reason) => {
         // console.log(id, status);
 
         const payload = {
             user_id: id,
             is_accepted: status,
+            cancel_reason: reason,
         };
         updateQuotationInfo({ payload });
 
@@ -92,7 +93,7 @@ export default function SellerRecentOrderStatus() {
             <HeaderPage title="Recent Order Status" home="seller" pathname={'Recent Order Status'} />
             {/* <div className="flex flex-col gap-6 w-full p-4 h-[calc(100vh_-_76.8px)] overflow-y-scroll"> */}
                 <div className="w-full flex justify-between">
-                    {!isLoading && <OrderDate
+                    {/* {!isLoading && <OrderDate
                         Label={
                             srcQueryParam === "currentShipments"
                                 ? "Shipping Agent has been assigned this order on"
@@ -102,8 +103,8 @@ export default function SellerRecentOrderStatus() {
                             orderData?.data?.updated_at,
                             "long"   
                         )}
-                    />}
-                    {srcQueryParam !== "sampleShipments" && (
+                    />} */}
+                    {/* {srcQueryParam !== "sampleShipments" && (
                         <BorderButton
                             variant="ghost-outlined"
                             onClick={() =>
@@ -112,7 +113,7 @@ export default function SellerRecentOrderStatus() {
                         >
                             Cancel Winning Bid
                         </BorderButton>
-                    )}
+                    )} */}
                 </div>
                
                 {/* {srcQueryParam !== "sampleShipments" && (
@@ -186,11 +187,11 @@ export default function SellerRecentOrderStatus() {
                     </div>
                 )} */}
 
-                <div className="flex gap-4 items-start">
+                <div className="flex gap-4 flex-col lg:flex-row  items-start">
                     {/* <Card className=""> */}
                         <ChatWindow />
                     {/* </Card> */}
-                    <div className=" w-1/3 flex flex-col gap-4">
+                    <div className=" w-full lg:w-1/3 flex flex-col gap-4">
                     
                         <OrderDetails OrderStatusData={orderData?.data} handleClick={handleClick} handleStatusChange={handleStatusChange} quotationID={quotationID}/>
 

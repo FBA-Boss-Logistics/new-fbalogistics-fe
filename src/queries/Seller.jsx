@@ -186,6 +186,13 @@ function postSampleShipmentDetail(data) {
 export function usePostSampleShipmentDetail() {
     return useMutation({
         mutationFn: (data) => postSampleShipmentDetail(data),
+        onSuccess: () => {
+            HandleSuccessResponse("Sample Shipment created successfully");
+        },
+        onError: (error) => {
+            console.log("Error occurred while fetching data", error);
+            HandleErrorResponse(error);
+        },
     });
 }
 
