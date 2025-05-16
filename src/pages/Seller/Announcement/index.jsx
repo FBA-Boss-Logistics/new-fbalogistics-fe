@@ -46,15 +46,15 @@ export default function index() {
     }
 
     return (
-        <div className="px-4 flex flex-col h-[calc(100vh_-_76.8px)] w-full overflow-y-scroll">
+        <div className="flex flex-col gap-4">
             {isLoading && <Loader />}
-            <AnnouncementModel
+            {/* <AnnouncementModel
                 SetOpenModel={() => {}}
                 openModel={false}
                 content={
                     "Hi there! I just placed an order for a product on your website. When can I expect it to be delivered?"
                 }
-            />
+            /> */}
             {dataLength && (
                 <div className="flex-grow">
                     <AnnouncementDataList
@@ -64,6 +64,7 @@ export default function index() {
                         setAnnouncementListPagination={
                             setAnnouncementListPagination
                         }
+                        
                         announcementListPagination={announcementListPagination}
                     />
                 </div>

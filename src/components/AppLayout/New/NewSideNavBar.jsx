@@ -110,8 +110,8 @@ const NewSideNavBar = ({menu, dashboard}) => {
                                 <a
                                 key={label}
                                  onClick={() => {
-                                  console.log(route)
                                   setCurrentPath(route);
+                                  setIsSidebarOpen(false)
                                   navigate(route);
                                 }}
                                  className={`flex cursor-pointer items-center p-3 text-blue-900 ${ currentPath === route?'bg-blue-50':''} rounded-md font-medium`}>
@@ -131,7 +131,10 @@ const NewSideNavBar = ({menu, dashboard}) => {
         {dashboard === "seller" && (
             <ul className='space-y-1  border-t mt-4'>
                 <li>
-                    <Link to={routes.QUOTES.pathname} onClick={() => setCurrentPath(routes.QUOTES.pathname)} className={`flex cursor-pointer items-center p-3 text-blue-900 ${ currentPath === routes.QUOTES.pathname?'bg-blue-50':''} rounded-md font-medium`}>
+                    <Link to={routes.QUOTES.pathname} onClick={() => {
+                      setCurrentPath(routes.QUOTES.pathname)
+                      setIsSidebarOpen(false)
+                    }} className={`flex cursor-pointer items-center p-3 text-blue-900 ${ currentPath === routes.QUOTES.pathname?'bg-blue-50':''} rounded-md font-medium`}>
                 <img src={AddCircleIcon} className="mr-3 h-5 w-5" />
                 Add Shipment
                 </Link>
@@ -171,7 +174,10 @@ const NewSideNavBar = ({menu, dashboard}) => {
                 </Link>
             </li>
             <li>
-                <Link to={isSeller ? routes.SELLERPROFILE.pathname : routes.SHIPPERPROFILE.pathname} className="flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-md">
+                <Link to={isSeller ? routes.SELLERPROFILE.pathname : routes.SHIPPERPROFILE.pathname} onClick={() => {
+                  setCurrentPath(isSeller ? routes.SELLERPROFILE.pathname : routes.SHIPPERPROFILE.pathname)
+                  setIsSidebarOpen(false)
+                }} className="flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-md">
                 <Settings className="mr-3 h-5 w-5" />
                 Settings
                 </Link>

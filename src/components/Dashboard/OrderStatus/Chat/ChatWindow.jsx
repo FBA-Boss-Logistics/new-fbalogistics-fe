@@ -197,7 +197,7 @@ export default function ChatWindow() {
 
 
     return (
-        <Card className="w-full flex flex-col border-solid border-natural-100 rounded-xl h-full">
+        <Card className="w-full flex flex-col border-solid border-natural-100 rounded-xl min:h-screen">
             <CardHeader className="flex flex-row gap-2 items-center  p-0 m-4">
             <Avatar
                                         sx={{
@@ -244,7 +244,7 @@ export default function ChatWindow() {
                  
                 </Typography>
             </CardHeader>
-            <CardContent>
+            <CardContent className="h-full">
 
             <div className="flex flex-wrap overflow-hidden ">
                 {messageData?.data?.messages?.length > 0 ? (
