@@ -268,7 +268,7 @@ export function usePatchStatusUpdate() {
 function createAnnouncement(data) {
     return axios({
         method: "POST",
-        url: "/announcement/",
+        url: "/v1/announcement/",
         data,
     });
 }
@@ -287,7 +287,7 @@ export function useCreateAnnouncement() {
 
 const fetchAnnouncementsListData = (data) => {
     const method = "GET";
-    let url = appendQueryParams(`/announcement/`, {
+    let url = appendQueryParams(`/v1/announcement/`, {
         ...data?.announcementListPagination,
     });
 
@@ -313,7 +313,7 @@ export const fetchAnnouncementDetailApi = (payload) => {
 
 const fetchAnnouncementDetail = (id) => {
     const method = "GET";
-    const url = `/announcement/${id}/`;
+    const url = `/v1/announcement/${id}/`;
     return axios({
         method,
         url,

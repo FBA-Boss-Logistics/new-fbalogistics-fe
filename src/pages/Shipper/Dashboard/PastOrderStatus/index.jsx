@@ -56,8 +56,8 @@ export default function PastOrderStatus() {
                             Date={
                                 OrderStatusData &&
                                 formatDateString(
-                                    OrderStatusData?.data?.updated_at,
-                                    "long"
+                                OrderStatusData?.data?.updated_at,
+                                "long"
                                 )
                             }
                             isLoading={isLoading}

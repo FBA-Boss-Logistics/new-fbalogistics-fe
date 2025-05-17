@@ -10,8 +10,7 @@ import { useState } from 'react';
 import { routes } from 'routes/RouteConstants';
 import { formatName } from "utils";
 import { Avatar, Badge, useTheme } from '@mui/material';
-import { FetchUserDetailApi } from 'queries/Auth';
-export default function AnnouncementShipperDetail() {
+export default function AnnouncementDetail() {
   const { id } = useParams();
   const { data: announcementData, isLoading, error } = FetchAnnouncementDetailDataApi(id);
   const [announcementDetailData, setAnnouncementDetailData] = useState(null);
@@ -24,8 +23,6 @@ export default function AnnouncementShipperDetail() {
   }, [announcementData]);
   const navigate = useNavigate();
   const theme = useTheme();
-  const {data: userData, isLoading: userLoading} = FetchUserDetailApi();
-  const isShipper = userData?.data?.groups?.includes("Shipper");
   return (
 
     <>
@@ -35,7 +32,7 @@ export default function AnnouncementShipperDetail() {
           size="sm"
           className="flex items-center gap-2 text-white "
           onClick={() => {
-            navigate(isShipper ? routes.ANNOUNCEMENT_SHIPPER.pathname : routes.ANNOUNCEMENT.pathname);
+            navigate(routes.ANNOUNCEMENT.pathname);
           }}
         >
           <ArrowLeft className="h-4 w-4" />
@@ -47,8 +44,9 @@ export default function AnnouncementShipperDetail() {
         <div className="md:col-span-2">
           <article className="space-y-6">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-              {announcementDetailData?.title || "No Title"}
+              {announcementDetailData?.sender?.first_name} {announcementDetailData?.sender?.last_name}
             </h1>
+
             <div className="flex items-center text-sm text-yellow-500">
               <span>{announcementDetailData?.timestamp}</span>
               {/* <span className="mx-2">•</span>
@@ -64,7 +62,7 @@ export default function AnnouncementShipperDetail() {
         </div>
 
         <div className="md:col-span-1">
-          <Card className="border-0 shadow-none px-4 py-4">
+          <Card className="border-0 shadow-none">
             <CardContent className="p-0 flex flex-col items-center text-center">
             <Badge
                     anchorOrigin={{
@@ -98,12 +96,11 @@ export default function AnnouncementShipperDetail() {
                 
                 </Avatar>
               </Badge>
-              <h3 className="text-lg font-medium">{announcementDetailData?.sender?.first_name} {announcementDetailData?.sender?.last_name}</h3>
+              <h3 className="text-lg font-medium">Angel Zhuang</h3>
               <p className="text-sm text-gray-500 mt-1">
-              {console.log(announcementDetailData)}
-                {announcementDetailData?.sender?.groups}
+                Contributing Writer
                 <br />
-                {/* at <span className="font-medium">{announcementDetailData?.sender?.company_name}</span> */}
+                at <span className="font-medium">FBA BOSS</span>
               </p>
             </CardContent>
           </Card>

@@ -64,7 +64,7 @@ export default function index() {
                         setAnnouncementListPagination={
                             setAnnouncementListPagination
                         }
-                        
+                        redirect="/seller/announcement"
                         announcementListPagination={announcementListPagination}
                     />
                 </div>

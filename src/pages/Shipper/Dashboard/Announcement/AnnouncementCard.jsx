@@ -6,7 +6,7 @@ import { Typography } from '@mui/material';
 import { Card, CardContent, CardFooter, CardHeader } from "components/ui/card";
 import { Button } from "components/ui/button";
 import { useNavigate } from 'react-router-dom';
-const AnnouncementCard = ({ time, fullName, text, id }) => {
+const AnnouncementCard = ({ time, fullName, text, id, redirect="shipper/dashboard/announcement" }) => {
   console.log("fullName");
   console.log(fullName);
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const AnnouncementCard = ({ time, fullName, text, id }) => {
             <p className="text-sm text-gray-600 line-clamp-1">{text}</p>
             <p className="mt-2 text-xs text-gray-500">{time}</p>
             <Button  size="sm" className="mt-4" onClick={() => {
-              navigate(`/shipper/dashboard/announcement/${id}`);
+              navigate(`${redirect}/${id}`);
             }}>
             Read more
             </Button>

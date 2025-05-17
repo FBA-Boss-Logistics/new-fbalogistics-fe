@@ -33,6 +33,7 @@ import AnnouncementShipperDetail from "pages/Shipper/Dashboard/Announcement/Anno
 import SampleShipmentTable from "pages/Shipper/Dashboard/SampleShipments";
 import NewDashboard from "pages/Shipper/Dashboard/New";
 import SellerDashboard from '../pages/Seller/Dashboard/index';
+import AnnouncementDetail from "pages/Seller/Announcement/Detail";
 
 const RouteConstants = {
     HOME: "/",
@@ -256,6 +257,12 @@ export const routes = {
         title: "Seller Announcement",
         isPublic: false,
         element: Annoucement,
+    },
+    ANNOUNCEMENT_DETAIL: {
+        pathname: "/seller/announcement/:id",
+        title: "Seller Announcement Detail",
+        isPublic: false,
+        element: AnnouncementDetail,
     },
 };
 

@@ -27,10 +27,10 @@ export default function Index() {
 
     const { setAnnouncementList, announcementList } = useChat();
 
-    function sendAnnouncement(announcementValue) {
+    function sendAnnouncement(announcementValue, announcementTitle) {
         if (!announcementValue.trim()) return;
         cretaeAnnouncement(
-            { message: announcementValue },
+            { message: announcementValue, title: announcementTitle },
             {
                 onSuccess: () => {
                     refetch();
@@ -65,7 +65,7 @@ export default function Index() {
                 <div className="flex items-center justify-between">
                     <div>
                     <h1 className="text-2xl font-bold text-gray-900">Announcements</h1>
-                    <div className="mt-1 flex items-center text-sm text-gray-500">
+                    <div className="mt-1 flex items-center ext-sm text-gray-500">
                         <Link href="/dashboard" className="hover:text-blue-600">
                         Dashboard
                         </Link>
