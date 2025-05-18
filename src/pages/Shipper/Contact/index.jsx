@@ -171,7 +171,9 @@ export default function Contact() {
                                                 className="opacity-70"
                                                 alt="ChatIcon"
                                             />
+                                            <span className="hidden md:inline">
                                             Chat
+                                            </span>
                                         </div>
                                     )}
                                 {/* <div className="flex items-center gap-2">

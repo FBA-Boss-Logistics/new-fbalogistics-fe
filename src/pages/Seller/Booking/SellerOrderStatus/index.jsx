@@ -221,9 +221,9 @@ export default function SellerOrderStatus() {
                                     >
                                         Freight Booking Reference Number : <span className="text-primary-500 font-medium ">{shipmentData?.data?.freight_booking_reference_number}</span>
                                     </Typography>
-                               
+                          
                                 {
-                                    shipmentData.data.status ===
+                                    shipmentData.data.status ==
                                         "Quotation Accepted" && (
                                         <div
                                             title="chat"
@@ -235,7 +235,10 @@ export default function SellerOrderStatus() {
                                                 className="opacity-70"
                                                 alt="ChatIcon"
                                             />
-                                            Chat
+                                            <spane className="hidden md:inline">
+                                             Chat
+                                            </spane>
+                                           
                                         </div>
                                     )}
                                  </div>
