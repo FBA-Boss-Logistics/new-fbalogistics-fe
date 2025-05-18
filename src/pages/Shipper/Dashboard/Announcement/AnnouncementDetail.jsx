@@ -29,7 +29,7 @@ export default function AnnouncementShipperDetail() {
   return (
 
     <>
-          <div className="container mx-auto">
+      <div className=" mx-auto">
       <div className="mb-8">
         <Button
           size="sm"
@@ -43,8 +43,8 @@ export default function AnnouncementShipperDetail() {
         </Button>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8">
-        <div className="md:col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
+        <div className="col-span-1 md:col-span-2">
           <article className="space-y-6">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
               {announcementDetailData?.title || "No Title"}
@@ -63,7 +63,7 @@ export default function AnnouncementShipperDetail() {
           </article>
         </div>
 
-        <div className="md:col-span-1">
+        <div className="md:col-span-1 bg0">
           <Card className="border-0 shadow-none px-4 py-4">
             <CardContent className="p-0 flex flex-col items-center text-center">
             <Badge
