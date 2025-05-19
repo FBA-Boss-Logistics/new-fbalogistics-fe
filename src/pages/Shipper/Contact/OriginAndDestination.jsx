@@ -21,7 +21,7 @@ export function OriginAndDestination({
     return (
         <div>
             <Collapsible open={showMore} onOpenChange={setShowMore}>
-            <CollapsibleTrigger className="flex items-center w-full mb-6">
+            <CollapsibleTrigger className="flex items-center w-full">
             <div className="flex items-center flex-row gap-2">
                     <div className="bg-natural-200 rounded-full">
                         <img src={Location} alt="location" />
@@ -34,7 +34,7 @@ export function OriginAndDestination({
             <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${showMore ? "rotate-180" : ""}`} />
             </CollapsibleTrigger>
             <CollapsibleContent>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 mt-2">
                 <div className="flex w-full justify-between gap-4">
                     <div className="p-2 flex-col gap-2 flex rounded-lg w-1/2">
                         <Typography

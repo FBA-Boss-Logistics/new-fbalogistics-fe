@@ -25,24 +25,21 @@ export function AdditionalInformation({additionalNotes}) {
     return (
         <Card className="p-4 space-y-4">
             <Collapsible open={showMore} onOpenChange={setShowMore}>
-            <CollapsibleTrigger className="flex items-center w-full mb-6">
+            <CollapsibleTrigger className="flex items-center w-full">
                 <div className="flex items-center flex-row gap-2">
                     <div className="bg-natural-200 rounded-full w-[30px]">
                         <img src={Note} alt="note" />
                     </div>
                     <Typography
-                        color="natural.800"
-                    variant="body2"
-                    fontWeight={500}
+                      color="natural.900" fontSize={18} fontWeight={500}
                 >
                     Additional Notes
                 </Typography>
                 </div>
-         
-            
             <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${showMore ? "rotate-180" : ""}`} />
             </CollapsibleTrigger>
-                <CollapsibleContent className=" p-2 flex-col justify-start items-start gap-2 flex">
+                <CollapsibleContent>
+                <div className=" p-2 flex-col justify-start items-start gap-2 flex mt-6">
                 <Typography
                         color="natural.500"
                         variant="body2"
@@ -50,6 +47,7 @@ export function AdditionalInformation({additionalNotes}) {
                     >
                         {additionalNotes}
                     </Typography>
+                </div>
                 </CollapsibleContent>
             </Collapsible>
         </Card>

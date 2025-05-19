@@ -273,7 +273,7 @@ export function Cargo({ productName, packages,shipmentData, asinNumber }) {
     return (
         <Card className="p-4 space-y-4">
             <Collapsible open={cargoOpen} onOpenChange={setCargoOpen}>
-            <CollapsibleTrigger className="flex items-center w-full mb-6">
+            <CollapsibleTrigger className="flex items-center w-full">
            
                 <div className="flex items-center flex-row gap-2 w-full">
                         <div className="bg-natural-200 rounded-full w-[30px]">
@@ -286,7 +286,7 @@ export function Cargo({ productName, packages,shipmentData, asinNumber }) {
                 </div>
             </CollapsibleTrigger>
             <CollapsibleContent>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 mt-6">
                 <div className="flex gap-4">
                     <div className="bg-natural-25 p-2 flex-col gap-2 flex w-1/2 rounded-lg">
                         <Typography

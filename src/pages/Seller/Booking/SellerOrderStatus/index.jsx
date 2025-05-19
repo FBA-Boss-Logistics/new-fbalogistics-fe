@@ -285,20 +285,20 @@ export default function SellerOrderStatus() {
                         status === "Shipment Cancelled" ? (
                             <Card className="p-4">
                             <Collapsible open={showQuotation} onOpenChange={setShowQuotation}>
-                            <CollapsibleTrigger className="flex items-center w-full mb-6">
+                            <CollapsibleTrigger className="flex items-center w-full ">
                                     <div className="flex items-center flex-row gap-2">
                                             <div className="bg-natural-200 rounded-full">
                                                 <img src={quotationIcon} alt="location" />
                                             </div>
                                     
-                                        <Typography fontSize={18} fontWeight={600} variant="body2" color="natural.900">
+                                        <Typography color="natural.900" fontSize={18} fontWeight={500}>
                                         Quotation
                                         </Typography>
                                     </div>
                                     <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${showQuotation ? "rotate-180" : ""}`} />
                                 </CollapsibleTrigger>
                                 <CollapsibleContent>
-                                <div className="flex gap-2 justify-between mt-2">
+                                <div className="flex gap-2 justify-between mt-6">
                                     <div className=" w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
                                         <Typography
                                             color="natural.800"
@@ -310,7 +310,7 @@ export default function SellerOrderStatus() {
                                         <Typography
                                             color="natural.500"
                                             variant="body2"
-                                            className="border p-2  border-solid border-natural-400 rounded-md w-[50%] bg-[#e4e4e7]"
+                                            className="border p-2  border-solid border-natural-400 rounded-md md:w-[50%] bg-[#e4e4e7]"
                                             fontWeight={500}
                                         >
                                             {quotation?.pickup_amount}
@@ -327,7 +327,7 @@ export default function SellerOrderStatus() {
                                         <Typography
                                             color="natural.500"
                                             variant="body2"
-                                            className="border p-2  border-solid border-natural-400 rounded-md w-[50%] bg-[#e4e4e7]"
+                                            className="border p-2  border-solid border-natural-400 rounded-md md:w-[50%] bg-[#e4e4e7]"
                                             fontWeight={500}
                                         >
                                             {quotation?.fast_amount}
@@ -345,7 +345,7 @@ export default function SellerOrderStatus() {
                                             color="natural.500"
                                             variant="body2"
                                             fontWeight={500}
-                                            className="border p-2  border-solid border-natural-400 rounded-md w-[50%] bg-[#e4e4e7]"
+                                            className="border p-2  border-solid border-natural-400 rounded-md md:w-[50%] bg-[#e4e4e7]"
                                         >
                                             {quotation?.normal_amount}
                                         </Typography>
