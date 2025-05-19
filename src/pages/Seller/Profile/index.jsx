@@ -26,6 +26,7 @@ import profileIcon from "assets/svg/personalIcon.svg"
 import passwordIcon from "assets/svg/passwordIcon.svg"
 import { PasswordField } from "components";
 import Loader from "components/Loader";
+import HeaderPage from "components/HeaderPage";
 const ProfileUpdateSchema = yup.object().shape({
     first_name: yup
         .string()
@@ -203,9 +204,12 @@ export default function SellerProfile() {
         className="flex flex-col gap-4"
         >
             <div className="flex flex-col gap-4 overflow-hidden">
-                <div className="flex flex-row justify-between gap-4">
+                <div className=" flex-row justify-between gap-4 hidden md:flex">
                     <p className="text-natural-900 text-2xl font-[600] leading-loose">Personal Profile</p>
-                    <Button form="personal-info" type="submit" className="hidden md:block">Save Changes</Button>
+                    <Button form="personal-info" type="submit" className="">Save Changes</Button>
+                </div>
+                <div className="flex flex-row justify-between gap-4 md:hidden">
+                    <HeaderPage title="Personal Profile" home="seller" pathname="profile" />
                 </div>
         
                 <Card className="p-6">
@@ -265,6 +269,142 @@ export default function SellerProfile() {
                                 </div>
                             </div>
                 </Card>
+                <Card className="p-4 space-y-4">
+                
+                <div className="flex items-center w-full mb-6 gap-2">
+                    <div className="bg-natural-200 rounded-full w-[30px]">
+                        <img src={profileIcon} alt="truck" />
+                    </div>
+                    <Typography color="natural.900" fontSize={18} fontWeight={500}>
+                        Personal Information
+                    </Typography>
+                </div>
+                {/* <div className="flex flex-col gap-2">
+                    <div className="flex gap-4">
+                    
+                    </div>
+                </div> */}
+                    <div className="flex md:flex-row flex-col gap-2 ">
+                        <div className="flex-col gap-2.5 flex w-full">
+                            <Typography
+                                color="natural.900"
+                                variant="body2"
+                                fontWeight={400}
+                            >
+                                First Name
+                                <span className="text-error-500">
+                                    *
+                                </span>
+                            </Typography>
+                            <TextField
+                                autoComplete="off"
+                                placeholder="Enter your First Name"
+                                inputRef={firstNameRef}
+                                {...firstNameReg}
+                                defaultValue={userDataInfo?.first_name}
+                                error={Boolean(errors.first_name)}
+                                fullWidth
+                                helperText={
+                                    errors.first_name &&
+                                    errors.first_name.message
+                                }
+                            />
+                        </div>
+                        <div className="flex-col gap-2.5 flex w-full">
+                            <Typography
+                                color="natural.900"
+                                variant="body2"
+                                fullWidth
+                                fontWeight={400}
+                            >
+                                Last Name
+                                <span className="text-error-500">
+                                    *
+                                </span>
+                            </Typography>
+                            <TextField
+                                autoComplete="off"
+                                placeholder="Enter your Last Name"
+                                inputRef={lastNameRef}
+                                {...lastNameReg}
+                                defaultValue={userDataInfo?.last_name}
+                                error={Boolean(errors.last_name)}
+                                helperText={
+                                    errors.last_name &&
+                                    errors.last_name.message
+                                }
+                            />
+                        </div>
+                    </div>
+                    <div className="flex md:flex-row flex-col gap-2 w-full">
+                        <div className="flex-col gap-2.5 flex w-full">
+                            <Typography
+                                color="natural.900"
+                                variant="body2"
+                                fontWeight={400}
+                            >
+                                Email
+                                <span className="text-error-500">*</span>
+                            </Typography>
+                            <TextField
+                                fullWidth
+                                sx={{
+                                    backgroundColor: "#E4E4E7",
+                                    borderRadius: "8px",
+                                }}
+                                inputRef={emailRef}
+                                {...emailReg}
+                                disabled
+                                error={Boolean(errors.email)}
+                                defaultValue={userDataInfo?.email}
+                                helperText={
+                                    errors.email && errors.email.message
+                                }
+                                autoComplete="off"
+                                placeholder="Enter your Email Address"
+                                id="input-with-icon-textfield"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            <img src={MAIL} alt="mail" />
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </div>
+
+                        <div className="flex-col gap-2.5 flex w-full">
+                            <Typography
+                                color="natural.900"
+                                variant="body2"
+                                fontWeight={400}
+                            >
+                                Mobile
+                                <span className="text-error-500">
+                                    *
+                                </span>
+                            </Typography>
+                            <PhoneNumberField
+                                required
+                                onChange={(value) => {
+                                    const cleanedPhoneNumber =
+                                        value.replace(/[()\s\-]/g, "");
+                                    setValue(
+                                        "phone",
+                                        cleanedPhoneNumber
+                                    );
+                                }}
+                                error={Boolean(errors.phone)}
+                                helperText={
+                                    errors.phone && errors.phone.message
+                                }
+                                fullWidth
+                                value={userDataInfo?.profile?.phone} // Pass the entire 'phoneValue' object to the PhoneNumberField
+                                className="w-full"
+                            />
+                        </div>
+                    </div>
+            </Card>
                 <Card className="p-4 space-y-4">
             
                 <div className="flex items-center w-full mb-6 gap-2">
@@ -327,142 +467,7 @@ export default function SellerProfile() {
 
                     
                 </Card>
-                <Card className="p-4 space-y-4">
-                
-                    <div className="flex items-center w-full mb-6 gap-2">
-                        <div className="bg-natural-200 rounded-full w-[30px]">
-                            <img src={profileIcon} alt="truck" />
-                        </div>
-                        <Typography color="natural.900" fontSize={18} fontWeight={500}>
-                            Personal Information
-                        </Typography>
-                    </div>
-                    {/* <div className="flex flex-col gap-2">
-                        <div className="flex gap-4">
-                        
-                        </div>
-                    </div> */}
-                        <div className="flex md:flex-row flex-col gap-2 ">
-                            <div className="flex-col gap-2.5 flex w-full">
-                                <Typography
-                                    color="natural.900"
-                                    variant="body2"
-                                    fontWeight={400}
-                                >
-                                    First Name
-                                    <span className="text-error-500">
-                                        *
-                                    </span>
-                                </Typography>
-                                <TextField
-                                    autoComplete="off"
-                                    placeholder="Enter your First Name"
-                                    inputRef={firstNameRef}
-                                    {...firstNameReg}
-                                    defaultValue={userDataInfo?.first_name}
-                                    error={Boolean(errors.first_name)}
-                                    fullWidth
-                                    helperText={
-                                        errors.first_name &&
-                                        errors.first_name.message
-                                    }
-                                />
-                            </div>
-                            <div className="flex-col gap-2.5 flex w-full">
-                                <Typography
-                                    color="natural.900"
-                                    variant="body2"
-                                    fullWidth
-                                    fontWeight={400}
-                                >
-                                    Last Name
-                                    <span className="text-error-500">
-                                        *
-                                    </span>
-                                </Typography>
-                                <TextField
-                                    autoComplete="off"
-                                    placeholder="Enter your Last Name"
-                                    inputRef={lastNameRef}
-                                    {...lastNameReg}
-                                    defaultValue={userDataInfo?.last_name}
-                                    error={Boolean(errors.last_name)}
-                                    helperText={
-                                        errors.last_name &&
-                                        errors.last_name.message
-                                    }
-                                />
-                            </div>
-                        </div>
-                        <div className="flex md:flex-row flex-col gap-2 w-full">
-                            <div className="flex-col gap-2.5 flex w-full">
-                                <Typography
-                                    color="natural.900"
-                                    variant="body2"
-                                    fontWeight={400}
-                                >
-                                    Email
-                                    <span className="text-error-500">*</span>
-                                </Typography>
-                                <TextField
-                                    fullWidth
-                                    sx={{
-                                        backgroundColor: "#E4E4E7",
-                                        borderRadius: "8px",
-                                    }}
-                                    inputRef={emailRef}
-                                    {...emailReg}
-                                    disabled
-                                    error={Boolean(errors.email)}
-                                    defaultValue={userDataInfo?.email}
-                                    helperText={
-                                        errors.email && errors.email.message
-                                    }
-                                    autoComplete="off"
-                                    placeholder="Enter your Email Address"
-                                    id="input-with-icon-textfield"
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start">
-                                                <img src={MAIL} alt="mail" />
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </div>
-
-                            <div className="flex-col gap-2.5 flex w-full">
-                                <Typography
-                                    color="natural.900"
-                                    variant="body2"
-                                    fontWeight={400}
-                                >
-                                    Mobile
-                                    <span className="text-error-500">
-                                        *
-                                    </span>
-                                </Typography>
-                                <PhoneNumberField
-                                    required
-                                    onChange={(value) => {
-                                        const cleanedPhoneNumber =
-                                            value.replace(/[()\s\-]/g, "");
-                                        setValue(
-                                            "phone",
-                                            cleanedPhoneNumber
-                                        );
-                                    }}
-                                    error={Boolean(errors.phone)}
-                                    helperText={
-                                        errors.phone && errors.phone.message
-                                    }
-                                    fullWidth
-                                    value={userDataInfo?.profile?.phone} // Pass the entire 'phoneValue' object to the PhoneNumberField
-                                    className="w-full"
-                                />
-                            </div>
-                        </div>
-                </Card>
+               
                 <div className="flex flex-row justify-between gap-4">
                     <Button form="personal-info" type="submit" size="lg" className=" md:hidden w-full rounded-full">Save Changes</Button>
                 </div>
