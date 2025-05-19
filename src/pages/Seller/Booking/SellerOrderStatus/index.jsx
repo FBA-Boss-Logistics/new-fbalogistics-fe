@@ -298,25 +298,29 @@ export default function SellerOrderStatus() {
                                     <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${showQuotation ? "rotate-180" : ""}`} />
                                 </CollapsibleTrigger>
                                 <CollapsibleContent>
-                                <div className="flex gap-2 justify-between mt-6">
-                                    <div className=" w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
+                                <div className="flex flex-col md:flex-row gap-2 justify-between mt-6">
+                                    <div className="w-full p-2 flex-col justify-start items-start gap-2 flex rounded-lg ">
                                         <Typography
                                             color="natural.800"
                                             variant="body2"
                                             fontWeight={500}
+                                            className="w-full 0"
+                                            
                                         >
                                             Pickup
                                         </Typography>
                                         <Typography
+                                          fullWidth
                                             color="natural.500"
                                             variant="body2"
-                                            className="border p-2  border-solid border-natural-400 rounded-md md:w-[50%] bg-[#e4e4e7]"
+                                            className="border p-2  border-solid border-natural-400 rounded-md w-full  bg-[#e4e4e7]"
                                             fontWeight={500}
+                                           
                                         >
                                             {quotation?.pickup_amount}
                                         </Typography>
                                     </div>
-                                    <div className=" w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
+                                    <div className="w-full p-2 flex-col justify-start items-start gap-2  flex rounded-lg">
                                         <Typography
                                             color="natural.800"
                                             variant="body2"
@@ -327,13 +331,13 @@ export default function SellerOrderStatus() {
                                         <Typography
                                             color="natural.500"
                                             variant="body2"
-                                            className="border p-2  border-solid border-natural-400 rounded-md md:w-[50%] bg-[#e4e4e7]"
+                                            className="border p-2  border-solid border-natural-400 w-full  rounded-md bg-[#e4e4e7]"
                                             fontWeight={500}
                                         >
                                             {quotation?.fast_amount}
                                         </Typography>
                                     </div>
-                                    <div className=" w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
+                                    <div className="w-full p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
                                         <Typography
                                             color="natural.800"
                                             variant="body2"
@@ -345,7 +349,7 @@ export default function SellerOrderStatus() {
                                             color="natural.500"
                                             variant="body2"
                                             fontWeight={500}
-                                            className="border p-2  border-solid border-natural-400 rounded-md md:w-[50%] bg-[#e4e4e7]"
+                                            className="border p-2  border-solid border-natural-400 rounded-md  w-full  bg-[#e4e4e7]"
                                         >
                                             {quotation?.normal_amount}
                                         </Typography>

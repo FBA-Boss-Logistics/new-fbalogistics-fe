@@ -174,7 +174,6 @@ heading="Data"
                                   />
                                 )}
                               </div>
-
                               {/* <div className="flex gap-4">
                                   {date && (
                                       <div>

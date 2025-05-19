@@ -26,6 +26,9 @@ import PastStatus from "components/Dashboard/OrderStatus/PastStatus";
 import ErrorUi from "pages/Seller/Booking/SellerOrderStatus/ErrorUi";
 import { Card } from "components/ui/card";
 import { Button } from "components/ui/button";
+import { Collapsible, CollapsibleContent } from "components/ui/collapsible";
+import { CollapsibleTrigger } from "@radix-ui/react-collapsible";
+import { ChevronDown } from "lucide-react";
 
 const { pickup_amount, fast_amount, normal_amount } = CommonFormValidations;
 const QuotationFormSchema = yup.object().shape({
@@ -121,6 +124,7 @@ export default function Contact() {
     const shipmentGoods = shipmentData?.data?.compliance?.compliance;
     const quotation = shipmentData?.data?.quotation;
     const supplierPhone = shipmentData?.data?.user?.profile?.phone;
+    const [showQuotation, setShowQuotation] = useState(true);
     const isEmptyObject = (obj) => {
         if (obj && Object.keys(obj).length === 0) {
             return true;
@@ -319,21 +323,26 @@ export default function Contact() {
                             </div>
                         )}
                         <Card className="p-4">
-                            <div className="flex items-center flex-row gap-2">
-                                <div className="w-[30px] h-[30px]">
-                                        <img src={Quotation} alt="quotation" />
+                        <Collapsible open={showQuotation} onOpenChange={setShowQuotation}>
+                            <CollapsibleTrigger className="flex items-center w-full ">
+                               <div className="flex items-center flex-row gap-2">
+                                   <div className="w-[30px] h-[30px]">
+                                           <img src={Quotation} alt="quotation" />
                                     </div>
-
-                                <Typography
-                                    color="natural.900"
-                                    fontSize={18}
-                                    fontWeight={500}
-                                >
-                                    Quotation
-                                </Typography>
-                            </div>
+                  
+                                   <Typography
+                                       color="natural.900"
+                                       fontSize={18}
+                                       fontWeight={500}
+                                   >
+                                       Quotation
+                                   </Typography>
+                               </div>
+                               <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${showQuotation ? "rotate-180" : ""}`} />
+                            </CollapsibleTrigger>
+                            <CollapsibleContent>
                             <form
-                                id="QuotationForm"
+                                id="QuotationForm" 
                                 onSubmit={handleSubmit(submitQuotationForm)}
                             >
                                 <div className="flex flex-col md:flex-row items-center align-bottom gap-2 w-full mt-4  ">
@@ -447,6 +456,8 @@ export default function Contact() {
                                         <></>
                                     )}
                             </form>
+                            </CollapsibleContent>
+                            </Collapsible>
                         </Card>
                         {isEmptyObject(quotation) ? (
                                         <div className="mt-8  items-end flex justify-end w-full md:hidden">
