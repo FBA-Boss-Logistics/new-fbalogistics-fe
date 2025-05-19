@@ -44,7 +44,7 @@ export default function AnnouncementDetail() {
         <div className="md:col-span-2">
           <article className="space-y-6">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
-              {announcementDetailData?.sender?.first_name} {announcementDetailData?.sender?.last_name}
+              {announcementDetailData?.title || "No title"}
             </h1>
 
             <div className="flex items-center text-sm text-yellow-500">
@@ -62,7 +62,7 @@ export default function AnnouncementDetail() {
         </div>
 
         <div className="md:col-span-1">
-          <Card className="border-0 shadow-none">
+        <Card className="border-0 shadow-none px-4 py-4">
             <CardContent className="p-0 flex flex-col items-center text-center">
             <Badge
                     anchorOrigin={{
@@ -96,11 +96,12 @@ export default function AnnouncementDetail() {
                 
                 </Avatar>
               </Badge>
-              <h3 className="text-lg font-medium">Angel Zhuang</h3>
+              <h3 className="text-lg font-medium">{announcementDetailData?.sender?.first_name} {announcementDetailData?.sender?.last_name}</h3>
               <p className="text-sm text-gray-500 mt-1">
-                Contributing Writer
+              {console.log(announcementDetailData)}
+                {announcementDetailData?.sender?.groups}
                 <br />
-                at <span className="font-medium">FBA BOSS</span>
+                {/* at <span className="font-medium">{announcementDetailData?.sender?.company_name}</span> */}
               </p>
             </CardContent>
           </Card>
