@@ -25,6 +25,7 @@ import { routes } from "routes/RouteConstants";
 import PastStatus from "components/Dashboard/OrderStatus/PastStatus";
 import ErrorUi from "pages/Seller/Booking/SellerOrderStatus/ErrorUi";
 import { Card } from "components/ui/card";
+import { Button } from "components/ui/button";
 
 const { pickup_amount, fast_amount, normal_amount } = CommonFormValidations;
 const QuotationFormSchema = yup.object().shape({
@@ -430,22 +431,39 @@ export default function Contact() {
 
                                 </div>
                                     {isEmptyObject(quotation) ? (
-                                        <div className="mt-8  items-end flex justify-end">
-                                            <BorderButton
+                                        <div className="mt-8  items-end  justify-end hidden md:flex">
+                                             <Button
                                                 form="QuotationForm"
                                                 type="submit"
-                                                size="small"
-                                                fullWidth={false}
-                                                variant="contained-outlined"
+                                                size="lg"
+                                                fullWidth={true}
+                                                variant="default"
+                                                className="bg-primary rounded-full text-white border-none hover:bg-primary hover:ring-none hover:border-none w-[242px]"
                                             >
                                                 Submit
-                                            </BorderButton>
+                                            </Button>
                                         </div>
                                     ) : (
                                         <></>
                                     )}
                             </form>
                         </Card>
+                        {isEmptyObject(quotation) ? (
+                                        <div className="mt-8  items-end flex justify-end w-full md:hidden">
+                                            <Button
+                                                form="QuotationForm"
+                                                type="submit"
+                                                size="lg"
+                                                fullWidth={true}
+                                                variant="default"
+                                                className="bg-primary rounded-full text-white border-none hover:bg-primary hover:ring-none hover:border-none w-full"
+                                            >
+                                                Submit
+                                            </Button>
+                                        </div>
+                                    ) : (
+                                        <></>
+                                    )}
                 {/* </Card> */}
                 </div>
             )}
