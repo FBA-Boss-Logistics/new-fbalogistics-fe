@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import image from 'assets/images/LandingPage/Image.webp'
 import fbaLogo from "assets/svg/FBALogo.svg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
-import SignInFrom from './partials/SignInForm';
 import { Button } from 'components/ui/button';
 import { Input } from 'components/ui/input';
 import { AlertCircle, Eye, EyeOff } from 'lucide-react';
@@ -99,7 +98,6 @@ const SignIn = () => {
              <TabsTrigger value="account" className='w-full h-full text-primary ' onClick={() => setActiveTab('Shipment Agent')}>Shipment Agent</TabsTrigger>
              <TabsTrigger value="password" className='w-full h-full text-primary ' onClick={() => setActiveTab('Customer')}>Customer</TabsTrigger>
            </TabsList>
-         {/* <SignInFrom /> */}
          </Tabs>
          <form onSubmit={handleSubmit(submitHandler)} id="login-form" className='w-full flex flex-col items-start justify-start gap-4'>
          <div className='w-full  flex flex-col items-start justify-start gap-4'>
