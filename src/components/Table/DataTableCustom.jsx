@@ -51,17 +51,23 @@ export default function DataTableCustom({
     date,
     isLoading,
     icon=<Package className="h-6 w-6" />,
+    filterWidget=false,  
+    handlePageFiltersWidget=()=>{},
 heading="Data"
 
 }) {
     const [searchKeyword, setSearchKeyword] = useState(null);
     const [pageFilters, setPageFilters] = useState({
-        page: 1,
-        per_page: 50,
-        search: "",
-        ordering: columns[0].accessor || columns[0].Header || "created_at",
-        handlePagination: true,
-    });
+      page: 1,
+      per_page: 50,
+      search: "",
+      ordering: columns[0].accessor || columns[0].Header || "created_at",
+      handlePagination: true,
+  });
+    
+    
+  
+    
     const tableInstance = useTable(
         {
             columns,
@@ -118,10 +124,12 @@ heading="Data"
 
     useEffect(() => {
         handlePageFilters("search", "");
+        handlePageFiltersWidget(pageFilters);
     }, []);
 
     useEffect(() => {
         handlePageFilters("search", searchKeyword);
+        handlePageFiltersWidget(pageFilters);
     }, [searchKeyword]);
 
     const handleSearchUpdate = (text) => {

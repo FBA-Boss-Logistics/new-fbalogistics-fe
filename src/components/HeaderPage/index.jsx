@@ -3,9 +3,9 @@ import { ChevronRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { routes } from 'routes/RouteConstants'
 
-const HeaderPage = ({title, pathname,home}) => {
+const HeaderPage = ({title, pathname,home, className}) => {
   return (
-    <div>
+    <div className={className}>
     <h1 className="text-2xl font-semibold text-zinc-800 mb-2">{title}</h1>
     <div className="flex items-center text-sm">
     <Link to={home=='shipment' ? routes.SHIPPERDASHBOARD.pathname : routes.SELLERDASHBOARD.pathname} className="text-primary hover:underline">

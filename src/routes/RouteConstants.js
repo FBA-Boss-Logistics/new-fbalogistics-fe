@@ -1,4 +1,5 @@
 import Landing from "pages/Landing";
+import LandingNew from "pages/Landing/new";
 import Dashboard from "pages/Shipper/Dashboard";
 import Playground from "pages/Playground";
 import SignIn from "pages/SignIn";
@@ -34,6 +35,8 @@ import SampleShipmentTable from "pages/Shipper/Dashboard/SampleShipments";
 import NewDashboard from "pages/Shipper/Dashboard/New";
 import SellerDashboard from '../pages/Seller/Dashboard/index';
 import AnnouncementDetail from "pages/Seller/Announcement/Detail";
+import SignInNew from "pages/Landing/new/SignIn";
+import SignUpNew from "pages/Landing/new/SignUp";
 
 const RouteConstants = {
     HOME: "/",
@@ -57,7 +60,7 @@ export const routes = {
         pathname: "/",
         title: "Home",
         isPublic: true,
-        element: Landing,
+        element: LandingNew,
     },
     SHIPPERDASHBOARD: {
         pathname: "/shipper/dashboard",
@@ -65,6 +68,18 @@ export const routes = {
         isPublic: false,
 
         element: Dashboard,
+    },
+    LOGIN:{
+        pathname: "/login",
+        title: "Login",
+        isPublic: true,
+        element: SignInNew,
+    },
+    SIGNUP:{
+        pathname: "/signup",
+        title: "Sign up",
+        isPublic: true,
+        element: SignUpNew,
     },
     NEWSHIPPERDASHBOARD: {
         pathname: "/shipper/dashboard/new",
@@ -391,7 +406,7 @@ export const pageDetails = (pathname) =>
     Object.values(routes).find((routeObj) => {
         return routeObj.pathname === pathname;
     });
-export const commonDescription = "FBA-Boss";
+export const commonDescription = "FBA Boss Logistics";
 export default RouteConstants;
 
 // Object.key(routeKey).find(routePath => routePath.includes(pathname.replaceAll(/[0-9]/g,'')))

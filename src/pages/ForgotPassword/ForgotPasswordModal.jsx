@@ -169,7 +169,7 @@ export default function ForgotPasswordModal({ open, handleClose }) {
                 maxWidth="xs"
             >
                 <DialogTitle>
-                    <img src={KeyIcon} width="44px" className="m-auto" />
+                    <img src={KeyIcon} width="44px" className="m-auto text-primary" />
                     <IconButton
                         aria-label="close"
                         onClick={handleCloseReset}
@@ -243,7 +243,7 @@ export default function ForgotPasswordModal({ open, handleClose }) {
                             )}
                             <Button
                                 // onClick={handleClose}
-                                className="w-full my-8 text-lg"
+                                className="w-full my-8 text-lg bg-primary hover:bg-primary/90 text-white rounded-lg"
                                 type="submit"
                                 onClick={() => {
                                     if (renderScreen.success) {
@@ -269,7 +269,7 @@ export default function ForgotPasswordModal({ open, handleClose }) {
                             });
                             handleClose();
                         }}
-                        className="flex justify-center text-base cursor-pointer"
+                        className="flex justify-center text-base cursor-pointer text-primary"
                         color="primary.500"
                     >
                         <KeyboardBackspaceOutlinedIcon
