@@ -28,7 +28,7 @@ export const HeroSection = () => {
          Let shipping agents compete for your business and get the best deals for your product deliveries.
          </p>
          <Button size="lg" className='   rounded-lg md:w-[180px] w-full h-[42px]' onClick={handleRedirect}>
-                   Book Your Shipment
+                   Get Started
                </Button>
       </div>
       <img width='462px' src={NewShipmentIcon} className='hidden md:block' />
