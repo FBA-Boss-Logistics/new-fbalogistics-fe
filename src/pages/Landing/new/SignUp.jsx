@@ -26,7 +26,7 @@ const SignUpFormSchema = yup.object().shape({
 const SignUp = () => {
     const navigate = useNavigate();
     const { mutate: signUpQuery } = useSignUpQuery();
-    const [activeTab, setActiveTab] = useState('Shipment Agent');
+    const [activeTab, setActiveTab] = useState('Customer');
     const [showPassword, setShowPassword] = useState(false)
     
     const togglePasswordVisibility = () => {
@@ -113,10 +113,10 @@ const SignUp = () => {
          Sign Up
          </h1>
          <div className='w-screen px-[20px] md:px-0 md:w-[400px] h-full flex flex-col items-start justify-start gap-4 '>
-         <Tabs defaultValue="account" className="w-full flex flex-col items-start justify-center gap-[14px]">
+         <Tabs defaultValue={activeTab} className="w-full flex flex-col items-start justify-center gap-[14px]">
            <TabsList className='w-full h-[42px] bg-[#F2F5FC]'>
-             <TabsTrigger value="account" className='w-full h-full text-primary ' onClick={() => setActiveTab('Shipment Agent')}>Shipment Agent</TabsTrigger>
-             <TabsTrigger value="password" className='w-full h-full text-primary ' onClick={() => setActiveTab('Customer')}>Customer</TabsTrigger>
+             <TabsTrigger value="Shipment Agent" className='w-full h-full text-primary ' onClick={() => setActiveTab('Shipment Agent')}>Shipment Agent</TabsTrigger>
+             <TabsTrigger value="Customer" className='w-full h-full text-primary ' onClick={() => setActiveTab('Customer')}>Customer</TabsTrigger>
            </TabsList>
          </Tabs>
          <form onSubmit={handleSubmit(submitSignUpFrom)} id="login-form" className='w-full flex flex-col items-start justify-start gap-4'>

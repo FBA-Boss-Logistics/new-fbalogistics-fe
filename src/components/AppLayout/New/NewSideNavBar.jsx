@@ -168,12 +168,6 @@ const NewSideNavBar = ({menu, dashboard}) => {
                 </a>
             </li>
             <li>
-                <Link href="#" className="flex items-center p-3 text-gray-700 hover:bg-gray-100 rounded-md">
-                <LifeBuoy className="mr-3 h-5 w-5" />
-                Support
-                </Link>
-            </li>
-            <li>
                 <Link to={isSeller ? routes.SELLERPROFILE.pathname : routes.SHIPPERPROFILE.pathname} onClick={() => {
                   setCurrentPath(isSeller ? routes.SELLERPROFILE.pathname : routes.SHIPPERPROFILE.pathname)
                   setIsSidebarOpen(false)
