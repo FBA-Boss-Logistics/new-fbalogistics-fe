@@ -11,7 +11,7 @@ NEW_RELEASE="$RELEASES_DIR/$TIMESTAMP"
 cd "$REPO_DIR" || { echo "❌ Failed to go to project folder"; exit 1; }
 
 # update code
-git pull origin main || { echo "❌ Failed to git pull"; exit 1; }
+git pull origin new-fba || { echo "❌ Failed to git pull"; exit 1; }
 
 # Install dependencies dan build
 npm install || { echo "❌ Failed to npm install"; exit 1; }
