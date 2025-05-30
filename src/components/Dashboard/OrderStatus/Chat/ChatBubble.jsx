@@ -40,8 +40,15 @@ export default function ChatBubble({
                 chatContainerRef.current.scrollHeight;
         }
 
+        if(currentMessageCount > 0 && !isLoading){
+            chatContainerRef.current.scrollTo({
+                top: chatContainerRef.current.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+        
         previousMessageCountRef.current = currentMessageCount;
-    }, [messageData?.messages, isReply]);
+    }, [messageData?.messages, isReply,isLoading]);
 
     function downloadFileHandler(id) {
         mutate(id, {
