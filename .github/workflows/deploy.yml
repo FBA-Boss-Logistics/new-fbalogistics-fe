@@ -18,4 +18,4 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           key: ${{ secrets.SSH_PRIVATE_KEY  }}
           port: ${{ secrets.SSH_PORT }}
-          script: bash /home/hakim/deploy.sh
+          script: bash /home/hakim/frontend/deploy.sh
