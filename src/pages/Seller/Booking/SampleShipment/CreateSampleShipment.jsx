@@ -17,6 +17,7 @@ import { CommonFormValidations } from "components/Form/CommonFormValidations";
 import { LabelledTextField } from "components";
 import { usePostSampleShipmentDetail } from "queries/Seller";
 import { useQueryClient } from "@tanstack/react-query";
+import HandleSuccessResponse from "utils/HandleSuccessResponse";
 
 const { productName, quantity, address } = CommonFormValidations;
 const SampleShipmentFormSchema = yup.object().shape({
@@ -51,6 +52,7 @@ const CreateSampleShipment = ({ open, onClose }) => {
 
         postSampleShipmentDetail(data, {
             onSuccess: () => {
+                HandleSuccessResponse(data);
                 queryClient.invalidateQueries("FETCH_SAMPLE_SHIPMENTS");
                 onClose();
             },

@@ -30,7 +30,10 @@ const MessageComponent = ({
     const isOnlyEmojiContent = isEmojiHandler(message?.content);
     const background_Color = isCurrentUserMessage
         ? "natural.300"
-        : "natural.100";
+        : "fbBlue.700";
+
+
+    const color = isCurrentUserMessage ? "natural.900" : "white";
 
     return (
         <div
@@ -50,6 +53,7 @@ const MessageComponent = ({
                                 <Box
                                     sx={{
                                         backgroundColor: background_Color,
+                                        color: color,
                                         padding: "10px",
                                         borderRadius: "12px",
                                     }}
@@ -188,6 +192,7 @@ const MessageComponent = ({
                             borderRadius: isCurrentUserMessage
                                 ? "0 8px 8px 8px"
                                 : "8px 0 8px 8px",
+                            color: color,
                             maxWidth: "550px",
                             minWidth: "100px",
                             marginLeft: isCurrentUserMessage ? "auto" : "10px",
@@ -276,6 +281,7 @@ const MessageComponent = ({
                                         <CheckIcon
                                             readBy={message.read_by?.length}
                                             time={time}
+                                            color={color}
                                             isCurrentUser={isCurrentUserMessage}
                                         />
                                     </Typography>
@@ -286,6 +292,7 @@ const MessageComponent = ({
                                 onMouseEnter={(e) =>
                                     handleEmojiButtonClick(e, message.id)
                                 }
+                                className="flex flex-row-reverse w-full"
                             >
                                 <LinkifyContent content={message?.content} />
                                 <Typography
@@ -300,9 +307,11 @@ const MessageComponent = ({
                                     <CheckIcon
                                         readBy={message.read_by?.length}
                                         time={time}
+                                        color={color}
                                         isCurrentUser={isCurrentUserMessage}
                                     />
                                 </Typography>
+
                             </span>
                         )}
                     </Typography>
@@ -334,7 +343,7 @@ const MessageComponent = ({
                                 handleEmojiClose();
                                 handleMenuOpen(e, message.id);
                             }}
-                            className="absolute top-0 right-0"
+                            className="absolute top-0 right-0 text-white"
                             sx={{ marginLeft: "auto" }}
                         >
                             <MoreVertIcon />

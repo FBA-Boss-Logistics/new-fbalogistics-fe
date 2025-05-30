@@ -1,22 +1,23 @@
-import { Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { Chip, Step, StepLabel, Stepper, Typography } from "@mui/material";
 import StepIcon from "assets/svg/stepicon.svg";
 import LastStepIcon from "assets/svg/laststepicon.svg";
 import { useLocation } from "react-router-dom";
+import { Card, CardHeader } from "components/ui/card";
 
 function PastStatusConnector() {
-    return <div className="h-6 w-[2px] rounded-s-sm bg-[#E9B744] ml-4"></div>;
+    return <div className="h-6   border-dashed border-l-2 border-primary-500 ml-4"></div>;
 }
 
 function BookingPastStatusConnector() {
-    return <div className="h-6 w-[2px] rounded-s-sm bg-success-500 ml-4"></div>;
+    return <div className="h-6 border-dashed border-l-2  ml-3"></div>;
 }
 
 function PastStatusIcon() {
-    return <img src={StepIcon} alt="icon" />;
+    return <img src={StepIcon} alt="icon" width={32} />;
 }
 
 export function CompleteStepIcon() {
-    return <img src={LastStepIcon} alt="icon" />;
+    return <img src={LastStepIcon} alt="icon" width={32} />;
 }
 
 export default function PastStatus({ status }) {
@@ -61,13 +62,17 @@ export default function PastStatus({ status }) {
     ];
 
     return (
-        <div className="w-full border-1 border-natural-100 border-solid rounded-xl bg-natural-25">
-            <div className="bg-natural-100 border-natural-100 border-solid rounded-t-xl pt-2 pb-2 pr-3 pl-3 ">
-                <Typography color="primary.900" fontWeight={600}>
-                    Status
-                </Typography>
-            </div>
-            <div className="p-3 flex flex-col ">
+        <div >
+            <Card className="w-full p-6">
+                {/* <CardHeader> */}
+                <div className="flex flex-row justify-between">
+                    <Typography color="primary.900" fontWeight={600}>
+                        Shipment Status
+                    </Typography>
+                    <Chip label={status} className="bg-primary-200 text-primary-600 border-none font-semibold " variant="outlined" />
+                </div>
+                {/* </CardHeader> */}
+            <div className="flex flex-col ">
                 <Stepper
                     activeStep={3}
                     orientation="vertical"
@@ -107,7 +112,7 @@ export default function PastStatus({ status }) {
                                                         : "grey",
                                             }}
                                         >
-                                            {el.label}
+                                            {el.label} 
                                         </span>
                                     </StepLabel>
                                 </Step>
@@ -115,6 +120,7 @@ export default function PastStatus({ status }) {
                     )}
                 </Stepper>
             </div>
+            </Card>
         </div>
     );
 }

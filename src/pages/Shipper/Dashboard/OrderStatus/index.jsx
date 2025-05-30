@@ -15,9 +15,10 @@ import {
     usePatchStatusUpdate,
 } from "queries/Shipper";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { formatDateString } from "utils";
 import ConfirmModal from "./ConfirmModal";
+import HeaderPage from "components/HeaderPage";
 
 export default function OrderStatus() {
     const { id } = useParams();
@@ -72,7 +73,15 @@ export default function OrderStatus() {
             />
         );
     }
+    const navigate = useNavigate();
 
+    const handleClick = () => {
+        if (srcQueryParam === "accepted") {
+            navigate(`/shipper/bid/${id}/?src=phone`);
+        } else {
+            navigate(`/shipper/bid/${id}`);
+        }
+    };
     return (
         <>
             {" "}
@@ -82,9 +91,10 @@ export default function OrderStatus() {
                 </div>
             ) : (
                 <div className="flex flex-col gap-6 w-full">
-                    <div className="w-[569px]">
+                    <HeaderPage title="Current Shipment" pathname="Current Shipment" home="shipment" />
+                    {/* <div className="w-[569px]"> */}
                         {" "}
-                        <OrderDate
+                        {/* <OrderDate
                             Label={"You have assigned this order on"}
                             Date={
                                 orderData &&
@@ -100,22 +110,24 @@ export default function OrderStatus() {
                                       ))
                             }
                             isLoading={isLoading}
-                        />
-                    </div>
+                        /> */}
+                    {/* </div> */}
 
                     {srcQueryParam !== "sampleShipments" && (
-                        <ShippingAddress
-                            OrderStatusData={orderData?.data}
-                            isLoading={isLoading}
-                        />
+                        // <ShippingAddress
+                        //     OrderStatusData={orderData?.data}
+                        //     isLoading={isLoading}
+                        // />
+                        <></>
                     )}
                     <div className="flex gap-4 items-start">
                         <ChatWindow />
                         <div className=" w-1/3 flex flex-col gap-4">
-                            <OrderDetails
-                                OrderStatusData={orderData?.data}
-                                isLoading={isLoading}
-                            />
+                                <OrderDetails
+                                    OrderStatusData={orderData?.data}
+                                    isLoading={isLoading}
+                                    handleClick={handleClick}
+                                />
                             {srcQueryParam === "sampleShipments" ? (
                                 <div>
                                     <div className="bg-primary-100 border-primary-100 border-solid rounded-t-xl pt-2 pb-2 pr-3 pl-3 ">

@@ -1,9 +1,10 @@
 import { Typography } from "@mui/material";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import Location from "assets/svg/location.svg";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { showAddress } from "utils";
-
+import { ChevronDown } from "lucide-react";
 export function OriginAndDestination({
     supplierName,
     pickupLocation,
@@ -15,23 +16,27 @@ export function OriginAndDestination({
 
     const currentUrl = useLocation().pathname;
 
-    const [showMore, setShowMore] = useState(false);
+    const [showMore, setShowMore] = useState(true);
 
     return (
-        <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4  flex-col gap-4 flex">
-            <div className="flex-col gap-2">
-                <div className="w-8 h-8 p-1 bg-natural-100 rounded-full border-4 border-natural-100 justify-center  gap-2 inline-flex">
+        <div>
+            <Collapsible open={showMore} onOpenChange={setShowMore}>
+            <CollapsibleTrigger className="flex items-center w-full">
+            <div className="flex items-center flex-row gap-2">
                     <div className="bg-natural-200 rounded-full">
                         <img src={Location} alt="location" />
                     </div>
-                </div>
-                <Typography fontSize={18} fontWeight={500} color="natural.900">
+              
+                <Typography fontSize={18} fontWeight={600} variant="body2" color="natural.900">
                     Origin and Destination
                 </Typography>
             </div>
-            <div className="flex flex-col gap-2">
+            <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${showMore ? "rotate-180" : ""}`} />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+            <div className="flex flex-col gap-2 mt-2">
                 <div className="flex w-full justify-between gap-4">
-                    <div className="bg-natural-25 p-2 flex-col gap-2 flex rounded-lg w-1/2">
+                    <div className="p-2 flex-col gap-2 flex rounded-lg w-1/2">
                         <Typography
                             variant="body2"
                             fontWeight={500}
@@ -50,7 +55,7 @@ export function OriginAndDestination({
                     {(currentUrl.includes("/booking/order/status") ||
                         srcQueryParam === "past order" ||
                         srcQueryParam === "phone") && (
-                        <div className="bg-natural-25 p-2 flex-col gap-2 flex w-1/2">
+                        <div className="p-2 flex-col gap-2 flex w-1/2">
                             <Typography
                                 variant="body2"
                                 fontWeight={500}
@@ -68,7 +73,7 @@ export function OriginAndDestination({
                         </div>
                     )}
                 </div>
-                <div className="bg-natural-25 p-2 flex-col gap-2 flex rounded-lg">
+                <div className="p-2 flex-col gap-2 flex rounded-lg">
                     <Typography
                         variant="body2"
                         fontWeight={500}
@@ -107,6 +112,8 @@ export function OriginAndDestination({
                     </div>
                 </div> */}
             </div>
+            </CollapsibleContent>
+            </Collapsible>
         </div>
     );
 }

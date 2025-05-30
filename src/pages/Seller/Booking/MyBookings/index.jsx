@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import DataTableCustom from "components/Table/DataTableCustom";
 import ProductImage from "assets/images/testphoto12.png";
 import EyeIcon from "assets/svg/Eye.svg";
-import { Typography } from "@mui/material";
+import {  Typography } from "@mui/material";
+import { Button } from "components/ui/button";
 import { useNavigate } from "react-router-dom";
 import BookingsTopNav from "../BookingsTopNav";
 import { FetchSellerShipmentDetailApi } from "queries/Seller";
@@ -10,7 +11,10 @@ import { formatDate } from "utils";
 import { format } from "date-fns";
 import ChatIconWithDot from "components/Comman/ChatWithGreenDot";
 import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
-
+import HeaderPage from "components/HeaderPage";
+import DashboardStats from "pages/Seller/Dashboard/dashboardStats";
+import { Card } from "components/ui/card";
+import ActionTable from "components/Table/ActionTable";
 export default function MyBooking() {
     const navigate = useNavigate();
     const [sellerShipmentListPagination, setSellerShipmentListPagination] =
@@ -82,38 +86,28 @@ export default function MyBooking() {
         }
     };
 
+    const handleDetailShipment = (original) => {
+        if(original.status === "Quotation Approved"){
+            navigate(`/seller/booking/order/status/${original.id}/?src=pendingorders`);
+        }else if(original.status === "Quotation Accepted"){
+            navigate(`/seller/booking/order/status/${original.id}/?src=phone`);
+        }else{
+            navigate(`/seller/booking/order/status/${original.id}/?src=newshipment`);
+        }
+    }
     /** @type import('@tanstack/react-table').ColumnDef<any> */ //for autosuggestions
     const columns = [
         {
             Header: "Shipment ID",
             accessor: "id",
             width: 10,
-        },
-        {
-            Header: "Product Name",
-            accessor: "product_name",
             Cell: ({ row: { original } }) => (
-                <div className="flex items-center">
-                    <img src={ProductImage} alt="Product" />
-                    <span className="ml-1.5">{original.product_name}</span>
-                </div>
-            ),
-        },
-        {
-            Header: "Shipment Date",
-            accessor: "shipment_ready_date",
-            Cell: ({ row: { original } }) => (
-                <Typography>
-                    {formatDate(original.shipment_ready_date)}
-                </Typography>
-            ),
-        },
-        {
-            Header: "Pickup Location",
-            accessor: "pickup_location",
-            Cell: ({ row: { original } }) => (
-                <Typography>
-                    {formatDate(original.pickup_location?.full_address)}
+                <Typography
+                variant="subtitle2"
+                color="natural.500"
+                fontWeight={400}
+                >
+                    {original.id}
                 </Typography>
             ),
         },
@@ -121,24 +115,87 @@ export default function MyBooking() {
             Header: "Status",
             accessor: "status",
             Cell: ({ row: { original } }) => (
-                <Typography>{formatDate(original.status)}</Typography>
+                <Typography
+                variant="subtitle2"
+                color="natural.500"
+                fontWeight={400}
+                >
+                    {original.status}
+                </Typography>
             ),
         },
         {
+            Header: "Shipment Date",
+            accessor: "shipment_ready_date",
+            Cell: ({ row: { original } }) => (
+                <Typography
+                variant="subtitle2"
+                color="natural.500"
+                fontWeight={400}
+                >
+                    {formatDate(original.shipment_ready_date)}
+                </Typography>
+            ),
+        },
+        {
+            Header: "Product Name",
+            accessor: "product_name",
+            Cell: ({ row: { original } }) => (
+                    <Typography
+                variant="subtitle2"
+                color="natural.500"
+                fontWeight={400}
+                >
+                    {original.product_name}
+                </Typography>
+               
+            ),
+        },
+       
+        {
+            Header: "Pickup Location",
+            accessor: "pickup_location",
+            Cell: ({ row: { original } }) => (
+                <Typography
+                variant="subtitle2"
+                color="natural.500"
+                fontWeight={400}
+                >
+                    {formatDate(original.pickup_location?.full_address)}
+                </Typography>
+            ),
+        },
+    
+        {
             Header: "Action",
             Cell: ({ row: { original } }) => {
+                const action = [
+                    {
+                        name: "View shipment",
+                        onClick: () => handleDetailShipment(original),
+                        visible: true,
+                    },
+                    {
+                        name: "Open chat",
+                        onClick: () => handleClick(original),
+                        visible: original.status === "Quotation Accepted",
+                    },
+                ];
                 return (
-                    <div className="flex gap-2 items-center">
+                    <>
+                    <div className="md:flex hidden gap-2 items-center w-full">
                         <img
                             src={EyeIcon}
-                            className="cursor-pointer"
-                            onClick={() => handleClick(original)}
+                            className="cursor-pointer "
+                            onClick={() => handleDetailShipment(original)}
                             alt="EyeIcon"
                         />
                         {original.status === "Quotation Accepted" && (
-                            <ChatIconWithDot handleClick={handleClick} original={original} />
+                            <ChatIconWithDot handleClick={handleClick} className="md:block hidden" original={original} />
                         )}
                     </div>
+                    <ActionTable action={action} />
+                    </>
                 );
             },
         },
@@ -147,24 +204,16 @@ export default function MyBooking() {
     return (
         <div>
             {/* <div className="py-4 border border-natural-100 border-solid border-x-0 border-t-0">
-                <SellerTopNav />
             </div> */}
-            <div className="px-4 bg-natural-25 h-[calc(100vh_-_76.8px)] overflow-y-scroll">
-                <BookingsTopNav />
-                <Typography
-                    variant="h6"
-                    color="natural.900"
-                    fontWeight={500}
-                    className="pb-4"
-                >
-                    Current Shipments
-                </Typography>
-
+            <DashboardStats />
+            {/* <SellerTopNav /> */}
+                <HeaderPage title="Active Shipments" pathname="Active Shipments" home="seller" />
+                <Card className="mt-6 overflow-hidden">
                 <DataTableCustom
                     data={userMessageNotification}
                     columns={columns}
                     paginationFooter={true}
-                    searchBar={true}
+                    headerGroup={true}
                     paginationData={paginationInformation}
                     isLoading={isLoading}
                     updateFilters={setSellerShipmentListPagination}
@@ -172,8 +221,9 @@ export default function MyBooking() {
                     pageNumber={true}
                     setSelectedDate={setSelectedSellerShipmentListDate}
                     selectedDate={selectedSellerShipmentListDate}
+                    heading="Top Selling Products"
                 />
-            </div>
+                </Card>
         </div>
     );
 }

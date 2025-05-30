@@ -8,6 +8,7 @@ import BookingsTopNav from "../BookingsTopNav";
 import { FetchSellerPendingShipmentDetailApi } from "queries/Seller";
 import { formatDate } from "utils";
 import { format } from "date-fns";
+import ActionTable from "components/Table/ActionTable";
 
 export default function PendingOrders() {
     const [sellerShipmentListPagination, setSellerShipmentListPagination] =
@@ -85,14 +86,25 @@ export default function PendingOrders() {
 
         {
             Header: "Action",
-            Cell: ({ row: { original } }) => (
-                <img
-                    src={EyeIcon}
-                    className="cursor-pointer"
+            Cell: ({ row: { original } }) => {
+                const action = [
+                    {
+                        name: "More info",
+                        onClick: () => handleClick(original.id),
+                        visible: true,
+                    },
+                ];
+                return(
+                    <>
+                    <img
+                        src={EyeIcon}
+                    className="cursor-pointer md:inline-block hidden"
                     onClick={() => handleClick(original.id)}
                     alt="EyeIcon"
                 />
-            ),
+                <ActionTable action={action} />
+                </>
+            )},
         },
     ];
 
@@ -120,7 +132,7 @@ export default function PendingOrders() {
                     data={sellerShipmentListData}
                     columns={columns}
                     paginationFooter={true}
-                    searchBar={true}
+                    headerGroup={true}
                     paginationData={paginationInformation}
                     isLoading={isLoading}
                     updateFilters={setSellerShipmentListPagination}

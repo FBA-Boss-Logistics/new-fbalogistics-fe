@@ -1,0 +1,26 @@
+name: Deploy via SSH using Deploy Key
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 15.204.178.191 >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        run: |
+         ssh hakim@15.204.178.191 'bash /home/hakim/deploy.sh'
+

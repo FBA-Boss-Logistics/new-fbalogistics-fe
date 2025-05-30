@@ -3,6 +3,7 @@ import { formatDateDivider, formatTimestamp } from "utils";
 import { Typography, Box, Container, IconButton, MenuItem, Select } from '@mui/material';
 import AnnouncementCard from './AnnouncementCard';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { routes } from 'routes/RouteConstants';
 
 const pageNumbers =[50,100,150,200];
 
@@ -11,24 +12,34 @@ function AnnouncementDataList({
     paginationInformation,
     setAnnouncementListPagination,
     isLoading,
-    announcementListPagination
+    announcementListPagination,
+    redirect="/shipper/dashboard/announcement"
 }) {
    
 
   return (
-    <Container>
-        <Box sx={{ border: '1px solid #ccc', borderRadius: '8px', padding: 2, marginTop: 2 }}>
-            {announcementDataList?.map(({ message, sender, timestamp }) =>{
+    <>
+            <div  className='space-y-6'>
+            {announcementDataList?.map(({ message, sender, timestamp, id }) =>{
                 return(
-                    <AnnouncementCard key={timestamp} text={message} fullName={`${sender.first_name} ${sender.last_name}`} time={formatDateDivider(timestamp)}/>
+                    
+                    <AnnouncementCard key={timestamp} text={message} id={id} fullName={`${sender.first_name} ${sender.last_name}`} time={formatDateDivider(timestamp)} redirect={redirect}/>
+                   
                 )
             })}
+             </div>
             {paginationInformation && announcementDataList?.length > 0 && <div
-                    className={`flex justify-start gap-2 pt-2.5 px-6 ml-4 overflow-hidden border-solid border-natural-200 rounded-xl`}
+                    className={`flex justify-start gap-2 pt-2.5 px-6 ml-4 overflow-hidden border-solid border-natural-200 rounded-xl  `}
                 >
-                     
+                            <IconButton
+                             className="border inline md:hidden border-natural-200 border-solid p-1 w-10 h-10 rounded-lg text-natural-900"
+                             onClick={() => setAnnouncementListPagination(prev => ({...prev, page : prev.page - 1}))}
+                             disabled={paginationInformation.page === 1 || isLoading}
+                         >
+                             <ChevronLeft />
+                         </IconButton>
                         <span className="flex gap-1 pb-4 w-full flex-col justify-center align-middle ">
-                            <div>
+                            <div className='hidden md:inline'>
                                 <Typography fontWeight={500}>
                                 Page {paginationInformation.page ?? "1"} of{" "}
                                 {paginationInformation.pages ?? "1"}
@@ -37,7 +48,7 @@ function AnnouncementDataList({
                         </span>
 
                          <div className="flex pb-4 gap-2 justify-end w-full">
-                            <div className="flex justify-start ml-5 mr-20">
+                            <div className="hidden md:flex justify-start ml-5 mr-20">
                              <span className="flex pt-1 gap-1 pb-1 w-full flex-col justify-center align-middle ">
                                      <Typography fontWeight={500}>
                                          Per Page
@@ -58,7 +69,7 @@ function AnnouncementDataList({
                              </Select>
                          </div>
                          <IconButton
-                             className="border border-natural-200 border-solid p-1 w-10 h-10 rounded-lg text-natural-900"
+                             className="border  hidden md:inline border-natural-200 border-solid p-1 w-10 h-10 rounded-lg text-natural-900"
                              onClick={() => setAnnouncementListPagination(prev => ({...prev, page : prev.page - 1}))}
                              disabled={paginationInformation.page === 1 || isLoading}
                          >
@@ -76,8 +87,8 @@ function AnnouncementDataList({
                          </IconButton>
                      </div>
             </div>}
-        </Box>
-  </Container>
+
+        </>
     
   )
 }

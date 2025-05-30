@@ -1,5 +1,6 @@
 import { FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import Loader from "components/Loader";
+import { Card, CardContent, CardHeader } from "components/ui/card";
 import { UpdateShipmentStatusApi } from "queries/Shipper";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -69,11 +70,16 @@ export default function OrderRadioGroup({ OrderStatusData, id, isLoading }) {
         <div className="border-1 border-primary-100 border-solid rounded-xl bg-natural-25">
             {!isLoading ? (
                 <>
-                    <div className="bg-primary-100 border-primary-100 border-solid rounded-t-xl pt-2 pb-2 pr-3 pl-3 ">
-                        <Typography color="primary.900" fontWeight={600}>
-                            Status
-                        </Typography>
-                    </div>
+                    <Card>
+                    <CardHeader>
+                        <div className="">
+                            <Typography color="primary.900" fontWeight={600}>
+                                Status
+                            </Typography>
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+
                     <div className="p-3 flex flex-col ">
                         <RadioGroup
                             aria-labelledby="demo-radio-buttons-group-label"
@@ -92,6 +98,8 @@ export default function OrderRadioGroup({ OrderStatusData, id, isLoading }) {
                             ))}
                         </RadioGroup>
                     </div>
+                    </CardContent>
+                    </Card>
                 </>
             ) : (
                 <div>

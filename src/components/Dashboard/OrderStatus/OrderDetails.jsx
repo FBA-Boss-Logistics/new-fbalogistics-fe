@@ -1,18 +1,26 @@
-import { Typography } from "@mui/material";
+import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import Loader from "components/Loader";
+import ModalComponent from "components/New/ModalComponent";
+import { Button } from "components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "components/ui/card";
+import { Info, MoreVerticalIcon } from "lucide-react";
 
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { formatDate, formatDateString } from "utils";
 import { formatLongDate } from "utils/format";
 export default function OrderDetails({
     OrderStatusData,
     isLoading,
     isQuotationDeclined,
+    handleClick,
+    handleStatusChange=null,
+    quotationID
 }) {
     const currentUrl = useLocation().pathname;
     const searchParams = new URLSearchParams(window.location.search);
     const srcQueryParam = searchParams.get("src");
+    const [cancelReason, setCancelReason] = useState("");
 
     const section1 = [
         { label: "Order Id", value: OrderStatusData?.id },
@@ -30,14 +38,16 @@ export default function OrderDetails({
         {
             label: "Tracking Link",
             value: (
+                <div className="flex items-center gap-2">
                 <a
                     href={OrderStatusData?.tracking_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-natural-700"
+                    className="text-natural-700 text-sm"
                 >
-                    {OrderStatusData?.tracking_link}
+                    {OrderStatusData?.tracking_link ?? "N/A"}
                 </a>
+                </div>
             ),
         },
         { label: "Product", value: OrderStatusData?.product_name },
@@ -62,9 +72,91 @@ export default function OrderDetails({
     ];
 
     const sections = srcQueryParam === "sampleShipments" ? section2 : section1;
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const [openModal, setOpenModal] = useState(false);
+    const handleOpenModal = () => {
+        setOpenModal(true);
+    };
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
 
     return (
-        <div className="w-full h-full border-1 flex flex-col border-natural-100 border-solid p-3 rounded-xl  justify-between ">
+        <>
+
+        {/* modal cancel winning bid */}
+        <ModalComponent open={openModal} onClose={handleCloseModal} title="Cancel Winning Bid">
+            <div className="flex flex-col  items-end justify-end h-full gap-4">
+                {/* <textarea value={cancelReason} onChange={(e)=>setCancelReason(e.target.value)} className="w-full h-full border-1 border-natural-100 border-solid rounded-xl"></textarea> */}
+                
+                <textarea
+                                        value={cancelReason}
+                                        onChange={(e) =>
+                                            setCancelReason(e.target.value)
+                                        }
+                                        rows={7}
+                                        placeholder="Enter your Cancel Reason"
+                                        className="border border-solid border-[#00000050] outline-none w-full p-4 rounded-md"
+                                    />
+                <div className="flex flex-col md:flex-row-reverse gap-2 w-full h-['20ox'] ">
+                    <Button className="rounded-full border-2 border-primary md:flex-1" size="lg" onClick={()=>{
+                        console.log(cancelReason)
+                        handleStatusChange(quotationID, false, cancelReason)
+                        handleCloseModal()
+                    }}>Cancel Winning Bid</Button>
+                    <Button className="rounded-full border-2 border-primary md:flex-1" variant="outline" size="lg" onClick={()=>{
+                        handleCloseModal()
+                    }}>Cancel</Button>
+                </div>
+            </div>
+        </ModalComponent>
+       
+        <Card className="w-full h-full border-1 flex flex-col border-natural-100 border-solid rounded-xl  justify-between ">
+         <CardHeader className="pb-2">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-medium">Shipment Details</h3>
+                        {srcQueryParam !== "sampleShipments" && handleStatusChange!==null ? (
+                            <>
+                            <IconButton
+                                    aria-label="more"
+                                    aria-controls="message-menu"
+                                    aria-haspopup="true"
+                                    onClick={(e) => { handleClose();
+                                        setAnchorEl(e.currentTarget);
+                                    }}
+                                    className=""
+                                    sx={{ marginLeft: "auto" }}
+                                >
+                                    <MoreVerticalIcon />
+                                </IconButton>
+                                <Menu
+                                    id="basic-menu"
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                    MenuListProps={{
+                                    'aria-labelledby': 'basic-button',
+                                    }}
+                                >
+                                    <MenuItem onClick={()=>{
+                                        // handleStatusChange(quotationID, false)
+                                        handleOpenModal()
+                                        handleClose()
+                                    }}>Cancel Winning Bid</MenuItem>
+                                </Menu>
+                        </>
+                        ) : (
+                            <></>
+                        )}
+                  </div>
+                  <CardDescription>Sales performance by location</CardDescription>
+        </CardHeader>
+        <CardContent>
+        <div className="w-full h-full border-1 flex flex-col border-natural-100 border-solid rounded-xl  justify-between  ">
             {!isLoading ? (
                 sections.map((section, index) => (
                     <React.Fragment key={index}>
@@ -75,7 +167,7 @@ export default function OrderDetails({
                                 </Typography>
                             </div>
 
-                            <div className="flex items-start w-1/2">
+                            <div className="flex items-start justify-end w-full ">
                                 <Typography
                                     textAlign={"start"}
                                     color="natural.700"
@@ -90,12 +182,23 @@ export default function OrderDetails({
                             <hr className="mt-3 mb-3 bg-natural-200 border-natural-200 border-solid" />
                         )}
                     </React.Fragment>
-                ))
+                )
+            )
             ) : (
                 <div className="flex items-center w-full justify-center h-full">
                     <Loader />
                 </div>
             )}
         </div>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+            <Button  variant="outline" size="lg"className="rounded-full border-2 border-primary text-primary" onClick={handleClick}>
+                <span  className="text-primary">
+                    View details
+                </span>
+            </Button>
+        </CardFooter>
+        </Card>
+        </>
     );
 }

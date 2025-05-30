@@ -19,6 +19,18 @@ import { useCreateShipmentQuery } from "queries/Seller";
 import { format } from "date-fns";
 import HandleErrorResponse from "utils/HandleErrorResponse";
 import { useQueryClient } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import { routes } from "routes/RouteConstants";
+import { ChevronRight, Plus, X } from "lucide-react";
+import { Button } from "components/ui/button";
+import Location from "assets/svg/location.svg";
+import Truck from "assets/svg/truck.svg";
+import { Card } from "components/ui/card";
+import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { ChevronDown } from "lucide-react";
+
+
 
 const {
     email,
@@ -371,13 +383,36 @@ const Quotes = () => {
         [email, first_name, last_name]
     );
 
-    return (
+    const [originOpen, setOriginOpen] = useState(true)
+    const [cargoOpen, setCargoOpen] = useState(true)
+    const [contactInfoOpen, setContactInfoOpen] = useState(true)
+    const [complianceOpen, setComplianceOpen] = useState(true)
+    return (    
         <div>
             {/* <div className="py-4">
                 <TopNavBar />
             </div> */}
-
-            <div className="px-32 py-8 flex bg-natural-50 border border-solid border-natural-100 justify-center">
+            <div className="flex flex-row justify-between items-center mb-6">
+                <div>
+                    <h1 className="text-2xl font-semibold text-zinc-800 mb-2">New Shipment</h1>
+                    <div className="flex items-center text-sm">
+                    <Link to={routes.SELLERDASHBOARD.pathname} className="text-blue-600 hover:underline">
+                        Dashboard
+                    </Link>
+                    <ChevronRight className="h-4 w-4 inline" />
+                    <span className="text-gray-500">New Shipment</span>
+                    </div>
+                </div>
+                <div>
+                    <Button asChild variant="outline" className=" border-2 hidden lg:flex font-semibold border-gray-400 text-gray-500">
+                        <Link to={routes.SELLERDASHBOARD.pathname}>
+                            <X className="h-4 w-4 " />
+                            Cancel
+                        </Link>
+                    </Button>
+                </div>
+            </div>
+            {/* <div className="px-32 py-8 flex bg-natural-50 border border-solid border-natural-100 justify-center">
                 <div className="w-64">
                     <div
                         className={`h-1 bg-natural-200 mb-2.5 ${
@@ -477,74 +512,74 @@ const Quotes = () => {
                         Please provide your name and email
                     </Typography>
                 </div>
-            </div>
+            </div> */}
 
-            <div className="px-32 py-8 h-[calc(100vh_-_225px)] overflow-y-scroll">
-                <Typography variant="h5" fontWeight={400} fontFamily="Sora">
-                    Let us help you increase your margins!
-                </Typography>
+            <div className="">
                 <form onSubmit={handleSubmit(submitShipperFrom, handleErrors)}>
-                    <div className=" border border-solid border-natural-200 overflow-y-auto rounded-xl mt-8 p-4 ">
-                        <div className="bg-natural-25 p-4 rounded-xl">
-                            <div>
-                                <div className="flex flex-col gap-8">
-                                    <div className="flex gap-4 mb-6 ">
-                                        <LabelledTextField
-                                            label="Freight Booking Reference Number*"
-                                            placeholder="This number is user assigned, IE: March 3 Jade Roller"
-                                            className=" "
-                                            inputRef={refBookingReferenceNumber}
-                                            {...RegisterBookingReferenceNumber}
-                                            error={Boolean(
-                                                errors.freight_booking_reference_number
-                                            )}
-                                            autoComplete="new-reference"
-                                            helperText={
-                                                errors.freight_booking_reference_number &&
-                                                errors
-                                                    .freight_booking_reference_number
-                                                    .message
-                                            }
-                                        />
-                                        <div className="w-full">
-                                            <Typography className="pb-[3px]">
-                                                When Will Your Shipment Be Ready
-                                                For Pickup?
-                                            </Typography>
-                                            <DatePicker
-                                                minDate={new Date()}
-                                                placeholder="Date"
-                                                format="MM/DD/YYYY"
-                                                onChange={(date) => {
-                                                    handleChangeValue(
-                                                        "shipment_ready_date",
-                                                        date
-                                                    );
-                                                }}
-                                                value={shipment_ready_date}
-                                            />
-                                            {errors.shipment_ready_date && (
-                                                <FormHelperText error>
-                                                    {
-                                                        errors
-                                                            .shipment_ready_date
-                                                            .message
-                                                    }
-                                                </FormHelperText>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <Typography
-                                            variant="h5"
-                                            fontFamily="Sora"
-                                            fontWeight={400}
-                                            color="natural.800"
-                                        >
-                                            Origin and Destination
+                
+                    <div>
+                        <div className="flex flex-col gap-6  font-semibold">
+                            {/* Shipment Details Section */}
+                            <CardComponent className="px-6 py-2">
+                                <div className="flex flex-wrap lg:flex-nowrap gap-4 mb-6 font-semibold">
+                                    <LabelledTextField
+                                        label="Freight Booking Reference Number*"
+                                        placeholder="This number is user assigned, IE: March 3 Jade Roller"
+                                        className=" "
+                                        inputRef={refBookingReferenceNumber}
+                                        {...RegisterBookingReferenceNumber}
+                                        error={Boolean(
+                                            errors.freight_booking_reference_number
+                                        )}
+                                        autoComplete="new-reference"
+                                        helperText={
+                                            errors.freight_booking_reference_number &&
+                                            errors
+                                                .freight_booking_reference_number
+                                                .message
+                                        }
+                                    />
+                                    <div className="w-full">
+                                        <Typography className="pb-[3px]" fontWeight={600}>
+                                        Pick up date
                                         </Typography>
-
+                                        <DatePicker
+                                            minDate={new Date()}
+                                            placeholder="Enter Date"
+                                            format="MM/DD/YYYY"
+                                            onChange={(date) => {
+                                                handleChangeValue(
+                                                    "shipment_ready_date",
+                                                    date
+                                                );
+                                            }}
+                                            value={shipment_ready_date}
+                                        />
+                                        {errors.shipment_ready_date && (
+                                            <FormHelperText error>
+                                                {
+                                                    errors
+                                                        .shipment_ready_date
+                                                        .message
+                                                }
+                                            </FormHelperText>
+                                        )}
+                                    </div>
+                                </div>
+                                    {/* collapsable section */}
+                                    <Collapsible open={originOpen} onOpenChange={setOriginOpen}>
+                                    <CollapsibleTrigger className="flex items-center w-full  text-left  rounded-md">
+                                        <div className="flex items-center flex-row gap-2">
+                                                <div className="bg-natural-200 rounded-full">
+                                                    <img src={Location} alt="location" />
+                                                </div>
+                                            <Typography fontSize={18} fontWeight={600} variant="body2" color="natural.900">
+                                                Origin and Destination
+                                            </Typography>
+                                        </div>
+                                    <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${originOpen ? "rotate-180" : ""}`} />
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
                                         <div className="my-1">
                                             <LabelledTextField
                                                 label="Please Provide The Complete Factory Pickup Address"
@@ -560,7 +595,7 @@ const Quotes = () => {
                                             />
                                         </div>
 
-                                        <div className="flex gap-4 my-4">
+                                        <div className="flex flex-wrap lg:flex-nowrap gap-4 ">
                                             <LabelledTextField
                                                 label="Supplier Contact Name"
                                                 placeholder="Name"
@@ -593,631 +628,616 @@ const Quotes = () => {
                                                 }
                                             />
                                         </div>
+                                    </CollapsibleContent>
+                                    </Collapsible>
+                                    
+                            </CardComponent>
+                            {/* Cargo Section */}
+                            <CardComponent className="px-6 pt-2">
+                                {/* collapsable section */}
+                                    <Collapsible open={cargoOpen} onOpenChange={setCargoOpen}>
+                                    <CollapsibleTrigger className="flex items-center w-full  text-left  rounded-md">
+                                        <div className="flex items-center flex-row gap-2">
+                                                <div className="bg-natural-200 rounded-full w-[30px]">
+                                                    <img src={Truck} alt="truck" />
+                                                </div>
+                                        <Typography color="natural.900" fontSize={18} fontWeight={600}>
+                                            Cargo
+                                        </Typography>
+                                        </div>
+                                    <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${cargoOpen ? "rotate-180" : ""}`} />
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
+                                    <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4 ">
+                                        <LabelledTextField
+                                            label="Product Name*"
+                                            placeholder="Product name"
+                                            inputRef={refProductName}
+                                            {...RegisterProductName}
+                                            value={product_name}
+                                            error={Boolean(
+                                                errors.product_name
+                                            )}
+                                            autoComplete="new-product-name"
+                                            helperText={
+                                                errors.product_name &&
+                                                errors.product_name.message
+                                            }
+                                        />
+                                        <LabelledTextField
+                                            label="Main competitor ASIN*"
+                                            placeholder="ASIN"
+                                            type="text"
+                                            inputRef={refCompetitorAsin}
+                                            {...RegisterCompetitorAsin}
+                                            value={main_competitor_asin}
+                                            error={Boolean(
+                                                errors.main_competitor_asin
+                                            )}
+                                            autoComplete="new-asin"
+                                            helperText={
+                                                errors.main_competitor_asin &&
+                                                errors.main_competitor_asin
+                                                    .message
+                                            }
+                                        />
+                                    </div>
 
-                                        <div className="mt-8">
-                                            <Typography
-                                                variant="h5"
-                                                fontFamily="Sora"
-                                                fontWeight={400}
-                                                color="natural.800"
-                                            >
-                                                Delivery Location
-                                            </Typography>
-                                            <div>
-                                                <div className="my-1">
-                                                    <LabelledTextField
-                                                        label="Amazon Warehouse Address"
-                                                        placeholder="Ship to address from your amazon shipping plan, including warehouse number"
-                                                        className="my-4"
-                                                        autoComplete="new-warehouse-address"
-                                                        error={Boolean(
-                                                            Array.isArray(
-                                                                errors?.delivery_location
-                                                            ) &&
-                                                                errors
-                                                                    .delivery_location[0]
-                                                                    ?.full_address
-                                                        )}
-                                                        helperText={
-                                                            Array.isArray(
-                                                                errors?.delivery_location
-                                                            ) &&
-                                                            errors
-                                                                .delivery_location[0]
-                                                                ?.full_address &&
+                                    <div className="flex gap-4  lg:w-1/2">
+                                                <LabelledTextField
+                                                    label="Amazon Warehouse Address"
+                                                    placeholder="Enter Address"
+                                                    className=" w-1/2"
+                                                    autoComplete="new-warehouse-address"
+                                                    error={Boolean(
+                                                        Array.isArray(
+                                                            errors?.delivery_location
+                                                        ) &&
                                                             errors
                                                                 .delivery_location[0]
                                                                 ?.full_address
+                                                    )}
+                                                    helperText={
+                                                        Array.isArray(
+                                                            errors?.delivery_location
+                                                        ) &&
+                                                        errors
+                                                            .delivery_location[0]
+                                                            ?.full_address &&
+                                                        errors
+                                                            .delivery_location[0]
+                                                            ?.full_address
+                                                            .message
+                                                    }
+                                                    onChange={(e) =>
+                                                        handleAdditinalAddress(
+                                                            e.target.value,
+                                                            0
+                                                        )
+                                                    }
+                                                />
+                                    </div>
+                             
+                                    
+                                    {cargoSetFields?.map((field, index) => {
+                                        return (
+                                            <div key={index}>
+                                                {index > 0 &&
+                                                    cargoSetFields?.length >
+                                                        1 && (
+                                                        <div>
+                                                            <FormControlLabel
+                                                                control={
+                                                                    <Checkbox
+                                                                        checked={
+                                                                            isRemoveChecked
+                                                                        }
+                                                                        onChange={(
+                                                                            e
+                                                                        ) =>
+                                                                            handleTogglePackageRemove(
+                                                                                e
+                                                                                    .target
+                                                                                    .checked,
+                                                                                index
+                                                                            )
+                                                                        }
+                                                                    />
+                                                                }
+                                                                label="Add another Amazon warehouse"
+                                                            />
+                                                        </div>
+                                                    )}
+
+                                                
+                                                <div className="flex flex-wrap lg:flex-nowrap gap-4 mt-8">
+                                                    <LabelledTextField
+                                                        label="Carton Lenght"
+                                                        placeholder="CM"
+                                                        type="number"
+                                                        autoComplete="new-carton-dimensions-length"
+                                                        onChange={(e) => {
+                                                            handleCargoField(
+                                                                e,
+                                                                index,
+                                                                "carton_dimensions_length"
+                                                            );
+                                                        }}
+                                                        value={
+                                                            field?.carton_dimensions_length
+                                                        }
+                                                        error={Boolean(
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                                errors
+                                                                    .packages[
+                                                                    index
+                                                                ]
+                                                                    ?.carton_dimensions_length
+                                                        )}
+                                                        helperText={
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.carton_dimensions_length &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.carton_dimensions_length
                                                                 .message
                                                         }
-                                                        onChange={(e) =>
-                                                            handleAdditinalAddress(
-                                                                e.target.value,
-                                                                0
-                                                            )
+                                                    />
+
+                                                    <LabelledTextField
+                                                        label="Carton Width"
+                                                        placeholder="CM"
+                                                        className="6"
+                                                        type="number"
+                                                        onChange={(e) => {
+                                                            handleCargoField(
+                                                                e,
+                                                                index,
+                                                                "carton_dimensions_width"
+                                                            );
+                                                        }}
+                                                        autoComplete="new-carton-dimensions-width"
+                                                        value={
+                                                            field?.carton_dimensions_width
+                                                        }
+                                                        error={Boolean(
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                                errors
+                                                                    .packages[
+                                                                    index
+                                                                ]
+                                                                    ?.carton_dimensions_width
+                                                        )}
+                                                        helperText={
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.carton_dimensions_width &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.carton_dimensions_width
+                                                                .message
+                                                        }
+                                                    />
+
+                                                    <LabelledTextField
+                                                        label="Carton Height"
+                                                        placeholder="CM"
+                                                        type="number"
+                                                        className=""
+                                                        onChange={(e) => {
+                                                            handleCargoField(
+                                                                e,
+                                                                index,
+                                                                "carton_dimensions_height"
+                                                            );
+                                                        }}
+                                                        autoComplete="new-carton-dimensions-height"
+                                                        value={
+                                                            field?.carton_dimensions_height
+                                                        }
+                                                        error={Boolean(
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                                errors
+                                                                    .packages[
+                                                                    index
+                                                                ]
+                                                                    ?.carton_dimensions_height
+                                                        )}
+                                                        helperText={
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.carton_dimensions_height &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.carton_dimensions_height
+                                                                .message
+                                                        }
+                                                    />
+
+                                                    <LabelledTextField
+                                                        label="Carton Weigth"
+                                                        placeholder="Kg"
+                                                        type="number"
+                                                        onChange={(e) => {
+                                                            handleCargoField(
+                                                                e,
+                                                                index,
+                                                                "weight_per_carton_kg"
+                                                            );
+                                                        }}
+                                                        autoComplete="new-weight-per-carton-kg"
+                                                        value={
+                                                            field?.weight_per_carton_kg
+                                                        }
+                                                        error={Boolean(
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                                errors
+                                                                    .packages[
+                                                                    index
+                                                                ]
+                                                                    ?.weight_per_carton_kg
+                                                        )}
+                                                        helperText={
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.weight_per_carton_kg &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.weight_per_carton_kg
+                                                                .message
                                                         }
                                                     />
                                                 </div>
-                                            </div>
-                                        </div>
-                                        {/* {deliveryLocationSetFields?.length <
-                                            3 && (
-                                            <div className="flex gap-4 items-center mt-6">
-                                                <Typography
-                                                    fontSize={18}
-                                                    fontWeight={500}
-                                                    color="natural.700"
-                                                >
-                                                    Shipping to multiple
-                                                    warehouses?
-                                                </Typography>
-
-                                                <div>
-                                                    <Button
-                                                        variant="natural-200"
-                                                        fullWidth
-                                                        onClick={() =>
-                                                            append({
-                                                                formatted_address_delivery:
-                                                                    "",
-                                                            })
-                                                        }
-                                                    >
-                                                        Click here
-                                                    </Button>
-                                                </div>
-                                            </div>
-                                        )} */}
-                                    </div>
-
-                                    <div>
-                                        <Typography
-                                            variant="h5"
-                                            fontFamily="Sora"
-                                            fontWeight={400}
-                                            color="natural.800"
-                                        >
-                                            Cargo
-                                        </Typography>
-                                        <div className="flex gap-4 my-4 ">
-                                            <LabelledTextField
-                                                label="Product Name*"
-                                                placeholder="Product name"
-                                                inputRef={refProductName}
-                                                {...RegisterProductName}
-                                                value={product_name}
-                                                error={Boolean(
-                                                    errors.product_name
-                                                )}
-                                                autoComplete="new-product-name"
-                                                helperText={
-                                                    errors.product_name &&
-                                                    errors.product_name.message
-                                                }
-                                            />
-                                            <LabelledTextField
-                                                label="Main competitor ASIN*"
-                                                placeholder="ASIN"
-                                                type="text"
-                                                inputRef={refCompetitorAsin}
-                                                {...RegisterCompetitorAsin}
-                                                value={main_competitor_asin}
-                                                error={Boolean(
-                                                    errors.main_competitor_asin
-                                                )}
-                                                autoComplete="new-asin"
-                                                helperText={
-                                                    errors.main_competitor_asin &&
-                                                    errors.main_competitor_asin
-                                                        .message
-                                                }
-                                            />
-                                        </div>
-                                        {cargoSetFields?.map((field, index) => {
-                                            return (
-                                                <div key={index}>
-                                                    {index > 0 &&
-                                                        cargoSetFields?.length >
-                                                            1 && (
-                                                            <div>
-                                                                <FormControlLabel
-                                                                    control={
-                                                                        <Checkbox
-                                                                            checked={
-                                                                                isRemoveChecked
-                                                                            }
-                                                                            onChange={(
-                                                                                e
-                                                                            ) =>
-                                                                                handleTogglePackageRemove(
-                                                                                    e
-                                                                                        .target
-                                                                                        .checked,
-                                                                                    index
-                                                                                )
-                                                                            }
-                                                                        />
-                                                                    }
-                                                                    label="Add another Amazon warehouse"
-                                                                />
-                                                            </div>
-                                                        )}
-
                                                     {index > 0 && (
-                                                        <div
-                                                            key={index}
-                                                            className="my-1"
-                                                        >
-                                                            <LabelledTextField
-                                                                label="Amazon Warehouse Address"
-                                                                placeholder="Ship to address from your amazon shipping plan, including warehouse number"
-                                                                className="my-4"
-                                                                autoComplete="new-warehouse-address"
-                                                                error={Boolean(
-                                                                    Array.isArray(
-                                                                        errors?.delivery_location
-                                                                    ) &&
-                                                                        errors
-                                                                            .delivery_location[
-                                                                            index
-                                                                        ]
-                                                                            ?.full_address
-                                                                )}
-                                                                helperText={
-                                                                    Array.isArray(
-                                                                        errors?.delivery_location
-                                                                    ) &&
-                                                                    errors
-                                                                        .delivery_location[
-                                                                        index
-                                                                    ]
-                                                                        ?.full_address &&
+                                                    <div
+                                                        key={index}
+                                                        className="flex gap-4 my-4 lg:w-1/2"
+                                                    >
+                                                        <LabelledTextField
+                                                            label="Amazon Warehouse Address"
+                                                            placeholder="Enter Address"
+                                                            className=""
+                                                            autoComplete="new-warehouse-address"
+                                                            error={Boolean(
+                                                                Array.isArray(
+                                                                    errors?.delivery_location
+                                                                ) &&
                                                                     errors
                                                                         .delivery_location[
                                                                         index
                                                                     ]
                                                                         ?.full_address
-                                                                        .message
-                                                                }
-                                                                onChange={(e) =>
-                                                                    handleAdditinalAddress(
-                                                                        e.target
-                                                                            .value,
-                                                                        index
-                                                                    )
-                                                                }
-                                                            />
-                                                        </div>
-                                                    )}
-                                                    <div className="flex gap-4 mt-8">
-                                                        <LabelledTextField
-                                                            label="Carton Dimensions (CM)"
-                                                            placeholder="Length"
-                                                            type="number"
-                                                            autoComplete="new-carton-dimensions-length"
-                                                            onChange={(e) => {
-                                                                handleCargoField(
-                                                                    e,
-                                                                    index,
-                                                                    "carton_dimensions_length"
-                                                                );
-                                                            }}
-                                                            value={
-                                                                field?.carton_dimensions_length
-                                                            }
-                                                            error={Boolean(
-                                                                Array.isArray(
-                                                                    errors?.packages
-                                                                ) &&
-                                                                    errors
-                                                                        .packages[
-                                                                        index
-                                                                    ]
-                                                                        ?.carton_dimensions_length
                                                             )}
                                                             helperText={
                                                                 Array.isArray(
-                                                                    errors?.packages
+                                                                    errors?.delivery_location
                                                                 ) &&
-                                                                errors.packages[
+                                                                errors
+                                                                    .delivery_location[
                                                                     index
                                                                 ]
-                                                                    ?.carton_dimensions_length &&
-                                                                errors.packages[
+                                                                    ?.full_address &&
+                                                                errors
+                                                                    .delivery_location[
                                                                     index
                                                                 ]
-                                                                    ?.carton_dimensions_length
+                                                                    ?.full_address
                                                                     .message
-                                                            }
-                                                        />
-
-                                                        <LabelledTextField
-                                                            label=" "
-                                                            placeholder="Width"
-                                                            className="  mt-6"
-                                                            type="number"
-                                                            onChange={(e) => {
-                                                                handleCargoField(
-                                                                    e,
-                                                                    index,
-                                                                    "carton_dimensions_width"
-                                                                );
-                                                            }}
-                                                            autoComplete="new-carton-dimensions-width"
-                                                            value={
-                                                                field?.carton_dimensions_width
-                                                            }
-                                                            error={Boolean(
-                                                                Array.isArray(
-                                                                    errors?.packages
-                                                                ) &&
-                                                                    errors
-                                                                        .packages[
-                                                                        index
-                                                                    ]
-                                                                        ?.carton_dimensions_width
-                                                            )}
-                                                            helperText={
-                                                                Array.isArray(
-                                                                    errors?.packages
-                                                                ) &&
-                                                                errors.packages[
-                                                                    index
-                                                                ]
-                                                                    ?.carton_dimensions_width &&
-                                                                errors.packages[
-                                                                    index
-                                                                ]
-                                                                    ?.carton_dimensions_width
-                                                                    .message
-                                                            }
-                                                        />
-
-                                                        <LabelledTextField
-                                                            label=" "
-                                                            placeholder="height"
-                                                            type="number"
-                                                            className="  mt-6"
-                                                            onChange={(e) => {
-                                                                handleCargoField(
-                                                                    e,
-                                                                    index,
-                                                                    "carton_dimensions_height"
-                                                                );
-                                                            }}
-                                                            autoComplete="new-carton-dimensions-height"
-                                                            value={
-                                                                field?.carton_dimensions_height
-                                                            }
-                                                            error={Boolean(
-                                                                Array.isArray(
-                                                                    errors?.packages
-                                                                ) &&
-                                                                    errors
-                                                                        .packages[
-                                                                        index
-                                                                    ]
-                                                                        ?.carton_dimensions_height
-                                                            )}
-                                                            helperText={
-                                                                Array.isArray(
-                                                                    errors?.packages
-                                                                ) &&
-                                                                errors.packages[
-                                                                    index
-                                                                ]
-                                                                    ?.carton_dimensions_height &&
-                                                                errors.packages[
-                                                                    index
-                                                                ]
-                                                                    ?.carton_dimensions_height
-                                                                    .message
-                                                            }
-                                                        />
-
-                                                        <LabelledTextField
-                                                            label="Weight Per Carton (KG)"
-                                                            placeholder="Kg"
-                                                            type="number"
-                                                            onChange={(e) => {
-                                                                handleCargoField(
-                                                                    e,
-                                                                    index,
-                                                                    "weight_per_carton_kg"
-                                                                );
-                                                            }}
-                                                            autoComplete="new-weight-per-carton-kg"
-                                                            value={
-                                                                field?.weight_per_carton_kg
-                                                            }
-                                                            error={Boolean(
-                                                                Array.isArray(
-                                                                    errors?.packages
-                                                                ) &&
-                                                                    errors
-                                                                        .packages[
-                                                                        index
-                                                                    ]
-                                                                        ?.weight_per_carton_kg
-                                                            )}
-                                                            helperText={
-                                                                Array.isArray(
-                                                                    errors?.packages
-                                                                ) &&
-                                                                errors.packages[
-                                                                    index
-                                                                ]
-                                                                    ?.weight_per_carton_kg &&
-                                                                errors.packages[
-                                                                    index
-                                                                ]
-                                                                    ?.weight_per_carton_kg
-                                                                    .message
-                                                            }
-                                                        />
-                                                    </div>
-
-                                                    <div className="flex gap-4 my-4 ">
-                                                        <LabelledTextField
-                                                            label="Total Cost of Goods"
-                                                            placeholder="$"
-                                                            type="number"
-                                                            onChange={(e) => {
-                                                                handleCargoField(
-                                                                    e,
-                                                                    index,
-                                                                    "total_cost_of_goods"
-                                                                );
-                                                            }}
-                                                            autoComplete="new-total-cost-of-goods"
-                                                            value={
-                                                                field?.total_cost_of_goods
-                                                            }
-                                                            error={Boolean(
-                                                                Array.isArray(
-                                                                    errors?.packages
-                                                                ) &&
-                                                                    errors
-                                                                        .packages[
-                                                                        index
-                                                                    ]
-                                                                        ?.total_cost_of_goods
-                                                            )}
-                                                            helperText={
-                                                                Array.isArray(
-                                                                    errors?.packages
-                                                                ) &&
-                                                                errors.packages[
-                                                                    index
-                                                                ]
-                                                                    ?.total_cost_of_goods &&
-                                                                errors.packages[
-                                                                    index
-                                                                ]
-                                                                    ?.total_cost_of_goods
-                                                                    .message
-                                                            }
-                                                        />
-                                                        <LabelledTextField
-                                                            label="# of Cartons"
-                                                            placeholder="No."
-                                                            type="number"
-                                                            onChange={(e) => {
-                                                                handleCargoField(
-                                                                    e,
-                                                                    index,
-                                                                    "number_of_cartons"
-                                                                );
-                                                            }}
-                                                            value={
-                                                                field?.number_of_cartons
-                                                            }
-                                                            autoComplete="new-number-of-cartons"
-                                                            error={Boolean(
-                                                                Array.isArray(
-                                                                    errors?.packages
-                                                                ) &&
-                                                                    errors
-                                                                        .packages[
-                                                                        index
-                                                                    ]
-                                                                        ?.number_of_cartons
-                                                            )}
-                                                            helperText={
-                                                                Array.isArray(
-                                                                    errors?.packages
-                                                                ) &&
-                                                                errors.packages[
-                                                                    index
-                                                                ]
-                                                                    ?.number_of_cartons &&
-                                                                errors.packages[
-                                                                    index
-                                                                ]
-                                                                    ?.number_of_cartons
-                                                                    .message
-                                                            }
-                                                        />
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
-                                        {cargoSetFields?.length < 5 && (
-                                            <div>
-                                                <FormControlLabel
-                                                    control={
-                                                        <Checkbox
-                                                            checked={
-                                                                isAddChecked
                                                             }
                                                             onChange={(e) =>
-                                                                handleTogglePackage(
+                                                                handleAdditinalAddress(
                                                                     e.target
-                                                                        .checked
+                                                                        .value,
+                                                                    index
                                                                 )
                                                             }
                                                         />
-                                                    }
-                                                    label="Add another Amazon warehouse"
-                                                />
+                                                    </div>
+                                                )}
+
+                                                <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4 ">
+                                                    <LabelledTextField
+                                                        label="Total Cost of Goods"
+                                                        placeholder="$"
+                                                        type="number"
+                                                        onChange={(e) => {
+                                                            handleCargoField(
+                                                                e,
+                                                                index,
+                                                                "total_cost_of_goods"
+                                                            );
+                                                        }}
+                                                        autoComplete="new-total-cost-of-goods"
+                                                        value={
+                                                            field?.total_cost_of_goods
+                                                        }
+                                                        error={Boolean(
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                                errors
+                                                                    .packages[
+                                                                    index
+                                                                ]
+                                                                    ?.total_cost_of_goods
+                                                        )}
+                                                        helperText={
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.total_cost_of_goods &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.total_cost_of_goods
+                                                                .message
+                                                        }
+                                                    />
+                                                    <LabelledTextField
+                                                        label="# of Cartons"
+                                                        placeholder="No."
+                                                        type="number"
+                                                        onChange={(e) => {
+                                                            handleCargoField(
+                                                                e,
+                                                                index,
+                                                                "number_of_cartons"
+                                                            );
+                                                        }}
+                                                        value={
+                                                            field?.number_of_cartons
+                                                        }
+                                                        autoComplete="new-number-of-cartons"
+                                                        error={Boolean(
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                                errors
+                                                                    .packages[
+                                                                    index
+                                                                ]
+                                                                    ?.number_of_cartons
+                                                        )}
+                                                        helperText={
+                                                            Array.isArray(
+                                                                errors?.packages
+                                                            ) &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.number_of_cartons &&
+                                                            errors.packages[
+                                                                index
+                                                            ]
+                                                                ?.number_of_cartons
+                                                                .message
+                                                        }
+                                                    />
+                                                </div>
                                             </div>
-                                        )}
-                                    </div>
-
-                                    <div>
-                                        <Typography
-                                            variant="h5"
-                                            fontFamily="Sora"
-                                            fontWeight={400}
-                                            color="natural.800"
-                                        >
-                                            Compliance
-                                        </Typography>
-
-                                        <LabelledTextField
-                                            label="Detailed product description"
-                                            placeholder="Product description will be used to ensure proper tariff calculation and import rates."
-                                            className=" my-4"
-                                            multiline
-                                            rows={3}
-                                            inputRef={refDetailedDescription}
-                                            {...RegisterDetailedDescription}
-                                            error={Boolean(
-                                                errors.detailed_product_description
-                                            )}
-                                            autoComplete="new-detailed-description"
-                                            helperText={
-                                                errors.detailed_product_description &&
-                                                errors
-                                                    .detailed_product_description
-                                                    .message
-                                            }
-                                        />
-
+                                        );
+                                    })}
+                                    {cargoSetFields?.length < 5 && (
                                         <div>
-                                            <Typography
-                                                variant="h6"
-                                                fontFamily="Sora"
-                                                color="natural.800"
-                                                fontWeight={600}
-                                            >
-                                                Does your shipment contain any
-                                                of the following goods?
-                                            </Typography>
-
-                                            <div className="flex flex-col">
-                                                <ComplianceCheckboxes
-                                                    options={complianceOptions}
-                                                    setValue={setValue}
-                                                    compliance={compliance}
-                                                    errors={errors}
-                                                    trigger={trigger}
-                                                />
-
-                                                <LabelledTextField
-                                                    placeholder="Additional Notes"
-                                                    className=" my-4"
-                                                    multiline
-                                                    rows={4}
-                                                    inputRef={
-                                                        refAdditionalNotes
-                                                    }
-                                                    {...RegisterAdditionalNotes}
-                                                    // error={Boolean(
-                                                    //     errors.additional_notes
-                                                    // )}
-                                                    autoComplete="new-additional-notes"
-                                                    // helperText={
-                                                    //     errors.additional_notes &&
-                                                    //     errors.additional_notes
-                                                    //         .message
-                                                    // }
-                                                />
-                                            </div>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        checked={
+                                                            isAddChecked
+                                                        }
+                                                        onChange={(e) =>
+                                                            handleTogglePackage(
+                                                                e.target
+                                                                    .checked
+                                                            )
+                                                        }
+                                                    />
+                                                }
+                                                label="Add another Amazon warehouse"
+                                            />
                                         </div>
-                                    </div>
+                                    )}
+                                    </CollapsibleContent>
+                                    </Collapsible>
+                            {/* complience Section */}
+                            </CardComponent>
 
-                                    <div>
-                                        <Typography
-                                            variant="h5"
-                                            fontFamily="Sora"
-                                            fontWeight={400}
-                                            color="natural.800"
-                                        >
+
+                            {/* contact information Section */}
+                              {/* contact information Section */}
+                              <CardComponent className="px-6 py-2">
+                                {/* collapsable section */}
+                                    <Collapsible open={contactInfoOpen} onOpenChange={setContactInfoOpen}>
+                                    <CollapsibleTrigger className="flex items-center w-full  text-left  rounded-md">
+                                        <div className="flex-col gap-2 ">
+                                            <div className="flex items-center flex-row gap-2">
+                                                <div className="bg-natural-200 rounded-full w-[30px]">
+                                                    <img src={Location} alt="truck" />
+                                                </div>
+                                        <Typography color="natural.900" fontSize={18} fontWeight={600}>
                                             Contact Information
                                         </Typography>
-
-                                        <div className="flex gap-4 my-4 ">
-                                            <LabelledTextField
-                                                label="First Name*"
-                                                placeholder="Enter your first name"
-                                                inputRef={refFirstName}
-                                                {...RegisterFirstName}
-                                                error={Boolean(
-                                                    errors.first_name
-                                                )}
-                                                helperText={
-                                                    errors.first_name &&
-                                                    errors.first_name.message
-                                                }
-                                                autoComplete="new-first-name"
-                                            />
-                                            <LabelledTextField
-                                                label="Last Name*"
-                                                placeholder="Enter your last name"
-                                                inputRef={refLastName}
-                                                {...RegisterLastName}
-                                                error={Boolean(
-                                                    errors.last_name
-                                                )}
-                                                helperText={
-                                                    errors.last_name &&
-                                                    errors.last_name.message
-                                                }
-                                                autoComplete="new-last-name"
-                                            />
                                         </div>
-
-                                        <LabelledTextField
-                                            label="Email*"
-                                            placeholder="Enter your email.."
-                                            className="my-4"
-                                            inputRef={refEmail}
-                                            {...RegisterEmail}
-                                            error={Boolean(errors.email)}
-                                            helperText={
-                                                errors.email &&
-                                                errors.email.message
-                                            }
-                                            autoComplete="new-email"
-                                        />
                                     </div>
+                                    <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${contactInfoOpen ? "rotate-180" : ""}`} />
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
+                                <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4  font-semibold ">
+                                    <LabelledTextField
+                                        label="First Name*"
+                                        placeholder="Enter your first name"
+                                        inputRef={refFirstName}
+                                        {...RegisterFirstName}
+                                        error={Boolean(
+                                            errors.first_name
+                                        )}
+                                        helperText={
+                                            errors.first_name &&
+                                            errors.first_name.message
+                                        }
+                                        autoComplete="new-first-name"
+                                    />
+                                    <LabelledTextField
+                                        label="Last Name*"
+                                        placeholder="Enter your last name"
+                                        inputRef={refLastName}
+                                        {...RegisterLastName}
+                                        error={Boolean(
+                                            errors.last_name
+                                        )}
+                                        helperText={
+                                            errors.last_name &&
+                                            errors.last_name.message
+                                        }
+                                        autoComplete="new-last-name"
+                                    />
                                 </div>
-                            </div>
+
+                                <LabelledTextField
+                                    label="Email*"
+                                    placeholder="Enter your email.."
+                                    className=""
+                                    inputRef={refEmail}
+                                    {...RegisterEmail}
+                                    error={Boolean(errors.email)}
+                                    helperText={
+                                        errors.email &&
+                                        errors.email.message
+                                    }
+                                    autoComplete="new-email"
+                                />
+                                </CollapsibleContent>
+                                </Collapsible>
+                            </CardComponent>
+                            <CardComponent className="px-6 py-2">
+                                {/* collapsable section */}
+                                <Collapsible open={complianceOpen} onOpenChange={setComplianceOpen}>
+                                    <CollapsibleTrigger className="flex items-center w-full  text-left  rounded-md">
+                                            <div className="flex-col gap-2 ">
+                                                <div className="flex items-center flex-row gap-2">
+                                                        <div className="bg-natural-200 rounded-full w-[30px]">
+                                                            <img src={Truck} alt="truck" />
+                                                        </div>
+                                                <Typography color="natural.900" fontSize={18} fontWeight={600}>
+                                                    Complience
+                                                </Typography>
+                                                </div>
+                                            </div>
+                                        <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${complianceOpen ? "rotate-180" : ""}`} />
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
+                                            <LabelledTextField
+                                                label="Detailed product description"
+                                                placeholder="Product description will be used to ensure proper tariff calculation and import rates."
+                                                className=" my-4"
+                                                multiline
+                                                rows={3}
+                                                inputRef={refDetailedDescription}
+                                                {...RegisterDetailedDescription}
+                                                error={Boolean(
+                                                    errors.detailed_product_description
+                                                )}
+                                                autoComplete="new-detailed-description"
+                                                helperText={
+                                                    errors.detailed_product_description &&
+                                                    errors
+                                                        .detailed_product_description
+                                                        .message
+                                                }
+                                            />
+
+                                            <div>
+                                                <Typography
+                                                    variant="h6"
+                                                    fontFamily="Sora"
+                                                    color="natural.800"
+                                                    fontWeight={600}
+                                                >
+                                                    Does your shipment contain any
+                                                    of the following goods?
+                                                </Typography>
+
+                                                <div className="flex flex-col">
+                                                    <ComplianceCheckboxes
+                                                        options={complianceOptions}
+                                                        setValue={setValue}
+                                                        compliance={compliance}
+                                                        errors={errors}
+                                                        trigger={trigger}
+                                                    />
+
+                                                    <LabelledTextField
+                                                        placeholder="Add your comments"
+                                                        className=""
+                                                        multiline
+                                                        rows={4}
+                                                        inputRef={
+                                                            refAdditionalNotes
+                                                        }
+                                                        {...RegisterAdditionalNotes}
+                                                        // error={Boolean(
+                                                        //     errors.additional_notes
+                                                        // )}
+                                                        autoComplete="new-additional-notes"
+                                                        // helperText={
+                                                        //     errors.additional_notes &&
+                                                        //     errors.additional_notes
+                                                        //         .message
+                                                        // }
+                                                    />
+                                                </div>
+                                            </div>
+                                    </CollapsibleContent>
+                                </Collapsible>
+                            </CardComponent>
+                          
                         </div>
                     </div>
+                 
 
-                    <div className="my-8 text-center flex flex-col items-center ">
-                        <div className="min-w-[352px] mb-6">
-                            <BorderButton
-                                variant="contained-outlined"
-                                size="large"
-                                fullWidth
-                                type="submit"
-                            >
-                                {" "}
-                                Submit{" "}
-                            </BorderButton>
-                        </div>
+                    <div className="my-8 text-center lg:text-right lg:items-end flex flex-col gap-4 items-center ">
+                            <Button size="lg" className="rounded-full md:w-[242px] w-full" >
+                                Submit
+                            </Button>
+                            <Button asChild variant="outline" size="lg" className=" md:hidden rounded-full border-primary text-primary md:w-[242px] w-full">
+                                <Link to={routes.SELLERDASHBOARD.pathname}>
+                                <X className="h-4 w-4" />
+                                    Cancel
+                                </Link>
+                            </Button>
 
-                        <Typography
-                            fontSize={18}
-                            fontWeight={400}
-                            color="secondary.900"
-                            className="underline"
-                        >
-                            Terms of Service
-                        </Typography>
                     </div>
                     <SubmitModal open={open} handleClose={handleCloseModal} />
                 </form>
