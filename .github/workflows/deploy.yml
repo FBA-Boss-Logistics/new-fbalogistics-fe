@@ -3,6 +3,7 @@ name: Deploy via SSH using Deploy Key
 on:
   push:
     branches:
+      - new-fba
       - main
 
 jobs:
