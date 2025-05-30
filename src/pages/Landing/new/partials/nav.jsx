@@ -18,7 +18,7 @@ const navigate = useNavigate();
                 howItWorks.scrollIntoView({ behavior: 'smooth' });
               }
             }}>
-               How it works!
+               How it works
             </h1>
             <div className='flex flex-row gap-4'>
                <Button variant="outline" size="lg" className=' border-2 border-slate-950 rounded-lg w-[82px] h-[42px]' onClick={() => navigate(routes.SIGNUP.pathname)}>
