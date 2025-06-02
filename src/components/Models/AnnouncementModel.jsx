@@ -1,8 +1,8 @@
 import Close from "@mui/icons-material/Close";
-import { Avatar, Button, useTheme } from "@mui/material";
+import { Avatar, useTheme } from "@mui/material";
 import { useState } from "react";
 import { formatName } from "utils";
-
+import { Button } from "components/ui/button";
 export default function AnnouncementModel({
     openModel,
     SetOpenModel,
@@ -12,10 +12,10 @@ export default function AnnouncementModel({
 }) {
     const [announcementText, setAnnouncementText] = useState("");
     const theme = useTheme();
-    
+   const [announcementTitle, setAnnouncementTitle] = useState("");
     function handleSubmit(e) {
         e.preventDefault();
-        handleSend(announcementText);
+        handleSend(announcementText, announcementTitle);
     }
     return (
         <>
@@ -74,6 +74,14 @@ export default function AnnouncementModel({
                                     id="form-announcement"
                                     className="flex flex-col gap-6"
                                 >
+                                    <input
+                                        value={announcementTitle}
+                                        onChange={(e) =>
+                                            setAnnouncementTitle(e.target.value)
+                                        }
+                                        placeholder="Enter your Announcement Title"
+                                        className="border border-solid border-[#00000050] outline-none w-full p-4 rounded-md"
+                                    />
                                     <textarea
                                         value={announcementText}
                                         onChange={(e) =>
@@ -85,7 +93,7 @@ export default function AnnouncementModel({
                                     />
                                     <div className="flex gap-2">
                                         <Button
-                                            variant="outlined"
+                                           variant="outline"
                                             className="flex-1"
                                             onClick={() => {
                                                 SetOpenModel(false);

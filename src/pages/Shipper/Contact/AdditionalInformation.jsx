@@ -14,28 +14,42 @@ import BorderButton from "components/BorderButton";
 import { useLocation, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { axios } from "service";
-
+import Note from "assets/svg/notes.svg";
+import { Card } from "components/ui/card";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
+import { ChevronDown } from "lucide-react";
 export function AdditionalInformation({additionalNotes}) {
+    const [showMore, setShowMore] = useState(true);
 
     if(!additionalNotes) return <></>
     return (
-        <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4 flex-col gap-4 flex">
-            <div className="bg-natural-25 p-2 flex-col justify-start items-start gap-2 flex">
-                <Typography
-                    color="natural.800"
-                    variant="body2"
-                    fontWeight={500}
+        <Card className="p-4 space-y-4">
+            <Collapsible open={showMore} onOpenChange={setShowMore}>
+            <CollapsibleTrigger className="flex items-center w-full">
+                <div className="flex items-center flex-row gap-2">
+                    <div className="bg-natural-200 rounded-full w-[30px]">
+                        <img src={Note} alt="note" />
+                    </div>
+                    <Typography
+                      color="natural.900" fontSize={18} fontWeight={500}
                 >
                     Additional Notes
                 </Typography>
+                </div>
+            <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${showMore ? "rotate-180" : ""}`} />
+            </CollapsibleTrigger>
+                <CollapsibleContent>
+                <div className=" p-2 flex-col justify-start items-start gap-2 flex mt-6">
                 <Typography
-                    color="natural.500"
-                    variant="body2"
-                    fontWeight={500}
-                >
-                    {additionalNotes}
-                </Typography>
-            </div>
-        </div>
+                        color="natural.500"
+                        variant="body2"
+                        fontWeight={500}
+                    >
+                        {additionalNotes}
+                    </Typography>
+                </div>
+                </CollapsibleContent>
+            </Collapsible>
+        </Card>
     );
 }

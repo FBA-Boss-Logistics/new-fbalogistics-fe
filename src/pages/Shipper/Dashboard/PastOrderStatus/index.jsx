@@ -3,11 +3,12 @@ import OrderDetails from "components/Dashboard/OrderStatus/OrderDetails";
 import PastStatus from "components/Dashboard/OrderStatus/PastStatus";
 import ShippingAddress from "components/Dashboard/OrderStatus/ShippingAddress";
 import { OrderDateStatus } from "components/Dashboard/OrderStatus/OrderDate";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FetchAllShipmentOrderDetailApi } from "queries/Shipper";
 import { formatDateString } from "utils";
 import ErrorUi from "pages/Seller/Booking/SellerOrderStatus/ErrorUi";
 import Loader from "components/Loader";
+import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 
 export default function PastOrderStatus() {
     const { id } = useParams();
@@ -26,6 +27,18 @@ export default function PastOrderStatus() {
     ) {
         return <ErrorUi url={"/shipper/dashboard/orders/pastorders"} content={error?.errors?.[0]?.message}/>;
     }
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const srcQueryParam = searchParams.get("src");
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        if (srcQueryParam === "accepted") {
+            navigate(`/shipper/bid/${id}/?src=phone`);
+        } else {
+            navigate(`/shipper/bid/${id}`);
+        }
+    };
     return (
         <>
             {isLoading ? (
@@ -34,6 +47,8 @@ export default function PastOrderStatus() {
                     <Loader />{" "}
                 </div>
             ) :(
+            <div className="flex flex-col gap-4 w-full ">
+                <CardComponent className="pt-4">
                 <div className="flex flex-col gap-6 w-full">
                     <div className="flex justify-between ">
                         <OrderDate
@@ -41,8 +56,8 @@ export default function PastOrderStatus() {
                             Date={
                                 OrderStatusData &&
                                 formatDateString(
-                                    OrderStatusData?.data?.updated_at,
-                                    "long"
+                                OrderStatusData?.data?.updated_at,
+                                "long"
                                 )
                             }
                             isLoading={isLoading}
@@ -52,17 +67,22 @@ export default function PastOrderStatus() {
                             isLoading={isLoading}
                         />
                     </div>
-                    <ShippingAddress OrderStatusData={OrderStatusData?.data} />
+                    {/* <ShippingAddress OrderStatusData={OrderStatusData?.data} /> */}
                     <div className="w-full flex gap-4">
                         <div className="w-full">
                             <OrderDetails
                                 OrderStatusData={OrderStatusData?.data}
                                 isLoading={isLoading}
+                                handleClick={handleClick}
                             />
                         </div>
 
-                        <PastStatus status={OrderStatusData?.data?.status} />
                     </div>
+                </div>
+                </CardComponent>
+                <div className="w-full ">
+                    <PastStatus status={OrderStatusData?.data?.status} />
+                </div>
                 </div>
             )}
         </>

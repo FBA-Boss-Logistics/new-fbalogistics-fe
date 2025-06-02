@@ -253,7 +253,7 @@ export const useCreateQuotationQuery = () => {
 function patchStatusUpdate(id, data) {
     return axios({
         method: "PATCH",
-        url: "/status-update/" + id,
+        url: "/status-update/" + id+"/",
         data,
     });
 }
@@ -268,7 +268,7 @@ export function usePatchStatusUpdate() {
 function createAnnouncement(data) {
     return axios({
         method: "POST",
-        url: "/announcement/",
+        url: "/v1/announcement/",
         data,
     });
 }
@@ -287,7 +287,7 @@ export function useCreateAnnouncement() {
 
 const fetchAnnouncementsListData = (data) => {
     const method = "GET";
-    let url = appendQueryParams(`/announcement/`, {
+    let url = appendQueryParams(`/v1/announcement/`, {
         ...data?.announcementListPagination,
     });
 
@@ -310,3 +310,27 @@ export const fetchAnnouncementDetailApi = (payload) => {
         }
     );
 };
+
+const fetchAnnouncementDetail = (id) => {
+    const method = "GET";
+    const url = `/v1/announcement/${id}/`;
+    return axios({
+        method,
+        url,
+    });
+};
+
+export const FetchAnnouncementDetailDataApi = (id) => {
+    return useQuery(
+        [`FETCH_ANNOUNCEMENT_DETAIL_DATA_${id}`],
+        () => fetchAnnouncementDetail(id),
+        {
+            enabled: Boolean(localStorage.getItem("AUTH_TOKEN")),
+            onSuccess: () => null,
+            onError: (error) => {
+                console.log("Error occurred while fetching data", error);
+            },
+        }
+    );
+};
+

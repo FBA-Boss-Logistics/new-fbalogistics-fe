@@ -11,6 +11,13 @@ import { FetchSampleShipmentDetailApi } from "queries/Seller";
 import { formatDate } from "utils";
 import ChatIconWithDot from "components/Comman/ChatWithGreenDot";
 import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
+import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
+import { ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { routes } from "routes/RouteConstants";
+import { Button } from "components/ui/button";
+import ActionTable from "components/Table/ActionTable";
+import { Card } from "components/ui/card";
 
 export default function SampleShipmentTable() {
     const navigate = useNavigate();
@@ -73,6 +80,15 @@ export default function SampleShipmentTable() {
             Header: "S No.",
             accessor: "id",
             width: 10,
+            Cell: ({ row: { original } }) => (
+                <Typography
+                    variant="subtitle1"
+                    color="natural.500"
+                    fontWeight={400}
+                >
+                    {original?.id}
+                </Typography>
+            ),
         },
         {
             Header: "Seller ID",
@@ -139,19 +155,36 @@ export default function SampleShipmentTable() {
         {
             Header: "Action",
 
-            Cell: ({ row: { original } }) => (
-                <div className="flex gap-2 items-center">
-                    <IconButton onClick={() => handleClick(original)}>
-                        <RemoveRedEyeOutlined
-                            fontSize="small"
-                            color="secondary.100"
-                        />
-                    </IconButton>
-                    <ChatIconWithDot handleClick={handleClick} original={original} /> 
-                </div>
-               
-            ),
+            Cell: ({ row: { original } }) => {
+                    const action = [
+                        {
+                            name: "View Shipment",
+                            onClick: () => handleClick(original),
+                            visible: true,
+                        },
+                        {
+                            name: "Open Chat",
+                            onClick: () => handleClick(original),
+                            visible: true,
+                        },
+                    ];
+                    return(
+                    <>
+                    <div className=" gap-2 items-center hidden md:flex">
+                        <IconButton onClick={() => handleClick(original)}>
+                            <RemoveRedEyeOutlined
+                                fontSize="small"
+                                color="secondary.100"
+                            />
+                        </IconButton>
+                        <ChatIconWithDot handleClick={handleClick} original={original} /> 
+                    </div>
+                <ActionTable action={action} />
+                </>
+                )
+            },
         },
+        
     ];
 
     const handleCloseModal = () => {
@@ -163,20 +196,31 @@ export default function SampleShipmentTable() {
             {/* {makePayment && (
                 <MakePaymentModal open={makePayment} onClose={handleClose} />
             )} */}
-
+             <div className="block md:hidden">
+                <h1 className="text-2xl font-semibold text-zinc-800 mb-2">Sample Shipment</h1>
+                <div className="flex items-center text-sm mb-6">
+                <Link to={routes.SHIPPERDASHBOARD.pathname} className="text-blue-600 hover:underline">
+                    Dashboard
+                </Link>
+                <ChevronRight className="h-4 w-4 inline" />
+                <span className="text-gray-500">Sample Shipment</span>
+                </div>
+            </div>
             <InfoModal open={modalOpen} onClose={handleCloseModal} />
-
-            <DataTableCustom
-                data={userMessageNotification}
-                columns={columns}
-                pageSize={10}
-                paginationFooter={true}
-                searchBar={true}
-                pageNumber={true}
-                updateFilters={setSellerShipmentPagination}
-                paginationData={paginationInformationShipment}
-                isLoading={isLoading}
-            />
+            <Card className="overflow-hidden">
+                <DataTableCustom
+                    data={userMessageNotification}
+                    columns={columns}
+                    pageSize={10}
+                    paginationFooter={true}
+                    headerGroup={true}
+                    pageNumber={true}
+                    updateFilters={setSellerShipmentPagination}
+                    paginationData={paginationInformationShipment}
+                    isLoading={isLoading}
+                    heading="Sample Shipment"
+                />
+            </Card>
         </>
     );
 }

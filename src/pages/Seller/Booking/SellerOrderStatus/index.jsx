@@ -17,7 +17,11 @@ import { useParams } from "react-router-dom";
 import ShipperBid from "./shipperBid";
 import ShippingAmount from "pages/Shipper/Contact/ShippingAmount";
 import ErrorUi from "./ErrorUi";
-
+import { Card, CardContent, CardHeader } from "components/ui/card";
+import Location from "assets/svg/location.svg";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
+import { ChevronDown } from "lucide-react";
+import HeaderPage from "components/HeaderPage";
 const { pickup_amount, fast_amount, normal_amount } = CommonFormValidations;
 const QuotationFormSchema = yup.object().shape({
     pickup_amount,
@@ -84,78 +88,64 @@ export default function SellerOrderStatus() {
         return <ErrorUi url={'/seller/booking'} content={error?.errors?.[0]?.message}/>
     }
 
+    const [showQuotation, setShowQuotation] = useState(true);
+
     return (
         <>
             {isLoading ? (
                 <div className="flex justify-center items-center">
-                    {" "}
-                    <Loader />{" "}
+                  
+                    <Loader />
                 </div>
             ) : (
                 <div>
-                    <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4">
+                    <HeaderPage title="Active Shipment" home="seller" pathname={'Active Shipment'} />
+                    <div className="flex flex-col md:flex-row-reverse gap-4 mt-4">
                         {srcQueryParam === "pendingorders" && (
-                            <div className="border-2  border-natural-100 border-solid rounded-xl m-4 flex-col gap-4 flex">
+                            
+                            <div className="w-full md:max-w-[300px] ">
                                 <ShippingAmount
                                     shippingAmount={
                                         shipmentData?.data?.quotation
                                             ?.total_amount
                                     }
+                                    shipmentData={shipmentData?.data?.quotation}
                                     quotationId={
                                         shipmentData?.data?.quotation?.id
                                     }
                                 />
                             </div>
                         )}
-                        <div className="flex justify-between ml-4 mr-4">
-                            <div>
-                                <Chip
-                                    label={`Freight Booking Reference Number ${shipmentData?.data?.freight_booking_reference_number}`}
-                                    className="bg-primary-200"
-                                />
-                            </div>
-                            {!srcQueryParam &&
-                                shipmentData?.data?.status ===
-                                    "Quotation Accepted" && (
-                                    <div
-                                        title="chat"
-                                        onClick={handleClick}
-                                        className="flex items-center gap-2 cursor-pointer border-2 font-light border-solid py-1 px-3 rounded-lg border-natural-100"
-                                    >
-                                        <img
-                                            src={ChatIcon}
-                                            className="opacity-70"
-                                            alt="ChatIcon"
-                                        />
-                                        Chat
-                                    </div>
-                                )}
-                            {/* <div className="flex gap-4">
-                        <Typography
-                            textAlign={"center"}
-                            variant="body1"
-                            fontWeight={500}
-                            color="natural.900"
-                        >
-                            Pickup Date
-                        </Typography>
-                        <Typography
-                            color="natural.900"
-                            variant="body1"
-                            fontWeight={600}
-                        >
-                            {shipmentData?.data?.shipment_ready_date}
-                        </Typography>
-                    </div> */}
-                        </div>
+                        {/* <Card> */}
+                        {/* <div className="flex justify-between ml-4 mr-4">
+                            <div className="flex gap-4">
+                                <Typography
+                                    textAlign={"center"}
+                                    variant="body1"
+                                    fontWeight={500}
+                                    color="natural.900"
+                                >
+                                    Pickup Date
+                                </Typography>
+                                <Typography
+                                    color="natural.900"
+                                    variant="body1"
+                                    fontWeight={600}
+                                >
+                                    {shipmentData?.data?.shipment_ready_date}
+                                </Typography>
+                             </div>
+                        </div> */}
+                        <div className="flex flex-col gap-4 w-full ">
                         {winBidAccepted && (
                             <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4 flex-col gap-4 flex">
-                                <div className="flex-col gap-2">
+                                <div className="flex-row items-center flex gap-2">
                                     <div className="w-8 h-8 p-1 bg-natural-100 rounded-full border-4 border-natural-100 justify-center  gap-2 inline-flex">
-                                        <div className="bg-natural-200 rounded-full">
+                                        <div className="">
                                             <img
-                                                src={UserIcon}
+                                                src={Location}
                                                 alt="userIcon"
+                                                className="w-full h-full"
                                             />
                                         </div>
                                     </div>
@@ -221,9 +211,40 @@ export default function SellerOrderStatus() {
                                 </div>
                             </div>
                         )}
-                        <div className="flex flex-col">
-                            <div>
-                                <OriginAndDestination
+                        <div className="flex flex-col gap-4">
+                            <Card >
+                                <CardHeader>
+                                <div className="flex flex-row items-center justify-between border-b border-natural-100 pb-4 ">
+                                <Typography
+                                        label={``}
+                                        className=""
+                                    >
+                                        Freight Booking Reference Number : <span className="text-primary-500 font-medium ">{shipmentData?.data?.freight_booking_reference_number}</span>
+                                    </Typography>
+                          
+                                {
+                                    shipmentData.data.status ==
+                                        "Quotation Accepted" && (
+                                        <div
+                                            title="chat"
+                                            onClick={handleClick}
+                                            className="flex items-center gap-2 cursor-pointer border-2 font-medium border-solid py-1 px-3 rounded-lg border-natural-100"
+                                        >
+                                            <img
+                                                src={ChatIcon}
+                                                className="opacity-70"
+                                                alt="ChatIcon"
+                                            />
+                                            <spane className="hidden md:inline">
+                                             Chat
+                                            </spane>
+                                           
+                                        </div>
+                                    )}
+                                 </div>
+                                </CardHeader>
+                                <CardContent>
+                                    <OriginAndDestination
                                     supplierName={
                                         shipmentData?.data
                                             ?.supplier_contact_name
@@ -240,7 +261,8 @@ export default function SellerOrderStatus() {
                                             ?.supplier_contact_phone
                                     }
                                 />
-                            </div>
+                            </CardContent>
+                            </Card>
 
                             <div>
                                 <Cargo
@@ -249,6 +271,7 @@ export default function SellerOrderStatus() {
                                     }
                                     packages={packages}
                                     asinNumber={asinNumber}
+                                    shipmentData={shipmentData?.data}
                                 />
                             </div>
                         </div>
@@ -260,42 +283,44 @@ export default function SellerOrderStatus() {
                         {status === "Quotation Accepted" ||
                         status === "Shipment Completed" ||
                         status === "Shipment Cancelled" ? (
-                            <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4">
-                                <div className="flex-col items-start gap-2">
-                                    <div className=" bg-natural-100 rounded-full border-4 border-solid p-[6px] border-natural-100 justify-center  gap-2 inline-flex">
-                                        <img
-                                            src={quotationIcon}
-                                            alt="quotation"
-                                            width={25}
-                                        />
-                                    </div>
-                                    <Typography
-                                        color="natural.900"
-                                        fontSize={18}
-                                        fontWeight={500}
-                                    >
+                            <Card className="p-4">
+                            <Collapsible open={showQuotation} onOpenChange={setShowQuotation}>
+                            <CollapsibleTrigger className="flex items-center w-full ">
+                                    <div className="flex items-center flex-row gap-2">
+                                            <div className="bg-natural-200 rounded-full">
+                                                <img src={quotationIcon} alt="location" />
+                                            </div>
+                                    
+                                        <Typography color="natural.900" fontSize={18} fontWeight={500}>
                                         Quotation
-                                    </Typography>
-                                </div>
-                                <div className="flex gap-2 justify-between mt-2">
-                                    <div className="bg-natural-25 w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
+                                        </Typography>
+                                    </div>
+                                    <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${showQuotation ? "rotate-180" : ""}`} />
+                                </CollapsibleTrigger>
+                                <CollapsibleContent>
+                                <div className="flex flex-col md:flex-row gap-2 justify-between mt-6">
+                                    <div className="w-full p-2 flex-col justify-start items-start gap-2 flex rounded-lg ">
                                         <Typography
                                             color="natural.800"
                                             variant="body2"
                                             fontWeight={500}
+                                            className="w-full 0"
+                                            
                                         >
                                             Pickup
                                         </Typography>
                                         <Typography
+                                          fullWidth
                                             color="natural.500"
                                             variant="body2"
-                                            className="border p-2  border-solid border-natural-400 rounded-md w-[50%] bg-[#e4e4e7]"
+                                            className="border p-2  border-solid border-natural-400 rounded-md w-full  bg-[#e4e4e7]"
                                             fontWeight={500}
+                                           
                                         >
                                             {quotation?.pickup_amount}
                                         </Typography>
                                     </div>
-                                    <div className="bg-natural-25 w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
+                                    <div className="w-full p-2 flex-col justify-start items-start gap-2  flex rounded-lg">
                                         <Typography
                                             color="natural.800"
                                             variant="body2"
@@ -306,13 +331,13 @@ export default function SellerOrderStatus() {
                                         <Typography
                                             color="natural.500"
                                             variant="body2"
-                                            className="border p-2  border-solid border-natural-400 rounded-md w-[50%] bg-[#e4e4e7]"
+                                            className="border p-2  border-solid border-natural-400 w-full  rounded-md bg-[#e4e4e7]"
                                             fontWeight={500}
                                         >
                                             {quotation?.fast_amount}
                                         </Typography>
                                     </div>
-                                    <div className="bg-natural-25 w-1/2 p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
+                                    <div className="w-full p-2 flex-col justify-start items-start gap-2 flex rounded-lg">
                                         <Typography
                                             color="natural.800"
                                             variant="body2"
@@ -324,13 +349,15 @@ export default function SellerOrderStatus() {
                                             color="natural.500"
                                             variant="body2"
                                             fontWeight={500}
-                                            className="border p-2  border-solid border-natural-400 rounded-md w-[50%] bg-[#e4e4e7]"
+                                            className="border p-2  border-solid border-natural-400 rounded-md  w-full  bg-[#e4e4e7]"
                                         >
                                             {quotation?.normal_amount}
                                         </Typography>
                                     </div>
                                 </div>
-                            </div>
+                                </CollapsibleContent>
+                            </Collapsible>
+                            </Card>
                         ) : (
                             <></>
                         )}
@@ -344,12 +371,13 @@ export default function SellerOrderStatus() {
                         <div>
                             <PastStatus status={status} />
                         </div>
-                    </div>
                     {srcQueryParam === "newshipment" && (
-                        <div className="border-2  border-natural-100 border-solid p-4 rounded-xl m-4">
+                        
                             <ShipperBid created_at={created_at} />
-                        </div>
+                      
                     )}
+                    </div>
+                    </div>
                 </div>
             )}
         </>

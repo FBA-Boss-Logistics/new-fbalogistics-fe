@@ -11,6 +11,10 @@ import { format } from "date-fns";
 import ChatIconWithDot from "components/Comman/ChatWithGreenDot";
 import { RemoveRedEyeOutlined } from "@mui/icons-material";
 import { useChat } from "components/Dashboard/OrderStatus/Chat/ChatContext";
+import ActionTable from "components/Table/ActionTable";
+import DashboardStats from "pages/Seller/Dashboard/dashboardStats";
+import HeaderPage from "components/HeaderPage";
+import { Card } from "components/ui/card";
 
 export default function SampleShipment() {
     const navigate = useNavigate();
@@ -71,53 +75,76 @@ export default function SampleShipment() {
             Header: "Shipment ID",
             accessor: "id",
             width: 10,
+            Cell: ({ row: { original } }) => (
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
+                    {original?.id}
+                </Typography>
+            ),
+        },
+        {
+            Header: "Sample Amount",
+            accessor: "quantity",
+            Cell: ({ row: { original } }) => (
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
+                    {original?.quantity}
+                </Typography>
+            ),
+        },
+        {
+            Header: "Delivery Address",
+            accessor: "address",
+            Cell: ({ row: { original } }) => (
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
+                    {original?.address}
+                </Typography>
+            ),
         },
         {
             Header: "Product Name",
             accessor: "product_name",
             Cell: ({ row: { original } }) => (
-                <div className="flex items-center">
-                    <img src={ProductImage} alt="Product" />
-                    <span className="ml-1.5">{original?.product_name}</span>
-                </div>
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
+                    {original?.product_name}
+                </Typography>
             ),
         },
         {
             Header: "Shipment Date",
             accessor: "shipment_ready_date",
             Cell: ({ row: { original } }) => (
-                <Typography>
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
                     {formatDate(original?.created_at?.split("T")?.[0])}
                 </Typography>
-            ),
-        },
-        {
-            Header: "Amount of Samples",
-            accessor: "pickup_location",
-            Cell: ({ row: { original } }) => (
-                <Typography>{original?.quantity}</Typography>
-            ),
-        },
-
-        {
-            Header: "Sample Delivery Address",
-            accessor: "address",
-            Cell: ({ row: { original } }) => (
-                <Typography>{original?.address}</Typography>
             ),
         },
         {
             Header: "Status",
             accessor: "status",
             Cell: ({ row: { original } }) => (
-                <Typography>{original?.status}</Typography>
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
+                    {original?.status}
+                </Typography>
             ),
         },
         {
             Header: "Action",
-            Cell: ({ row: { original } }) => (
-                <div className="flex gap-2 items-center">
-                    <IconButton onClick={() => handleClick(original)}>
+            Cell: ({ row: { original } }) => {
+                const action = [
+                    {
+                        name: "View Shipment",
+                        onClick: () => handleClick(original),
+                        visible: true,
+                    },
+                    {
+                        name: "Open Chat",
+                        onClick: () => handleClick(original),
+                        visible: true,
+                    },
+                ];
+                return(
+                    <>
+                    <div className="md:flex hidden gap-2 items-center">
+                        <IconButton onClick={() => handleClick(original)}>
                         <RemoveRedEyeOutlined
                             fontSize="small"
                             color="secondary.100"
@@ -125,8 +152,11 @@ export default function SampleShipment() {
                     </IconButton>
                     <ChatIconWithDot handleClick={handleClick} original={original} /> 
                 </div>
-            ),
-        },
+
+                    <ActionTable action={action} />
+                </>
+            )},
+        }
     ];
 
     const handleClick = ({id}) => {
@@ -150,36 +180,26 @@ export default function SampleShipment() {
             {makePayment && (
                 <PaymentModal open={makePayment} onClose={handleClose} />
             )}
-            <div>
-                {/* <div className="py-4 border border-natural-100 border-solid border-x-0 border-t-0">
-                <SellerTopNav />
-            </div> */}
-                <div className="px-4 bg-natural-25 h-[calc(100vh_-_76.8px)] overflow-y-scroll">
-                    <BookingsTopNav />
-                    <Typography
-                        variant="h6"
-                        color="natural.900"
-                        fontWeight={500}
-                        className="pb-4"
-                    >
-                        Sample Shipments
-                    </Typography>
+            <DashboardStats/>
 
-                    <DataTableCustom
-                        data={userMessageNotification}
-                        columns={columns}
-                        paginationFooter={true}
-                        searchBar={true}
-                        updateFilters={setSellerShipmentPagination}
-                        paginationData={paginationInformation}
-                        isLoading={isLoading}
-                        pageNumber={true}
-                        date={true}
-                        setSelectedDate={setSelectedSellerShipmentDate}
-                        selectedDate={selectedSellerShipmentDate}
-                    />
-                </div>
-            </div>
+            <HeaderPage title="Sample Shipments" home="seller" pathname="Sample Shipments" />
+
+            <Card className="mt-6 overflow-hidden"> 
+            <DataTableCustom
+                data={userMessageNotification}
+                columns={columns}
+                paginationFooter={true}
+                headerGroup={true}
+                updateFilters={setSellerShipmentPagination}
+                paginationData={paginationInformation}
+                isLoading={isLoading}
+                pageNumber={true}
+                    date={true}
+                    setSelectedDate={setSelectedSellerShipmentDate}
+                    selectedDate={selectedSellerShipmentDate}
+                    heading="Sample Shipments"
+                />
+            </Card>
         </>
     );
 }

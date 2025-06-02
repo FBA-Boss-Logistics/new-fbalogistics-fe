@@ -42,14 +42,16 @@ const PasswordField = forwardRef((props) => {
     return (
         <FormControl
             className={`${className} ${
-                fullWidth ? "w-full" : ""
+                fullWidth ? "w-full" : "w-1/2"
             } mui-textfield`}
         >
             <Typography
                 // shrink
                 // disabled={disabled}
                 required={required}
-                variant="standard"
+                variant="subtitle1"
+                fontSize={14}
+                fontWeight={600}
                 sx={{
                     position: "initial",
                 }}

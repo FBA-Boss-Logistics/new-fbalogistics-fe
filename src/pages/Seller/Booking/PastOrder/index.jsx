@@ -8,6 +8,11 @@ import BookingsTopNav from "../BookingsTopNav";
 import { FetchSellerPastOrderDetailApi } from "queries/Seller";
 import { formatDate } from "utils";
 import { format } from "date-fns";
+import ActionTable from "components/Table/ActionTable";
+import DashboardStats from "pages/Seller/Dashboard/dashboardStats";
+import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
+import { Card } from "components/ui/card";
+import HeaderPage from "components/HeaderPage";
 
 export default function PastOrderBooking() {
     const [
@@ -50,22 +55,38 @@ export default function PastOrderBooking() {
             Header: "Shipment ID",
             accessor: "id",
             width: 10,
+            Cell: ({ row: { original } }) => (
+                <Typography
+                    variant="subtitle2"
+                    color="natural.500"
+                    fontWeight={400}
+                >
+                    {original.id}
+                </Typography>
+            ),
         },
         {
             Header: "Product Name",
             accessor: "product_name",
             Cell: ({ row: { original } }) => (
-                <div className="flex items-center">
-                    <img src={ProductImage} alt="Product" />
-                    <span className="ml-1.5">{original.product_name}</span>
-                </div>
+                // <div className="flex items-center">
+                //     <img src={ProductImage} alt="Product" />
+                //     <span className="ml-1.5">{original.product_name}</span>
+                // </div>
+                <Typography
+                variant="subtitle2"
+                color="natural.500"
+                fontWeight={400}
+                >
+                    {original.product_name}
+                </Typography>
             ),
         },
         {
             Header: "Shipment Date",
             accessor: "shipment_ready_date",
             Cell: ({ row: { original } }) => (
-                <Typography>
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
                     {formatDate(original.shipment_ready_date)}
                 </Typography>
             ),
@@ -74,7 +95,7 @@ export default function PastOrderBooking() {
             Header: "Pickup Location",
             accessor: "pickup_location",
             Cell: ({ row: { original } }) => (
-                <Typography>
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
                     {formatDate(original.pickup_location?.full_address)}
                 </Typography>
             ),
@@ -83,19 +104,34 @@ export default function PastOrderBooking() {
         {
             Header: "Final Amount",
             accessor: "final_amount",
-            Cell: ({ row: { original } }) => "$" + original.final_amount,
+            Cell: ({ row: { original } }) => (
+                <Typography variant="subtitle2" color="natural.500" fontWeight={400}>
+                    ${original.final_amount}
+                </Typography>
+            ),
         },
 
         {
             Header: "Action",
-            Cell: ({ row: { original } }) => (
-                <img
-                    src={EyeIcon}
-                    className="cursor-pointer"
+            Cell: ({ row: { original } }) => {
+                const action = [
+                    {
+                        name: "View Shipment",
+                        onClick: () => handleClick(original.id),
+                        visible: true,
+                    },
+                ];
+                return(
+                    <>
+                    <img
+                        src={EyeIcon}
+                    className="cursor-pointer md:inline-block hidden"
                     onClick={() => handleClick(original.id)}
                     alt="EyeIcon"
                 />
-            ),
+                <ActionTable action={action} />
+                </>
+            )},
         },
     ];
 
@@ -114,34 +150,24 @@ export default function PastOrderBooking() {
     // };
     return (
         <div>
-            {/* <div className="py-4 border border-natural-100 border-solid border-x-0 border-t-0">
-                <SellerTopNav />
-            </div> */}
-            <div className="px-4 bg-natural-25 h-[calc(100vh_-_76.8px)] overflow-y-scroll">
-                <BookingsTopNav />
-                <Typography
-                    variant="h6"
-                    color="natural.900"
-                    fontWeight={500}
-                    className="pb-4"
-                >
-                    Completed Shipments
-                </Typography>
-
+            <DashboardStats />
+            <HeaderPage title="Completed Shipments" pathname="Completed Shipments" home="seller" />
+            <Card className="mt-6 overflow-hidden"> 
                 <DataTableCustom
                     data={sellerPastShipmentListData}
                     columns={columns}
                     paginationFooter={true}
                     pageNumber={true}
-                    searchBar={true}
+                    headerGroup={true}
                     paginationData={paginationInformation}
                     isLoading={isLoading}
                     updateFilters={setSellerPastShipmentListPagination}
                     date={true}
                     setSelectedDate={setSelectedDate}
                     selectedDate={selectedDate}
+                    heading="Completed Shipments"
                 />
-            </div>
+            </Card>
         </div>
     );
 }

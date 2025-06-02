@@ -181,6 +181,7 @@ const SideNavBar = () => {
                         })
                         ?.map(({ icon, label, route, children }, i) => {
                             const isOpen = location.pathname.startsWith(route);
+                          
                             return (
                                 <>
                                     <Button

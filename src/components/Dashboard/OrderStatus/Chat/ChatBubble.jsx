@@ -40,8 +40,15 @@ export default function ChatBubble({
                 chatContainerRef.current.scrollHeight;
         }
 
+        if(currentMessageCount > 0 && !isLoading){
+            chatContainerRef.current.scrollTo({
+                top: chatContainerRef.current.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+        
         previousMessageCountRef.current = currentMessageCount;
-    }, [messageData?.messages, isReply]);
+    }, [messageData?.messages, isReply,isLoading]);
 
     function downloadFileHandler(id) {
         mutate(id, {
@@ -126,7 +133,7 @@ export default function ChatBubble({
             ref={chatContainerRef}
         >
             {isShipperPath ? (
-                <div className="p-5 flex flex-col  w-full ">
+                <div className="p-5 flex flex-col  w-full  ">
                     {!isLoading ? (
                         messageData?.messages?.map((message, i) => {
                             const formattedTime = formatTimestamp(
@@ -164,20 +171,20 @@ export default function ChatBubble({
                                     )}
 
                                     <div
-                                        className={`pl-4 ${
+                                        className={` ${
                                             message?.sender_type === "Seller" ||
                                             message?.sender_type === "Admin"
                                                 ? "w-fit"
-                                                : "flex flex-col gap-[6px] items-end justify-end"
+                                                : "flex flex-col gap-[6px] items-end justify-end mt-1 "
                                         }`}
                                     >
                                         {message?.sender_type === "Seller" && (
                                             <div className="flex my-1">
-                                                {isCurrentUserMessageSender && (
+                                                {/* {isCurrentUserMessageSender && (
                                                     <ChatAvatar
                                                         name={sellerName}
                                                     />
-                                                )}
+                                                )} */}
                                                 <div
                                                     className="flex flex-col pb-1"
                                                     onMouseLeave={
@@ -350,7 +357,7 @@ export default function ChatBubble({
                                         )}
 
                                         {message?.sender_type === "Shipper" && (
-                                            <div className="flex justify-end pb-1 my-1">
+                                            <div className="flex justify-end pb-1 my-1  ">
                                                 {isCurrentUserMessageSender && (
                                                     <ChatAvatar
                                                         name={shipperName}
@@ -433,7 +440,7 @@ export default function ChatBubble({
                 </div>
             ) : (
                 isSellerPath && (
-                    <div className="p-5 flex flex-col w-full ">
+                    <div className="p-5 flex flex-col w-full gap-2 ">
                         {!isLoading ? (
                             messageData?.messages?.map((message, i) => {
                                 const formattedTime = formatTimestamp(
@@ -461,41 +468,44 @@ export default function ChatBubble({
                                 return (
                                     <div key={message?.id}>
                                         {showDateDivider && (
-                                            <div className="text-center my-1 ">
+                                            <div className="text-center my-1 mb-6 ">
                                                 <Typography
                                                     color="natural.800"
                                                     variant="subtitle2"
+                                                    className="text-xs"
                                                 >
-                                                    {formattedDateDivider}
+                                                    <span className="bg-slate-100 rounded-full px-4 py-2">
+                                                        {formattedDateDivider}
+                                                    </span>
                                                 </Typography>
                                             </div>
                                         )}
 
                                         <div
-                                            className={`pl-4 ${
+                                            className={`${
                                                 message?.sender_type ===
                                                     "Shipper" ||
                                                 message?.sender_type === "Admin"
                                                     ? "w-fit"
-                                                    : "flex flex-col gap-[6px] items-end justify-end mt-1"
+                                                    : "flex flex-col gap-[6px] items-end justify-end mt-1 "
                                             }`}
                                         >
                                             {message?.sender_type ===
                                                 "Shipper" && (
-                                                <div className="flex my-1">
-                                                    {isCurrentUserMessageSender && (
-                                                        <ChatAvatar
-                                                            name={shipperName}
-                                                            active={true}
-                                                        />
-                                                    )}
+                                                // <div className="flex bg-yellow-500">
+                                                //     {isCurrentUserMessageSender && (
+                                                //         <ChatAvatar
+                                                //             name={shipperName}
+                                                //             active={true}
+                                                //         />
+                                                //     )}
                                                     <div
-                                                        className="flex flex-col"
+                                                        className="flex flex-col "
                                                         onMouseLeave={
                                                             handleEmojiClose
                                                         }
                                                     >
-                                                        {isCurrentUserMessageSender && (
+                                                        {/* {isCurrentUserMessageSender && (
                                                             <div className="flex pl-3 justify-between items-start">
                                                                 <Typography
                                                                     fontSize={
@@ -516,7 +526,7 @@ export default function ChatBubble({
                                                                     }
                                                                 </Typography>
                                                             </div>
-                                                        )}
+                                                        )} */}
                                                         {
                                                             <MessageComponent
                                                                 emojiAnchorEl={
@@ -582,7 +592,7 @@ export default function ChatBubble({
                                                             />
                                                         )}
                                                     </div>
-                                                </div>
+                                                // </div>
                                             )}
 
                                             {message?.sender_type ===
@@ -689,13 +699,13 @@ export default function ChatBubble({
 
                                             {message?.sender_type ===
                                                 "Seller" && (
-                                                <div className="flex justify-end my-1">
-                                                    {isCurrentUserMessageSender && (
-                                                        <ChatAvatar
-                                                            name={sellerName}
-                                                            active={true}
-                                                        />
-                                                    )}
+                                                // <div className="flex justify-end my-1">
+                                                //     {isCurrentUserMessageSender && (
+                                                //         <ChatAvatar
+                                                //             name={sellerName}
+                                                //             active={true}
+                                                //         />
+                                                //     )}
                                                     <div
                                                         className="flex flex-col "
                                                         onMouseLeave={
@@ -767,7 +777,7 @@ export default function ChatBubble({
                                                             />
                                                         )}
                                                     </div>
-                                                </div>
+                                                // </div>
                                             )}
                                         </div>
                                     </div>

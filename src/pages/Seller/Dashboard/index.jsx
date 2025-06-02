@@ -1,224 +1,95 @@
-import { Avatar, IconButton, Typography, useTheme } from "@mui/material";
-
-// import EDITICON from "assets/svg/editicon.svg"
-import ProductImage from "assets/images/testphoto12.png";
-
-import DataTableCustom from "components/Table/DataTableCustom";
-import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { RemoveRedEyeOutlined } from "@mui/icons-material";
-import { FetchUserDetailApi } from "queries/Auth";
-import { formatDate, formatName } from "utils";
-import { FetchSellerRecentOrderDetailApi } from "queries/Seller";
-import { format } from "date-fns";
-
+import ShipmentCard from 'components/New/ShipmentCard'
+import { routes } from "routes/RouteConstants";
+import { Button } from "@/components/ui/button";
+import { useEffect, useMemo, useState } from "react";
+import DashboardStats from "./dashboardStats";
+import { useNavigate } from 'react-router-dom';
+import { useSeller } from '../Context/SellerContext';
+import { fetchAnnouncementDetailApi } from 'queries/Shipper';
+import { useChat } from 'components/Dashboard/OrderStatus/Chat/ChatContext';
+import AnnouncementDataList from 'pages/Shipper/Dashboard/Announcement/AnnouncementDataList';
+import Loader from 'components/Loader';
 export default function SellerDashboard() {
-    const [
-        sellerHomeRecentOrderPagination,
-        setSellerHomeRecentOrderPagination,
-    ] = useState({});
-    const [
-        selectedSellerHomeRecentOrderDate,
-        setSelectedSellerHomeRecentOrderDate,
-    ] = useState(null);
-    // Assuming formData?.shipment_ready_date is in "MM/DD/YYYY" format
-    const initialsellerHomeRecentOrderDate = selectedSellerHomeRecentOrderDate
-        ? format(new Date(selectedSellerHomeRecentOrderDate), "yyyy-MM-dd")
-        : null;
-    const {
-        data: sellerHomeRecentOrderData,
-        dataUpdatedAt,
-        isLoading,
-    } = FetchSellerRecentOrderDetailApi({
-        sellerHomeRecentOrderPagination,
-        initialsellerHomeRecentOrderDate,
+    const {createSampleShipment, setCreateSampleShipment} = useSeller();
+    const [announcementListPagination, setAnnouncementListPagination] = useState({ per_page: 1 });
+    const {data, isLoading, refetch} = fetchAnnouncementDetailApi({
+        announcementListPagination,
     });
-    const { sellerHomeListData, paginationInformation } = useMemo(() => {
-        if (dataUpdatedAt) {
+    
+    const createShipment = () => {
+        setCreateSampleShipment(true);
+    };
+    const navigate = useNavigate();
+    
+    const {setAnnouncementList, announcementList} = useChat();
+
+    const { announcementDataList, paginationInformation } = useMemo(() => {
+        if (data?.data.data) {
             return {
-                sellerHomeListData: sellerHomeRecentOrderData?.data,
-                paginationInformation:
-                    sellerHomeRecentOrderData?.pagination_option,
+                announcementDataList: data?.data,
+                paginationInformation: data?.data?.pagination_option,
             };
         }
         return {
-            sellerHomeListData: [],
+            announcementDataList: [],
             paginationInformation: {},
         };
-    }, [dataUpdatedAt]);
+    }, [data?.data.data]);
 
-    const theme = useTheme();
-    const navigate = useNavigate();
-
-    const { data: userInfo } = FetchUserDetailApi();
-    const fullName = userInfo?.data.first_name + " " + userInfo?.data.last_name;
-    const phone = userInfo?.data?.profile?.phone;
-
-    /** @type import('@tanstack/react-table').ColumnDef<any> */ //for autosuggestions
-    const columns = [
-        {
-            Header: "Shipment ID",
-            accessor: "id",
-            width: 10,
-        },
-        {
-            Header: "Product Name",
-            accessor: "product_name",
-            footer: "Product Name",
-            Cell: ({ row: { original } }) => (
-                <div className="flex items-center">
-                    <img src={ProductImage} alt="Product" />
-                    <span className="ml-1.5">{original.product_name}</span>
-                </div>
-            ),
-        },
-        {
-            Header: "Shipment Date",
-            accessor: "shipment_ready_date",
-            Cell: ({ row: { original } }) => (
-                <Typography
-                    variant="subtitle1"
-                    color="natural.500"
-                    fontWeight={400}
-                >
-                    {formatDate(original.shipment_ready_date)}
-                </Typography>
-            ),
-        },
-        {
-            Header: "Pickup Location",
-            accessor: "pickup_location",
-            Cell: ({ row: { original } }) => (
-                <Typography>
-                    {formatDate(original.pickup_location?.full_address)}
-                </Typography>
-            ),
-        },
-        {
-            Header: "Final Amount",
-            accessor: "final_amount",
-            Cell: ({ row: { original } }) => "$" + original.final_amount,
-        },
-        {
-            Header: "Wining Bid",
-            accessor: "total_amount",
-            Cell: ({ row: { original } }) =>
-                "$" + original.quotation.total_amount,
-        },
-        {
-            Header: "Action",
-            Cell: ({ row: { original } }) => (
-                <IconButton
-                    onClick={() => {
-                        const Orderid = original.id;
-                        navigate(
-                            `/seller/booking/recentorderstatus/${Orderid}`
-                        );
-                    }}
-                >
-                    {" "}
-                    <RemoveRedEyeOutlined
-                        fontSize="small"
-                        color="secondary.100"
-                    />
-                </IconButton>
-            ),
-        },
-    ];
-
+    useEffect(() => {
+        setAnnouncementList(announcementDataList?.data);
+    }, [announcementDataList]);
+  
     return (
-        <div>
-            <div className="flex justify-between items-start border-2  border-natural-200 border-solid p-4 rounded-xl m-4">
-                <div className="flex justify-center gap-8 pl-8 pr-8 items-center">
-                    <div>
-                        <Avatar
-                            sx={{
-                                width: 99,
-                                height: 96,
-                                bgcolor: theme.palette.primary[100],
-                                color: theme.palette.primary[800],
-                                border: 3,
-                                fontSize: 36,
-                                borderColor: theme.palette.primary[500],
-                                fontWeight: 500,
-                            }}
-                        >
-                            {formatName(fullName)}
-                        </Avatar>
-                    </div>
-                    <div className="flex gap-14">
-                        <div className="flex-col gap-2 flex">
-                            <Typography
-                                color="natural.400"
-                                variant="body1"
-                                fontWeight={500}
-                            >
-                                Name
-                            </Typography>
-                            <Typography
-                                color="natural.500"
-                                fontSize={18}
-                                fontWeight={400}
-                            >
-                                {userInfo?.data.first_name}{" "}
-                                {userInfo?.data.last_name}
-                            </Typography>
-                        </div>
-                        <div className="flex-col gap-2 flex">
-                            <Typography
-                                color="natural.400"
-                                variant="body1"
-                                fontWeight={500}
-                            >
-                                Email
-                            </Typography>
-                            <Typography
-                                color="natural.500"
-                                fontSize={18}
-                                fontWeight={400}
-                            >
-                                {userInfo?.data.email}
-                            </Typography>
-                        </div>
-                        <div className="flex-col gap-2 flex">
-                            <Typography
-                                color="natural.400"
-                                variant="body1"
-                                fontWeight={500}
-                            >
-                                Phone
-                            </Typography>
-                            <Typography
-                                color="natural.500"
-                                fontSize={18}
-                                fontWeight={400}
-                            >
-                                {phone}
-                            </Typography>
-                        </div>
-                    </div>
-                </div>
-                {/* <div className="flex gap-2">
-                    <Typography>Edit</Typography>
-                    <img src={EDITICON} alt="edit"/>
-                </div> */}
+        <>
+          <DashboardStats/>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <ShipmentCard
+              title="New Shipment"
+              description="Ready to get started with a new shipment? Click the button below to request a quote."
+              buttonText="New shipment"
+              imageType="new"
+              onClick={() => navigate(routes.QUOTES.pathname)}
+            />
+            <ShipmentCard
+              title="Sample Shipment"
+              description="Ready to get started with a new sample shipment? Click the button below to begin."
+              buttonText="Sample shipment"
+              imageType="sample"
+              onClick={createShipment}
+            />
+          </div>
+
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-medium">Announcements</h2>
+              <Button className="hidden md:block" onClick={() => navigate(routes.ANNOUNCEMENT.pathname)} >
+                View all announcements
+              </Button>
+              </div>
+ 
+          {/* announcements */}
+            <div className="flex flex-col gap-4">
+                {isLoading && <Loader />}
+                {announcementList?.length > 0 && (
+                    // <div className="h-[calc(100vh_-_110.8px)] overflow-y-scroll pt-1">
+                        <AnnouncementDataList
+                            isLoading={isLoading}
+                            announcementDataList={announcementList}
+                            setAnnouncementListPagination={
+                                setAnnouncementListPagination
+                            }
+                            announcementListPagination={
+                                announcementListPagination
+                            }
+                            paginationFooter={false}
+                        />
+                    // </div>
+                )}
+            <Button className="block md:hidden bg-orange-500 mx-4 hover:bg-orange-600 rounded-full" size="lg" onClick={() => navigate(routes.ANNOUNCEMENT.pathname)} >
+                View all announcements
+            </Button>
             </div>
 
-            <div className="m-4">
-                <DataTableCustom
-                    data={sellerHomeListData}
-                    columns={columns}
-                    updateFilters={setSellerHomeRecentOrderPagination}
-                    paginationFooter={true}
-                    searchBar={true}
-                    pageNumber={true}
-                    paginationData={paginationInformation}
-                    isLoading={isLoading}
-                    date={true}
-                    setSelectedDate={setSelectedSellerHomeRecentOrderDate}
-                    selectedDate={selectedSellerHomeRecentOrderDate}
-                />
-            </div>
-        </div>
+        </>
     );
 }

@@ -11,6 +11,8 @@ import { routes } from "routes/RouteConstants";
 import { convertIntoUnix } from "pages/Shipper/Dashboard/Quotation/utils";
 import useCountdownTimer from "pages/Shipper/Dashboard/Quotation/useCountdownTimer";
 import StarGernator from "./StarGernator";
+import { Card } from "components/ui/card";
+import CardComponent from "components/Dashboard/OrderStatus/CardComponent";
 
 const Timer = memo(function Timer({ refetch, created_at }) {
     const createdAtTimeStamp = convertIntoUnix(created_at);
@@ -188,21 +190,20 @@ export default function ShipperBid({ created_at }) {
 
     return (
         <>
-            <div>
-                <Typography variant="h6">Shipper Bid</Typography>
-            </div>
-
+            <CardComponent>
             <DataTableCustom
                 data={quotationListData}
                 columns={columns}
                 paginationFooter={true}
-                searchBar={false}
+                headerGroup={true}
                 pageNumber={true}
                 isLoading={isLoading}
                 paginationData={paginationInformation}
                 updateFilters={setAdminPagination}
                 shipperBid={true}
+                heading="Shipper Bid"
             />
+            </CardComponent>
         </>
     );
 }

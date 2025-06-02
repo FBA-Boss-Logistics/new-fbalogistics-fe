@@ -7,7 +7,7 @@ const IconBase = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     fontSize: '0.875rem',
-    color: theme.palette.grey[600],
+    color: theme.palette.grey[500],
     position: 'absolute',
     bottom: theme.spacing(0.5),
     right: theme.spacing(1),
@@ -29,11 +29,12 @@ const BlueDoneAllIcon = styled(DoneAllIcon)(({ theme }) => ({
     marginLeft: theme.spacing(0.5),
 }));
 
-const TimeText = styled('span')(({ theme }) => ({
+const TimeText = styled('span')(({ theme, color }) => ({
     fontSize: 'inherit',
+    color: color,
 }));
 
-const CheckIcon = ({ readBy, time, isCurrentUser }) => {
+const CheckIcon = ({ readBy, time, isCurrentUser, color = 'grey.500' }) => {
     let IconComponent = <StyledDoneIcon />;
     if (readBy === 3) {
         IconComponent = <BlueDoneAllIcon />;
@@ -43,7 +44,7 @@ const CheckIcon = ({ readBy, time, isCurrentUser }) => {
 
     return (
         <IconBase>
-            <TimeText>{time}</TimeText>
+            <TimeText color={color}>{time}</TimeText>
             {!isCurrentUser && IconComponent}
         </IconBase>
     );

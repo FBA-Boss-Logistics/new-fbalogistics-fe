@@ -156,25 +156,137 @@
 // }
 
 import { Chip, Typography } from "@mui/material";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import Truck from "assets/svg/truck.svg";
+import DataTableCustom from "components/Table/DataTableCustom";
+import { Card } from "components/ui/card";
+import { ChevronDown, Package } from "lucide-react";
+import { useState } from "react";
 
-export function Cargo({ productName, packages, asinNumber }) {
+const columns = [
+    {
+        Header: "Carton Dimensions (CM)",
+        accessor: "carton_dimensions_length",
+        footer: "Carton Dimensions (CM)",
+        Cell: ({ row: { original } }) => (
+           <div className="flex gap-4 py-4  ">
+                <Chip
+                    label={`L - ${original.carton_dimensions_length}`}
+                    className="bg-natural-200 text-natural-400"
+                />
+                <Chip
+                    label={`W - ${original.carton_dimensions_width}`}
+                    className="bg-natural-200 text-natural-400"
+                />
+                <Chip
+                    label={`H - ${original.carton_dimensions_height}`}
+                    className="bg-natural-200 text-natural-400"
+                />
+           </div>
+        ),
+    },
+    {
+        Header: "Weight Per Carton (KG)",
+        accessor: "weight_per_carton_kg",
+        footer: "Weight Per Carton (KG)",
+        Cell: ({ row: { original } }) => (
+            <div className="flex-grow p-2">
+            <Typography
+            color="natural.500"
+            fontWeight={400}
+            variant="body2"
+        >
+            {`${original.weight_per_carton_kg} kg`}
+        </Typography>
+        </div>
+        ),
+    },
+    {
+        Header: "Total Cost of Goods",
+        accessor: "total_cost_of_goods",
+        footer: "Total Cost of Goods",
+        Cell: ({ row: { original } }) => (
+            <div className="flex-grow p-2">
+            <Typography
+                variant="body2"
+                fontWeight={500}
+                color="natural.800"
+            >
+                {original.total_cost_of_goods}
+            </Typography>
+            </div>
+        ),
+    },
+    {
+        Header: "Number of Cartons",
+        accessor: "number_of_cartons",
+        footer: "Number of Cartons",
+        Cell: ({ row: { original } }) => (
+            <div className="flex-grow p-2">
+            <Typography
+                variant="body2"
+                fontWeight={500}
+                color="natural.800"
+            >
+                {original.number_of_cartons}
+            </Typography>
+            </div>
+        ),
+    },
+    {
+        Header: "Chargeable Weight",
+        accessor: "chargeable_weight",
+        footer: "Chargeable Weight",
+        Cell: ({ row: { original } }) => (
+            <div className="flex-grow p-2">
+            <Typography
+                variant="body2"
+                fontWeight={400}
+                color="natural.500"
+            >
+                {original.chargeable_weight}
+            </Typography>
+            </div>
+        ),
+    },
+    {
+        Header: "Delivery Location",
+        accessor: "delivery_location",
+        footer: "Delivery Location",
+        Cell: ({ row: { original } }) => (
+            <div className="flex-grow p-2">
+                <Typography
+                    variant="body2"
+                    fontWeight={400}
+                    color="natural.500"
+            >
+                {original.delivery_location}
+            </Typography>
+            </div>
+        ),
+    },
+
+]
+
+export function Cargo({ productName, packages,shipmentData, asinNumber }) {
+    const [cargoOpen, setCargoOpen] = useState(true);
     return (
-        <div className="border-2 border-natural-100 border-solid p-4 rounded-xl m-4 flex-col gap-4 flex">
-            <div className="flex-col gap-2">
-                <div className="flex justify-between">
-                    <div className="w-8 h-8 p-1 bg-natural-100 rounded-full border-4 border-natural-100 justify-center gap-2 inline-flex">
-                        <div className="bg-natural-200 rounded-full">
+        <Card className="p-4 space-y-4">
+            <Collapsible open={cargoOpen} onOpenChange={setCargoOpen}>
+            <CollapsibleTrigger className="flex items-center w-full">
+           
+                <div className="flex items-center flex-row gap-2 w-full">
+                        <div className="bg-natural-200 rounded-full w-[30px]">
                             <img src={Truck} alt="truck" />
                         </div>
-                    </div>
-                </div>
-
                 <Typography color="natural.900" fontSize={18} fontWeight={500}>
                     Cargo
                 </Typography>
-            </div>
-            <div className="flex flex-col gap-2">
+                <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${cargoOpen ? "rotate-180" : ""}`} />
+                </div>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+            <div className="flex flex-col gap-2 mt-6">
                 <div className="flex gap-4">
                     <div className="bg-natural-25 p-2 flex-col gap-2 flex w-1/2 rounded-lg">
                         <Typography
@@ -211,7 +323,7 @@ export function Cargo({ productName, packages, asinNumber }) {
                     </div>
                 </div>
 
-                <table className="table">
+                {/* <table className="table-auto">
                     <thead>
                         <tr className="bg-natural-25">
                             <th className="flex-grow  p-2 ">
@@ -341,8 +453,21 @@ export function Cargo({ productName, packages, asinNumber }) {
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </table> */}
+
+                <DataTableCustom
+                data={shipmentData?.packages}
+                columns={columns}
+                paginationFooter={false}
+                headerGroup={false}
+                pageNumber={false}
+                paginationData={shipmentData?.paginationInformationShipment}
+                date={false}
+            />
+
             </div>
-        </div>
+            </CollapsibleContent>
+            </Collapsible>
+        </Card>
     );
 }

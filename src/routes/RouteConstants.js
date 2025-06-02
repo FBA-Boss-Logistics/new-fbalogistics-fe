@@ -1,4 +1,5 @@
 import Landing from "pages/Landing";
+import LandingNew from "pages/Landing/new";
 import Dashboard from "pages/Shipper/Dashboard";
 import Playground from "pages/Playground";
 import SignIn from "pages/SignIn";
@@ -29,7 +30,13 @@ import CancelledOrders from "pages/Seller/Booking/CancelledOrders";
 import PendingOrders from "pages/Seller/Booking/PendingOrders";
 import SampleShipment from "pages/Seller/Booking/SampleShipment";
 import Annoucement from "pages/Seller/Announcement";
+import AnnouncementShipperDetail from "pages/Shipper/Dashboard/Announcement/AnnouncementDetail";
 import SampleShipmentTable from "pages/Shipper/Dashboard/SampleShipments";
+import NewDashboard from "pages/Shipper/Dashboard/New";
+import SellerDashboard from '../pages/Seller/Dashboard/index';
+import AnnouncementDetail from "pages/Seller/Announcement/Detail";
+import SignInNew from "pages/Landing/new/SignIn";
+import SignUpNew from "pages/Landing/new/SignUp";
 
 const RouteConstants = {
     HOME: "/",
@@ -42,6 +49,10 @@ const RouteConstants = {
     BOOKING: "/booking",
     SELLERHOME: "/home",
     SELLERPROFILE: "/seller/profile",
+    // testing
+    NEWSHIPPERDASHBOARD: "/shipper/dashboard/new",
+
+
 };
 
 export const routes = {
@@ -49,7 +60,7 @@ export const routes = {
         pathname: "/",
         title: "Home",
         isPublic: true,
-        element: Landing,
+        element: LandingNew,
     },
     SHIPPERDASHBOARD: {
         pathname: "/shipper/dashboard",
@@ -57,6 +68,24 @@ export const routes = {
         isPublic: false,
 
         element: Dashboard,
+    },
+    LOGIN:{
+        pathname: "/login",
+        title: "Login",
+        isPublic: true,
+        element: SignInNew,
+    },
+    SIGNUP:{
+        pathname: "/signup",
+        title: "Sign up",
+        isPublic: true,
+        element: SignUpNew,
+    },
+    NEWSHIPPERDASHBOARD: {
+        pathname: "/shipper/dashboard/new",
+        title: "Dashboard",
+        isPublic: false,
+        element: NewDashboard,
     },
     PLAYGROUND: {
         pathname: "/playground",
@@ -142,6 +171,12 @@ export const routes = {
         isPublic: false,
         element: AnnouncementShipper,
     },
+    ANNOUNCEMENT_SHIPPER_DETAIL: {
+        pathname: "/shipper/dashboard/announcement/:id",
+        title: "Shipper Announcement Detail",
+        isPublic: false,
+        element: AnnouncementShipperDetail,
+    },
     DEFAULT: {
         pathname: "/dashboard/orders/default",
         title: "Default",
@@ -153,6 +188,12 @@ export const routes = {
         title: "seller booking",
         isPublic: false,
         element: Booking,
+    },
+    SELLERDASHBOARD: {
+        pathname: "/seller/dashboard",
+        title: "seller dashboard",
+        isPublic: false,
+        element: SellerDashboard,
     },
     SELLERBOOKINGSTATUS: {
         pathname: "/seller/booking/status",
@@ -231,6 +272,12 @@ export const routes = {
         title: "Seller Announcement",
         isPublic: false,
         element: Annoucement,
+    },
+    ANNOUNCEMENT_DETAIL: {
+        pathname: "/seller/announcement/:id",
+        title: "Seller Announcement Detail",
+        isPublic: false,
+        element: AnnouncementDetail,
     },
 };
 
@@ -359,7 +406,7 @@ export const pageDetails = (pathname) =>
     Object.values(routes).find((routeObj) => {
         return routeObj.pathname === pathname;
     });
-export const commonDescription = "FBA-Boss";
+export const commonDescription = "FBA Boss Logistics";
 export default RouteConstants;
 
 // Object.key(routeKey).find(routePath => routePath.includes(pathname.replaceAll(/[0-9]/g,'')))
