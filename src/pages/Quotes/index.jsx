@@ -387,6 +387,50 @@ const Quotes = () => {
     const [cargoOpen, setCargoOpen] = useState(true)
     const [contactInfoOpen, setContactInfoOpen] = useState(true)
     const [complianceOpen, setComplianceOpen] = useState(true)
+    const [cargoCount, setCargoCount] = useState(1);
+
+    const handleAddCargoSetField = () => {
+         if(cargoSetFields.length < 10 && cargoCount < 10) {
+         deliveryLocationAppend({
+            full_address: null,
+         });
+        cargoAppend({
+            carton_dimensions_length: null,
+            carton_dimensions_width: null,
+            carton_dimensions_height: null,
+            weight_per_carton_kg: null,
+            total_cost_of_goods: null,
+            number_of_cartons: null,
+        });
+         }
+           
+    };
+    
+    const handleChangeCargoSetField = (e) => {
+   //  console.log(e.target.value)
+      //   setCargoCount(e.target.value)
+        console.log(e.target.value,"e.target.value")
+        var currentCount = cargoSetFields.length;
+        var newCargoCount = parseInt(e.target.value)
+        if (isNaN(newCargoCount)) return;
+        if (newCargoCount < 1) newCargoCount = 1;
+        if (newCargoCount > 10) newCargoCount = 10;
+        setCargoCount(newCargoCount)
+        if(currentCount < newCargoCount) {
+        console.log(newCargoCount-currentCount,"newCargoCount-currentCount")
+        for(let i = currentCount; i < newCargoCount; i++) {
+               handleAddCargoSetField()
+
+            }
+        }
+        else if(currentCount > newCargoCount) {
+           for (let i = currentCount - 1; i >= newCargoCount; i--) {
+            cargoRemove(i);
+            deliveryLocationRemove(i);
+          }
+        }
+       
+    };
     return (    
         <div>
             {/* <div className="py-4">
@@ -412,107 +456,6 @@ const Quotes = () => {
                     </Button>
                 </div>
             </div>
-            {/* <div className="px-32 py-8 flex bg-natural-50 border border-solid border-natural-100 justify-center">
-                <div className="w-64">
-                    <div
-                        className={`h-1 bg-natural-200 mb-2.5 ${
-                            originFilled ? "bg-primary-500" : "bg-natural-200"
-                        }`}
-                    ></div>
-                    <Typography
-                        color={originFilled ? "primary.500" : "natural.700"}
-                        variant="body2"
-                        fontWeight={500}
-                    >
-                        Origin and Destination
-                    </Typography>
-
-                    <Typography
-                        color={originFilled ? "primary.500" : "natural.500"}
-                        variant="body2"
-                        fontWeight={500}
-                    >
-                        Please provide your Origin and Destination
-                    </Typography>
-                </div>
-
-                <div className="w-72">
-                    <div
-                        className={`h-1 bg-natural-200 mb-2.5 ${
-                            cargoFilled ? "bg-primary-500" : "bg-natural-200"
-                        }`}
-                    ></div>
-                    <Typography
-                        color={cargoFilled ? "primary.500" : "natural.700"}
-                        variant="body2"
-                        fontWeight={500}
-                    >
-                        Cargo
-                    </Typography>
-
-                    <Typography
-                        color={cargoFilled ? "primary.500" : "natural.500"}
-                        variant="body2"
-                        fontWeight={500}
-                    >
-                        Please provide your Cargo Details
-                    </Typography>
-                </div>
-
-                <div className="w-72">
-                    <div
-                        className={`h-1 bg-natural-200 mb-2.5 ${
-                            complianceFilled
-                                ? "bg-primary-500"
-                                : "bg-natural-200"
-                        }`}
-                    ></div>
-                    <Typography
-                        color={complianceFilled ? "primary.500" : "natural.700"}
-                        variant="body2"
-                        fontWeight={500}
-                    >
-                        Compliance
-                    </Typography>
-
-                    <Typography
-                        color={complianceFilled ? "primary.500" : "natural.500"}
-                        variant="body2"
-                        fontWeight={500}
-                    >
-                        Please provide your name and email
-                    </Typography>
-                </div>
-
-                <div className="w-80">
-                    <div
-                        className={`h-1 bg-natural-200 mb-2.5 ${
-                            contactInfoFilled
-                                ? "bg-primary-500"
-                                : "bg-natural-200"
-                        }`}
-                    ></div>
-                    <Typography
-                        color={
-                            contactInfoFilled ? "primary.500" : "natural.700"
-                        }
-                        variant="body2"
-                        fontWeight={500}
-                    >
-                        Contact Information
-                    </Typography>
-
-                    <Typography
-                        color={
-                            contactInfoFilled ? "primary.500" : "natural.500"
-                        }
-                        variant="body2"
-                        fontWeight={500}
-                    >
-                        Please provide your name and email
-                    </Typography>
-                </div>
-            </div> */}
 
             <div className="">
                 <form onSubmit={handleSubmit(submitShipperFrom, handleErrors)}>
@@ -632,6 +575,23 @@ const Quotes = () => {
                                     </Collapsible>
                                     
                             </CardComponent>
+                            <CardComponent className="px-6 pt-2">
+                                 <div className="flex items-center gap-2 my-4 justify-between">
+                                     <label htmlFor="cargoCountSelect" className="mr-2">Warehouse quantity:</label>
+                                     <select
+                                         id="cargoCountSelect"
+                                         className="border-2 border-gray-400 text-gray-500 p-1 px-2 rounded-md"
+                                         value={cargoCount}
+                                         onChange={(e) => handleChangeCargoSetField(e)}
+                                     >
+                                         {[...Array(10).keys()].map((num) => (
+                                             <option key={num + 1} value={num + 1}>
+                                                 {num + 1}
+                                             </option>
+                                         ))}
+                                     </select>
+                                 </div>
+                            </CardComponent>
                             {/* Cargo Section */}
                             <CardComponent className="px-6 pt-2">
                                 {/* collapsable section */}
@@ -645,9 +605,11 @@ const Quotes = () => {
                                             Cargo
                                         </Typography>
                                         </div>
+                                        
                                     <ChevronDown className={`ml-auto h-5 w-5 transition-transform ${cargoOpen ? "rotate-180" : ""}`} />
                                     </CollapsibleTrigger>
                                     <CollapsibleContent>
+                                   
                                     <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4 ">
                                         <LabelledTextField
                                             label="Product Name*"
@@ -682,7 +644,7 @@ const Quotes = () => {
                                             }
                                         />
                                     </div>
-
+               
                                     <div className="flex gap-4  lg:w-1/2">
                                                 <LabelledTextField
                                                     label="Amazon Warehouse Address"
@@ -725,29 +687,9 @@ const Quotes = () => {
                                                 {index > 0 &&
                                                     cargoSetFields?.length >
                                                         1 && (
-                                                        <div>
-                                                            <FormControlLabel
-                                                                control={
-                                                                    <Checkbox
-                                                                        checked={
-                                                                            isRemoveChecked
-                                                                        }
-                                                                        onChange={(
-                                                                            e
-                                                                        ) =>
-                                                                            handleTogglePackageRemove(
-                                                                                e
-                                                                                    .target
-                                                                                    .checked,
-                                                                                index
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                }
-                                                                label="Add another Amazon warehouse"
-                                                            />
-                                                        </div>
+                                                        <hr className="mt-9" />
                                                     )}
+                                                    
 
                                                 
                                                 <div className="flex flex-wrap lg:flex-nowrap gap-4 mt-8">
@@ -917,13 +859,14 @@ const Quotes = () => {
                                                         }
                                                     />
                                                 </div>
+                                                
                                                     {index > 0 && (
                                                     <div
                                                         key={index}
                                                         className="flex gap-4 my-4 lg:w-1/2"
                                                     >
                                                         <LabelledTextField
-                                                            label="Amazon Warehouse Address"
+                                                            label={`Amazon Warehouse Address (${index + 1})`}
                                                             placeholder="Enter Address"
                                                             className=""
                                                             autoComplete="new-warehouse-address"
@@ -1049,26 +992,6 @@ const Quotes = () => {
                                             </div>
                                         );
                                     })}
-                                    {cargoSetFields?.length < 5 && (
-                                        <div>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        checked={
-                                                            isAddChecked
-                                                        }
-                                                        onChange={(e) =>
-                                                            handleTogglePackage(
-                                                                e.target
-                                                                    .checked
-                                                            )
-                                                        }
-                                                    />
-                                                }
-                                                label="Add another Amazon warehouse"
-                                            />
-                                        </div>
-                                    )}
                                     </CollapsibleContent>
                                     </Collapsible>
                             {/* complience Section */}
