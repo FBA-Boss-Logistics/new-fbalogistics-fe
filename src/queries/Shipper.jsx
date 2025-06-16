@@ -232,6 +232,27 @@ export const UpdateShipmentStatusApi = () => {
     });
 };
 
+//Update Package Tracking Number
+
+const UpdatePackageTrackingNumber = (data) => {
+   console.log("data", data);
+    const method = "PATCH";
+    const url = `/update-packages/${data.id}`;
+    return axios({ method, url, data });
+};
+
+export const UpdatePackageTrackingNumberApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(UpdatePackageTrackingNumber, {
+        onSuccess: (response) => {
+            queryClient.invalidateQueries("FETCH_RECENT_ORDER_INFO");
+            HandleSuccessResponse(response);
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
 // Quotation - Post Req
 
 const CreateQuotation = (data) => {

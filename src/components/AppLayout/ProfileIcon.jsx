@@ -149,7 +149,6 @@ const ProfileIcon = () => {
             onError: () => {},
         });
     };
-
     const handleNotificationListClick = (
         notificationData,
         isClickOnCloseBtn

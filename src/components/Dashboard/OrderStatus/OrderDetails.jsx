@@ -35,21 +35,22 @@ export default function OrderDetails({
             label: isQuotationDeclined ? "Total Bid" : "Wining Bid",
             value: "$" + OrderStatusData?.quotation?.total_amount,
         },
-        {
-            label: "Tracking Link",
-            value: (
-                <div className="flex items-center gap-2">
-                <a
-                    href={OrderStatusData?.tracking_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-natural-700 text-sm"
-                >
-                    {OrderStatusData?.tracking_link ?? "N/A"}
-                </a>
-                </div>
-            ),
-        },
+      //   {
+      //       label: "Tracking Link",
+      //       value: (
+      //           <div className="flex items-center gap-2">
+      //           <a
+      //               href={OrderStatusData?.tracking_link}
+      //               target="_blank"
+      //               rel="noopener noreferrer"
+      //               className="text-natural-700 text-sm"
+      //           >
+      //               {OrderStatusData?.tracking_link ?? "N/A"}
+      //           </a>
+      //           </div>
+      //       ),
+      //   },
+      {label:"Winning Agent", value: OrderStatusData?.quotation?.user?.first_name},
         { label: "Product", value: OrderStatusData?.product_name },
     ];
 
@@ -87,7 +88,6 @@ export default function OrderDetails({
 
     return (
         <>
-
         {/* modal cancel winning bid */}
         <ModalComponent open={openModal} onClose={handleCloseModal} title="Cancel Winning Bid">
             <div className="flex flex-col  items-end justify-end h-full gap-4">
