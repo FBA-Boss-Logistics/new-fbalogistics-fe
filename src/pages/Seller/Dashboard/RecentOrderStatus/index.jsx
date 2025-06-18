@@ -104,7 +104,7 @@ export default function SellerRecentOrderStatus() {
                     
                     <div className=" w-full lg:w-1/3 flex flex-col gap-4">
                     
-                        <OrderDetails OrderStatusData={orderData?.data} handleClick={handleClick} handleStatusChange={handleStatusChange} quotationID={quotationID}/>
+                        <OrderDetails isSampleShipment={srcQueryParam === "sampleShipments"} OrderStatusData={orderData?.data} handleClick={handleClick} handleStatusChange={handleStatusChange} quotationID={quotationID}/>
 
                         <PastStatus status={orderData?.data?.status} />
                     </div>

@@ -15,7 +15,8 @@ export default function OrderDetails({
     isQuotationDeclined,
     handleClick,
     handleStatusChange=null,
-    quotationID
+    quotationID,
+    isSampleShipment=false
 }) {
     const currentUrl = useLocation().pathname;
     const searchParams = new URLSearchParams(window.location.search);
@@ -192,11 +193,15 @@ export default function OrderDetails({
         </div>
         </CardContent>
         <CardFooter className="flex justify-end">
+        {isSampleShipment ? (
+            <></>
+        ) : (
             <Button  variant="outline" size="lg"className="rounded-full border-2 border-primary text-primary" onClick={handleClick}>
                 <span  className="text-primary">
                     View details
                 </span>
             </Button>
+        )}
         </CardFooter>
         </Card>
         </>
