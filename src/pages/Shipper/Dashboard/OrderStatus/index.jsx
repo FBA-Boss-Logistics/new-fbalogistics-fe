@@ -19,6 +19,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { formatDateString } from "utils";
 import ConfirmModal from "./ConfirmModal";
 import HeaderPage from "components/HeaderPage";
+import NavigationShipments from "components/HeaderPage/NavigationShipments";
+import Invoice from "components/Dashboard/OrderStatus/Invoice/Invoice";
+import Tracking from "components/Dashboard/OrderStatus/Tracking/Tracking";
+import ContactUs from "pages/Shipper/Contact";
 
 export default function OrderStatus() {
     const { id } = useParams();
@@ -28,6 +32,7 @@ export default function OrderStatus() {
     const queryClient = useQueryClient();
 
     const { mutate: patchStatusUpdate } = usePatchStatusUpdate();
+    const [activeTab, setActiveTab] = useState("Chat");
     // const { data: OrderStatusData, isLoading } =
     //     FetchAllShipmentOrderDetailApi(id);
 
@@ -82,6 +87,19 @@ export default function OrderStatus() {
             navigate(`/shipper/bid/${id}`);
         }
     };
+
+    const handleComponentSwitch = () => {
+        switch (activeTab) {
+            case "Chat":
+                return <ChatWindow />;
+            case "Project":
+                return <ContactUs id={id} />;
+            case "Invoice":
+                return <Invoice />;
+            case "Tracking":
+                return <Tracking />;
+        }
+    }
     return (
         <>
             {" "}
@@ -92,6 +110,7 @@ export default function OrderStatus() {
             ) : (
                 <div className="flex flex-col gap-6 w-full">
                     <HeaderPage title="Current Shipment" pathname="Current Shipment" home="shipment" />
+                    <NavigationShipments activeTab={activeTab} setActiveTab={setActiveTab} />
                     {/* <div className="w-[569px]"> */}
                         {" "}
                         {/* <OrderDate
@@ -120,9 +139,10 @@ export default function OrderStatus() {
                         // />
                         <></>
                     )}
-                    <div className="flex gap-4 items-start">
-                        <ChatWindow />
-                        <div className=" w-1/3 flex flex-col gap-4">
+                    <div className="flex sm:flex-row flex-col gap-4 items-start">
+                        {/* <ChatWindow /> */}
+                        {handleComponentSwitch()}
+                        <div className="md:w-1/3 w-full flex flex-col gap-4">
                                 <OrderDetails
                                     OrderStatusData={orderData?.data}
                                     isLoading={isLoading}
@@ -185,11 +205,12 @@ export default function OrderStatus() {
                                     </div>
                                 </div>
                             ) : (
-                                <OrderRadioGroup
-                                    OrderStatusData={orderData?.data}
-                                    id={id}
-                                    isLoading={isLoading}
-                                />
+                                <></>
+                                // <OrderRadioGroup
+                                //     OrderStatusData={orderData?.data}
+                                //     id={id}
+                                //     isLoading={isLoading}
+                                // />
                             )}
                         </div>
                     </div>

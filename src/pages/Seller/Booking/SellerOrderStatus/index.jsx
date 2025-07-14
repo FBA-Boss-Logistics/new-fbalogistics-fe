@@ -79,9 +79,10 @@ export default function SellerOrderStatus() {
     };
 
     const handleClick = () => {
-        navigate(
-            `/seller/booking/recentorderstatus/${id}/?src=currentShipments`
-        );
+        // navigate(
+        //     `/seller/booking/recentorderstatus/${id}/?src=currentShipments`
+        // );
+        window.location.reload();
     };
     
     if (isAuthorizedError) {
