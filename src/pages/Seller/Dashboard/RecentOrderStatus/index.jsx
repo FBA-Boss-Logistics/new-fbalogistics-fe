@@ -71,7 +71,8 @@ export default function SellerRecentOrderStatus() {
     const pickupAddress = orderData?.data?.pickup_location?.full_address;
 
     const handleClick = () => {
-        navigate(`/seller/booking/order/status/${id}`);
+        // navigate(`/seller/booking/order/status/${id}`);
+        setActiveTab("Project");
     };
 
     const handleStatusChange = (id, status, reason) => {
@@ -99,7 +100,7 @@ export default function SellerRecentOrderStatus() {
             case "Project":
                 return <SellerOrderStatus id={id} />;
             case "Invoice":
-                return <InvoiceCustomer />;
+                return <InvoiceCustomer formId="invoice-customer-form" />;
             case "Tracking":
                 return <TrackingCustomer />;
         }
@@ -113,19 +114,20 @@ export default function SellerRecentOrderStatus() {
             ) : (
                 <>           
             <HeaderPage title="Recent Order Status" home="seller" pathname={'Recent Order Status'} />
-                <NavigationShipments activeTab={activeTab} setActiveTab={setActiveTab} />
+                <NavigationShipments activeTab={activeTab} setActiveTab={setActiveTab} id={id} />
               
 
                 <div className="flex gap-4 flex-col lg:flex-row  items-start">
                 
                         {handleComponentSwitch()}
                     
-                    <div className=" w-full lg:w-1/3 flex flex-col gap-4">
-                    
-                        <OrderDetails isSampleShipment={srcQueryParam === "sampleShipments"} OrderStatusData={orderData?.data} handleClick={handleClick} handleStatusChange={handleStatusChange} quotationID={quotationID}/>
+                    {activeTab === "Chat" && (
+                        <div className=" w-full lg:w-1/2 flex flex-col gap-4">
+                            <OrderDetails isSampleShipment={srcQueryParam === "sampleShipments"} OrderStatusData={orderData?.data} handleClick={handleClick} handleStatusChange={handleStatusChange} quotationID={quotationID}/>
 
-                        {/* <PastStatus status={orderData?.data?.status} /> */}
-                    </div>
+                            {/* <PastStatus status={orderData?.data?.status} /> */}
+                        </div>
+                    )}
                 </div>
                 </>
             )}

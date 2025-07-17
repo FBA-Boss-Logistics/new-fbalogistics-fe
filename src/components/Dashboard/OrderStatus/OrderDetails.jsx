@@ -24,18 +24,12 @@ export default function OrderDetails({
     const [cancelReason, setCancelReason] = useState("");
 
     const section1 = [
-        { label: "Order Id", value: OrderStatusData?.id },
-        {
-            label: "Expected Date",
-            value: currentUrl.includes("seller")
-                ? formatDate(OrderStatusData?.shipment_ready_date)
-                : formatDate(OrderStatusData?.shipment_ready_date),
-        },
-        { label: "Total Amount", value: "$" + OrderStatusData?.final_amount },
+        { label: "Shipment ID", value: OrderStatusData?.id },
         {
             label: isQuotationDeclined ? "Total Bid" : "Wining Bid",
             value: "$" + OrderStatusData?.quotation?.total_amount,
         },
+        { label: "Product Name", value: OrderStatusData?.product_name },
       //   {
       //       label: "Tracking Link",
       //       value: (
@@ -52,7 +46,6 @@ export default function OrderDetails({
       //       ),
       //   },
       {label:"Winning Agent", value: OrderStatusData?.quotation?.user?.first_name},
-        { label: "Product", value: OrderStatusData?.product_name },
     ];
 
     const section2 = [
@@ -117,12 +110,12 @@ export default function OrderDetails({
         </ModalComponent>
        
         <Card className="w-full h-full border-1 flex flex-col border-natural-100 border-solid rounded-xl  justify-between ">
-         <CardHeader className="pb-2">
+         <CardHeader className="pb-0">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-medium">Shipment Details</h3>
+                    <h3 className="font-semibold text-lg text-[#333843]">Shipment Details</h3>
                         {srcQueryParam !== "sampleShipments" && handleStatusChange!==null ? (
                             <>
-                            <IconButton
+                                <IconButton
                                     aria-label="more"
                                     aria-controls="message-menu"
                                     aria-haspopup="true"
@@ -154,25 +147,23 @@ export default function OrderDetails({
                             <></>
                         )}
                   </div>
-                  <CardDescription>Sales performance by location</CardDescription>
+                  <CardDescription className="!mt-0">Sales performance by location</CardDescription>
         </CardHeader>
-        <CardContent>
-        <div className="w-full h-full border-1 flex flex-col border-natural-100 border-solid rounded-xl  justify-between  ">
+        <CardContent className="!pt-6">
+        <div className="w-full h-full border-1 flex flex-col border-natural-100 border-solid rounded-xl  justify-between">
             {!isLoading ? (
                 sections.map((section, index) => (
                     <React.Fragment key={index}>
                         <div className="flex gap-6">
-                            <div className="flex items-start w-1/3">
-                                <Typography color="natural.700">
+                            <div className="flex items-start w-full">
+                                <Typography className="text-sm font-normal text-[#667085]">
                                     {section.label}
                                 </Typography>
                             </div>
 
                             <div className="flex items-start justify-end w-full ">
                                 <Typography
-                                    textAlign={"start"}
-                                    color="natural.700"
-                                    fontWeight={500}
+                                    className="text-sm font-semibold text-[#2D3748]"
                                 >
                                     {section.value}
                                 </Typography>
@@ -192,11 +183,11 @@ export default function OrderDetails({
             )}
         </div>
         </CardContent>
-        <CardFooter className="flex justify-end">
+        <CardFooter className="flex justify-end !pt-1">
         {isSampleShipment ? (
             <></>
         ) : (
-            <Button  variant="outline" size="lg"className="rounded-full border-2 border-primary text-primary" onClick={handleClick}>
+            <Button  variant="outline" size="lg"className="rounded-full border-2 border-primary text-primary px-[14px] py-[10px]" onClick={handleClick}>
                 <span  className="text-primary">
                     View details
                 </span>

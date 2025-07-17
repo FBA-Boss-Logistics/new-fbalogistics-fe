@@ -49,7 +49,7 @@ const LabelledTextFieldBootStrap = forwardRef((props) => {
                     position: "initial",
                     // fontSize: "14px",
                 }}
-                className=" !transform-none mb-1"
+                className=" !transform-none mb-[10px] font-semibold text-sm text-[#2E2E2E]"
             >
                 {label}
             </Typography>
@@ -68,6 +68,7 @@ const LabelledTextFieldBootStrap = forwardRef((props) => {
                     inputProps: {
                         style: {
                             textTransform: capitalize ? "capitalize" : "none",
+                            padding: "11px 17px",
                         },
                         maxLength: maxLength || 1000000,
                     },

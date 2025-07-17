@@ -205,6 +205,49 @@ export const FetchAllShipmentOrderDetailApi = (id) => {
     );
 };
 
+const fetchAllWarehouseDetail = (id) => {
+    const method = "GET";
+    const url = `/warehouses/?shipment_id=${id}`;
+    console.log("url", url)
+    return axios({
+        method,
+        url,
+    });
+};
+
+export const fetchAllWarehouseDetailApi = (id) => {
+    return useQuery(
+        [`FETCH_ALL_WAREHOUSE_DETAIL_INFO_${id}`],
+        () => fetchAllWarehouseDetail(id),
+        {
+            enabled: Boolean(localStorage.getItem("AUTH_TOKEN")),
+            onSuccess: () => null,
+            onError: (error) => {
+                console.log("Error occurred while fetching data", error);
+            },
+        }
+    );
+};
+
+const CreateWarehouse = (data) => {
+    const method = "POST";
+    const url = `warehouses/`;
+    return axios({ method, url, data });
+};
+
+export const useCreateWarehouseQuery = () => {
+    const queryClient = useQueryClient();
+    return useMutation(CreateWarehouse, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("CREATE_WAREHOUSE");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
 //PATCH Shipment Status update
 
 const UpdateShipmentStatus = (updateShipmentData) => {

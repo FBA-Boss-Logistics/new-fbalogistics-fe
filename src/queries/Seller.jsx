@@ -50,6 +50,16 @@ const FetchSellerShipmentDetail = (data) => {
         url,
     });
 };
+
+const FetchSellerShipmentDetailById = (id) => {
+    const method = "GET";
+    let url = `/seller/shipments/${id}/`;
+    return axios({
+        method,
+        url,
+    });
+};
+
 const fetchSellerShipmentNotifications = (data) => {
     const method = "GET";
     let url = appendQueryParams(`/chat/notifications/`, {
@@ -61,6 +71,52 @@ const fetchSellerShipmentNotifications = (data) => {
         method,
         url,
     });
+};
+
+const FetchSellerInvoiceAll = () => {
+    const method = "GET";
+    return axios({
+        method,
+        url: "/invoices/",
+    });
+}
+
+export const FetchSellerInvoiceAllApi = () => {
+    return useQuery(["FETCH_SELLER_INVOICE_ALL_INFO"], () => FetchSellerInvoiceAll(), {
+        enabled: Boolean(localStorage.getItem("AUTH_TOKEN")),
+        onSuccess: () => null,
+        onError: (error) => {
+            console.log("Error occurred while fetching data", error);
+        },
+    });
+};
+
+const FetchSellerInvoiceDetail = (data) => {
+    const method = "GET";
+    let url = appendQueryParams(`/invoices/`, {
+        shipment_id: data?.shipment_id || "",
+        ...data?.sellerShipmentListPagination,
+        shipment_ready_date: data?.initialDate,
+    });
+
+    return axios({
+        method,
+        url,
+    })
+};
+
+export const FetchSellerInvoiceDetailApi = (payload) => {
+    return useQuery(
+        ["FETCH_SELLER_INVOICE_INFO", payload],
+        () => FetchSellerInvoiceDetail(payload),
+        {
+            enabled: Boolean(payload),
+            onSuccess: () => null,
+            onError: (error) => {
+                console.log("Error occurred while fetching data", error);
+            },
+        }
+    );
 };
 
 export const FetchSellerShipmentDetailApi = (payload) => {
@@ -78,6 +134,21 @@ export const FetchSellerShipmentDetailApi = (payload) => {
         }
     );
 };
+
+export const FetchSellerShipmentDetailByIdApi = (payload) => {
+    return useQuery(
+        ["FETCH_SELLER_SHIPMENT_INFO_BY_ID", payload],
+        () => FetchSellerShipmentDetailById(payload),
+        {
+            enabled: Boolean(payload),
+            onSuccess: () => null,
+            onError: (error) => {
+                console.log("Error occurred while fetching data", error);
+            },
+        }
+    );
+};
+
 export const fetchSellerShipmentNotificationsApi = (payload) => {
     return useQuery(
         ["FETCH_SELLER_SHIPMENT_NOTIFICATOINS", payload],
@@ -269,6 +340,35 @@ export const useCreateShipmentQuery = () => {
         onError: (error) => console.log("Error in Login", error),
     });
 };
+
+const CreateInvoice = (data) => {
+    const method = "POST";
+    const url = `invoices/`;
+    return axios({ method, url, data });
+};
+export const useCreateInvoiceQuery = () => {
+    const queryClient = useQueryClient();   
+    return useMutation(CreateInvoice, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(["FETCH_LOGIN_USER_INFO"]);
+        },
+        onError: (error) => console.log("Error in Login", error),
+    });
+};
+// const CreateShipment = (data) => {
+//     const method = "POST";
+//     const url = `/v1/shipments/`;
+//     return axios({ method, url, data });
+// };
+// export const useCreateShipmentQuery = () => {
+//     const queryClient = useQueryClient();
+//     return useMutation(CreateShipment, {
+//         onSuccess: () => {
+//             queryClient.invalidateQueries(["FETCH_LOGIN_USER_INFO"]);
+//         },
+//         onError: (error) => console.log("Error in Login", error),
+//     });
+// };
 
 // Quotation data
 
