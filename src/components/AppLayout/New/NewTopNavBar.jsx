@@ -13,6 +13,7 @@ import NotificationItem from "@/components/New/NotificationItem"
 import { Sheet, SheetContent, SheetTrigger } from 'components/ui/sheet'
 import NewSideNavBar from './NewSideNavBar'
 import LogoFBA from 'assets/images/logo.png'
+import SharkLogo from 'assets/svg/SharkLogo.svg'
 import { FetchUserDetailApi, useLogOutApiQuery } from 'queries/Auth'
 import { useNavigate } from 'react-router-dom'
 import ProfileIcon from '../ProfileIcon';
@@ -50,7 +51,7 @@ const NewTopNavBar = ({menu, dashboard}) => {
 
         <div className="flex items-center justify-center flex-1">
           {/* <span className="text-xl font-bold text-blue-900">FBA BOSS</span> */}
-          <img src={LogoFBA} width={'120px'}  alt="plane moving" onClick={() => isSeller ? navigate(routes.SELLERDASHBOARD.pathname) : navigate(routes.SHIPPERDASHBOARD.pathname)} />
+          <img src={SharkLogo} width={'120px'}  alt="plane moving" onClick={() => isSeller ? navigate(routes.SELLERDASHBOARD.pathname) : navigate(routes.SHIPPERDASHBOARD.pathname)} />
 
         </div>
         <ProfileIcon />
