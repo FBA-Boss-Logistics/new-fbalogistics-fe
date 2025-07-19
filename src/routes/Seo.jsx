@@ -14,7 +14,7 @@ const Seo = () => {
                     {currentPageDetails?.title
                         ? `${currentPageDetails.title} | `
                         : ""}
-                    FBA Boss Logistics
+                    Freight Shark Logistics
                 </title>
                 <meta
                     name="description"
