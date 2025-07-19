@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import image from 'assets/images/LandingPage/Image.webp'
 import fbaLogo from "assets/svg/FBALogo.svg";
+import SharkLogo from "assets/svg/SharkLogo.svg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 import { Button } from 'components/ui/button';
 import { Input } from 'components/ui/input';
@@ -106,7 +107,7 @@ const SignUp = () => {
         <img src={image} alt="logo" className=' h-screen object-cover  w-full hidden lg:block'  width={800} height={1024} />
       <div className=" w-full  h-full max-h-screen  flex flex-col items-center justify-start md:gap-[30px] gap-[50px] px-[80px] py-[20px] md:py-[20px] lg:py-[0px]  overflow-y-auto">
       {/*for logo */}
-         <img src={fbaLogo} alt="logo" className='w-[131.93px] h-auto cursor-pointer' onClick={() => navigate(routes.HOME.pathname)} />
+         <img src={SharkLogo} alt="logo" className='w-[131.93px] h-auto cursor-pointer' onClick={() => navigate(routes.HOME.pathname)} />
          {/*for section */}
        <div className='w-screen md:w-full h-full flex flex-col items-center justify-start gap-4 '>
          <h1 className='font-bold text-black text-center text-[24px] md:text-[26px] w-full'>
