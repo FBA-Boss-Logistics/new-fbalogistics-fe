@@ -14,14 +14,14 @@ const Footer = () => {
       <img width="131.93px" src={sharkLogo} alt="logo" />
       <hr className='w-full md:hidden' />
       <div className='flex flex-row gap-[24px] order-last md:order-none'>
-        <p>fbaboss © {new Date().getFullYear()} </p>
+        <p>Freight Shark © {new Date().getFullYear()} </p>
       </div>
-      <div className='flex flex-row gap-[24px]'>
+      {/* <div className='flex flex-row gap-[24px]'>
            <img src={facebookIcon} className='cursor-pointer' alt="facebook" />
            <img src={instagramIcon} className='cursor-pointer' alt="instagram" />
            <img src={linkedinIcon} className='cursor-pointer' alt="linkedin" />
            <img src={xIcon} className='cursor-pointer' alt="x" />
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -5,7 +5,7 @@ const Steps = ({steps}) => {
   <>
   <div className='flex flex-col gap-[24px] pb-[104px]'>
      {steps.map((step, index) => (
-       <div key={index} className="bg-[#3C67C1] lg:mx-[136px] mx-[20px] rounded-[24px] md:p-[60px] p-[24px]">
+       <div key={index} className="bg-[#00B4D8] lg:mx-[136px] mx-[20px] rounded-[24px] md:p-[60px] p-[24px]">
          <div className="flex flex-col md:flex-row  justify-center items-center w-full gap-[24px]  md:h-[170px]">
           <div className='h-full pr-[54px] flex md:justify-center justify-start items-center  w-full md:w-auto  font-bold md:text-[84px] text-[48px]  md:border-r border-[#FFFFFF33] text-[#FFFFFF33]'>
             {step.title}
