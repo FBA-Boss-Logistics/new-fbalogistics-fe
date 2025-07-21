@@ -20,6 +20,7 @@ import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import LogoutWhite from "assets/icons/LogoutWhite.svg";
 import fbaLogo from "assets/svg/FBALogo.svg";
+import sharkLogo from "assets/svg/SharkLogo.svg";
 import AnnouncementIcon from "assets/svg/announcement.svg";
 import BarIcon from "assets/svg/bar.svg";
 import completeIcon from "assets/svg/completeIcon.svg";
@@ -80,7 +81,7 @@ const NewSideNavBar = ({menu, dashboard}) => {
 
              onClick={() => isSeller ? navigate(routes.SELLERDASHBOARD.pathname) : navigate(routes.SHIPPERDASHBOARD.pathname)}
 
-             src={LogoFBA} width={'70%'} alt="plane moving" />
+             src={sharkLogo} width={'70%'} alt="plane moving" />
 
             </span>
             </div>

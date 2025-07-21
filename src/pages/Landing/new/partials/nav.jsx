@@ -1,4 +1,5 @@
 import React from 'react'
+import fbaLogo from "assets/svg/FBALogo.svg";
 import sharkLogo from "assets/svg/SharkLogo.svg";
 import { Button } from 'components/ui/button';
 import { routes } from 'routes/RouteConstants';

@@ -85,7 +85,7 @@ export default function SellerDashboard() {
                         />
                     // </div>
                 )}
-            <Button className="block md:hidden bg-orange-500 mx-4 hover:bg-orange-600 rounded-full" size="lg" onClick={() => navigate(routes.ANNOUNCEMENT.pathname)} >
+            <Button className="block md:hidden mx-4 hover:bg-[#1F2C39]/90 rounded-full" size="lg" onClick={() => navigate(routes.ANNOUNCEMENT.pathname)} >
                 View all announcements
             </Button>
             </div>

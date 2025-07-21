@@ -30,7 +30,8 @@ export default {
     				'700': '#8E6F29',
     				'800': '#493915',
     				'900': '#33270E',
-    				DEFAULT: 'hsl(var(--primary))',
+    				// DEFAULT: 'hsl(var(--primary))',
+					DEFAULT: '#1F2C39',
     				foreground: 'hsl(var(--primary-foreground))'
     			},
     			secondary: {

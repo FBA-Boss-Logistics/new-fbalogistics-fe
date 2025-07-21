@@ -9,7 +9,7 @@ export default function ShipmentCard({ title, description, buttonText, imageType
            <h2 className="text-lg font-medium mb-2">{title}</h2>
           <p className="text-sm text-gray-600 mb-4 ">{description}</p>
           <Button
-            className=" text-white hover:text-white border-blue-700 hover:bg-blue-800"
+            className=" text-white hover:text-white border-blue-700 hover:bg-[#1F2C39]/90"
             onClick={onClick}
           >
             <span className="">+</span> {buttonText}

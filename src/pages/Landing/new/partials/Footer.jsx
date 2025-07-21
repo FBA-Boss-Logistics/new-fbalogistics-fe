@@ -1,4 +1,5 @@
 import React from 'react'
+import fbaLogo from "assets/svg/FBALogo.svg";
 import sharkLogo from "assets/svg/SharkLogo.svg";
 
 import facebookIcon from "assets/svg/landingPage/Facebook.svg"
@@ -15,6 +16,12 @@ const Footer = () => {
       <div className='flex flex-row gap-[24px] order-last md:order-none'>
         <p>Freight Shark © {new Date().getFullYear()} </p>
       </div>
+      {/* <div className='flex flex-row gap-[24px]'>
+           <img src={facebookIcon} className='cursor-pointer' alt="facebook" />
+           <img src={instagramIcon} className='cursor-pointer' alt="instagram" />
+           <img src={linkedinIcon} className='cursor-pointer' alt="linkedin" />
+           <img src={xIcon} className='cursor-pointer' alt="x" />
+      </div> */}
     </div>
   )
 }
