@@ -1,5 +1,6 @@
 import Landing from "pages/Landing";
 import LandingNew from "pages/Landing/new";
+import LandingNewRebrand from "pages/Landing/new/partials/new";
 import Dashboard from "pages/Shipper/Dashboard";
 import Playground from "pages/Playground";
 import SignIn from "pages/SignIn";
@@ -61,6 +62,12 @@ export const routes = {
         title: "Home",
         isPublic: true,
         element: LandingNew,
+    },
+    REBRAND: {
+        pathname: "/rebrand",
+        title: "Home",
+        isPublic: true,
+        element: LandingNewRebrand,
     },
     SHIPPERDASHBOARD: {
         pathname: "/shipper/dashboard",

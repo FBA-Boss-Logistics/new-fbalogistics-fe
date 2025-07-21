@@ -54,7 +54,9 @@ export const MainSection = () => {
          </Badge>
         </span>
           <h1 className='md:text-[48px] text-[32px] font-bold leading-[56px]'>
-            How it works?
+            <a href="/" className='text-white hover:text-white'>
+              How it works?
+            </a>
           </h1>
         </div>
         
