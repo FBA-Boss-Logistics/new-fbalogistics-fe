@@ -13,14 +13,16 @@ const navigate = useNavigate();
          <a href="/"><img width="131.93px" src={sharkLogo} alt="logo" /></a>
 
          <div className='hidden md:flex flex-row items-center gap-6'>
-            <h1 className='l font-bold cursor-pointer' onClick={() => {
-              const howItWorks = document.getElementById('how-it-works');
-              if (howItWorks) {
-                howItWorks.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}>
-               How it works
-            </h1>
+            <a href="/">
+              <h1 className='l font-bold cursor-pointer text-black hover:text-black' onClick={() => {
+                const howItWorks = document.getElementById('how-it-works');
+                if (howItWorks) {
+                  howItWorks.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}>
+                How it works
+              </h1>
+            </a>
             <div className='flex flex-row gap-4'>
                <Button variant="outline" size="lg" className=' border-2 border-slate-950 rounded-lg w-[82px] h-[42px]' onClick={() => navigate(routes.SIGNUP.pathname)}>
                    Sign up
