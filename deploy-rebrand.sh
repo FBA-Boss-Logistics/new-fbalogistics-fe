@@ -1,9 +1,9 @@
 #!/bin/bash
 
-APP_NAME="testing"
-REPO_DIR="/home/hakim/testing"
-RELEASES_DIR="/var/www/releases-testing"
-DEPLOY_SYMLINK="/var/www/testing"
+APP_NAME="freightshark"
+REPO_DIR="/home/hakim/freightshark"
+RELEASES_DIR="/var/www/releases-freightshark"
+DEPLOY_SYMLINK="/var/www/freightshark"
 TIMESTAMP=$(date +%s)
 NEW_RELEASE="$RELEASES_DIR/$TIMESTAMP"
 
