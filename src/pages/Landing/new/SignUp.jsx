@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import image from 'assets/images/LandingPage/Image.webp'
+// import image from 'assets/images/LandingPage/Image.webp'
+import image from 'assets/images/LandingPage/Image-change.webp'
 import fbaLogo from "assets/svg/FBALogo.svg";
 import SharkLogo from "assets/svg/SharkLogo.svg";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
