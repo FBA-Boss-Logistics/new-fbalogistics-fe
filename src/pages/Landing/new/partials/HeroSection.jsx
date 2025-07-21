@@ -34,8 +34,8 @@ export const HeroSection = () => {
          Amazon FBA Sellers with improved logistics services and the 
          same great team you trust.
          </p>
-         <Button size="lg" className='   rounded-lg md:w-[180px] w-full h-[42px]' onClick={handleRedirect}>
-                   Go to dashboard
+         <Button size="lg" className='rounded-lg md:w-[180px] w-full h-[42px] bg-[#1A2E4C] text-white' onClick={handleRedirect}>
+                   <span className='text-[13.6px] font-medium pt-[14.7px] pb-[14.3px] ps-[31px] pe-[31.44px]'>Go to dashboard</span>
                </Button>
       </div>
       <div className='flex md:w-[560px] w-[200px] items-center justify-center py-[32px] pe-[136px]'>
