@@ -49,8 +49,8 @@ const SignIn = () => {
    const submitHandler = (formData) => {
     const { email, password } = formData;
     console.log(formData);
-    const payloadShipper = { email, password, group: "Shipper" };
-    const payloadSeller = { email, password, group: "Seller" };
+    const payloadShipper = { email: email.toLowerCase(), password, group: "Shipper" };
+    const payloadSeller = { email: email.toLowerCase(), password, group: "Seller" };
     if (activeTab === "Shipment Agent") {
       loginQuery(payloadShipper, {
         onSuccess: () => {
