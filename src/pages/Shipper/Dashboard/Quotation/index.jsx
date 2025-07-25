@@ -77,12 +77,12 @@ export default function Quotation() {
     const navigate = useNavigate();
     /** @type import('@tanstack/react-table').ColumnDef<any> */ //for autosuggestions
     const columns = [
-        {
-            Header: "Biding Ends In:",
-                Cell: useCallback((row) => {
-                    return <Timer refetch={refetch} row={row} isLoading={isLoading} />;
-                }, []),
-        },
+      //   {
+      //       Header: "Biding Ends In:",
+      //           Cell: useCallback((row) => {
+      //               return <Timer refetch={refetch} row={row} isLoading={isLoading} />;
+      //           }, []),
+      //   },
         {
             Header: "Product Name",
             accessor: "product_name",

@@ -9,6 +9,7 @@ import {
 import Autocomplete from "@mui/material/Autocomplete";
 import React, { forwardRef, useState } from "react";
 import { LabelledTextField } from "components";
+import { ChevronDown } from "lucide-react";
 // import ErrorBoundary from 'components/ErrorBoundary';
 
 const LabelledSelectField = (props) => {
@@ -19,6 +20,8 @@ const LabelledSelectField = (props) => {
         error,
         helperText,
         className,
+        labelClassName,
+        inputClassName,
         size,
         placeholder,
         options,
@@ -37,7 +40,7 @@ const LabelledSelectField = (props) => {
     } = props;
 
     return (
-        <div className="flex flex-col">
+        <div className={`flex flex-col ${className}`}>
             <div>
                 <InputLabel
                     // shrink
@@ -48,11 +51,12 @@ const LabelledSelectField = (props) => {
                         position: "initial",
                         // fontSize: "14px",
                     }}
-                    className=" !transform-none mb-1"
+                    className={` !transform-none mb-[10px] font-semibold text-sm text-[#2E2E2E] ${labelClassName}`}
                 >
                     {label}
                 </InputLabel>
                 <Autocomplete
+                    popupIcon={<ChevronDown className={"ml-auto h-5 w-5 transition-transform"} />}
                     disableCloseOnSelect={multiple && disableCloseOnSelect}
                     fullWidth
                     sx={{ width: "100%" }}
@@ -72,9 +76,17 @@ const LabelledSelectField = (props) => {
                                 placeholder={placeholder}
                                 inputRef={inputRef}
                                 variant="outlined"
-                                style={{
-                                    borderRadius: "4px",
-                                    padding: ".15rem 0",
+                                className={inputClassName}
+                                // className={inputClassName}
+                                // style={{
+                                //     borderRadius: "4px",
+                                //     padding: ".15rem 0",
+                                //     width: "100%",
+                                // }}
+                                sx={{
+                                    "& .MuiInputBase-input": {
+                                        padding: "5px 11px !important",
+                                    },
                                     width: "100%",
                                 }}
                                 error={Boolean(error)}
@@ -100,7 +112,9 @@ const LabelledSelectField = (props) => {
 };
 
 LabelledSelectField.defaultProps = {
-    label: "test",
+    label: "",
+    labelClassName: "",
+    inputClassName: "",
     variant: "outlined",
     ref: null,
     error: false,

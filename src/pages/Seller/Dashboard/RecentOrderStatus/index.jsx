@@ -21,6 +21,10 @@ import HeaderPage from "components/HeaderPage";
 import { Card } from "components/ui/card";
 import { MoreVerticalIcon } from "lucide-react";
 import Loader from "components/Loader";
+import NavigationShipments from "components/HeaderPage/NavigationShipments";
+import InvoiceCustomer from "components/Dashboard/OrderStatus/Invoice/Customer/InvoiceCustomer";
+import Tracking from "components/Dashboard/OrderStatus/Tracking/Customer";
+import SellerOrderStatus from "pages/Seller/Booking/SellerOrderStatus";
 
 export default function SellerRecentOrderStatus() {
     const navigate = useNavigate();
@@ -67,7 +71,8 @@ export default function SellerRecentOrderStatus() {
     const pickupAddress = orderData?.data?.pickup_location?.full_address;
 
     const handleClick = () => {
-        navigate(`/seller/booking/order/status/${id}`);
+        // navigate(`/seller/booking/order/status/${id}`);
+        setActiveTab("Project");
     };
 
     const handleStatusChange = (id, status, reason) => {
@@ -86,6 +91,20 @@ export default function SellerRecentOrderStatus() {
     if (isAuthorizedError) {
         return <ErrorUi url='/seller/booking' content={errors?.errors?.[0]?.message} />;
     }
+    const [activeTab, setActiveTab] = useState("Chat")
+
+    const handleComponentSwitch = () => {
+        switch (activeTab) {
+            case "Chat":
+                return <ChatWindow />;
+            case "Project":
+                return <SellerOrderStatus id={id} />;
+            case "Invoice":
+                return <InvoiceCustomer formId="invoice-customer-form" />;
+            case "Tracking":
+                return <Tracking id={id} />;
+        }
+    }
     return (
         <div className="flex flex-col gap-6 w-full">
             {isLoading ? (
@@ -95,19 +114,20 @@ export default function SellerRecentOrderStatus() {
             ) : (
                 <>           
             <HeaderPage title="Recent Order Status" home="seller" pathname={'Recent Order Status'} />
-         
+                <NavigationShipments activeTab={activeTab} setActiveTab={setActiveTab} id={id} />
               
 
                 <div className="flex gap-4 flex-col lg:flex-row  items-start">
                 
-                        <ChatWindow />
+                        {handleComponentSwitch()}
                     
-                    <div className=" w-full lg:w-1/3 flex flex-col gap-4">
-                    
-                        <OrderDetails isSampleShipment={srcQueryParam === "sampleShipments"} OrderStatusData={orderData?.data} handleClick={handleClick} handleStatusChange={handleStatusChange} quotationID={quotationID}/>
+                    {activeTab === "Chat" && (
+                        <div className=" w-full lg:w-1/2 flex flex-col gap-4">
+                            <OrderDetails isSampleShipment={srcQueryParam === "sampleShipments"} OrderStatusData={orderData?.data} handleClick={handleClick} handleStatusChange={handleStatusChange} quotationID={quotationID}/>
 
-                        <PastStatus status={orderData?.data?.status} />
-                    </div>
+                            {/* <PastStatus status={orderData?.data?.status} /> */}
+                        </div>
+                    )}
                 </div>
                 </>
             )}

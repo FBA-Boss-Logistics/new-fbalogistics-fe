@@ -205,6 +205,49 @@ export const FetchAllShipmentOrderDetailApi = (id) => {
     );
 };
 
+const fetchAllWarehouseDetail = (id) => {
+    const method = "GET";
+    const url = `/warehouses/?shipment_id=${id}`;
+    console.log("url", url)
+    return axios({
+        method,
+        url,
+    });
+};
+
+export const fetchAllWarehouseDetailApi = (id) => {
+    return useQuery(
+        [`FETCH_ALL_WAREHOUSE_DETAIL_INFO_${id}`],
+        () => fetchAllWarehouseDetail(id),
+        {
+            enabled: Boolean(localStorage.getItem("AUTH_TOKEN")),
+            onSuccess: () => null,
+            onError: (error) => {
+                console.log("Error occurred while fetching data", error);
+            },
+        }
+    );
+};
+
+const CreateWarehouse = (data) => {
+    const method = "POST";
+    const url = `warehouses/`;
+    return axios({ method, url, data });
+};
+
+export const useCreateWarehouseQuery = () => {
+    const queryClient = useQueryClient();
+    return useMutation(CreateWarehouse, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("CREATE_WAREHOUSE");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
 //PATCH Shipment Status update
 
 const UpdateShipmentStatus = (updateShipmentData) => {
@@ -225,6 +268,115 @@ export const UpdateShipmentStatusApi = () => {
         onSuccess: (response) => {
             HandleSuccessResponse(response);
             queryClient.invalidateQueries("UPDATE_SHIPMENT_STATUS");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
+//Update Package Tracking Number
+
+const UpdatePackageTrackingNumber = (data) => {
+   console.log("data", data);
+    const method = "PATCH";
+    const url = `/update-packages/${data.id}`;
+    return axios({ method, url, data });
+};
+
+export const UpdatePackageTrackingNumberApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(UpdatePackageTrackingNumber, {
+        onSuccess: (response) => {
+            queryClient.invalidateQueries("FETCH_RECENT_ORDER_INFO");
+            HandleSuccessResponse(response);
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
+// Update Warehouse Status
+const UpdateWarehousebyPatch = (data) => {
+    const method = "PATCH";
+    const url = `/warehouses/${data.id}/`;
+    return axios({ method, url, data });
+};
+export const UpdateWarehousebyPatchApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(UpdateWarehousebyPatch, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("FETCH_ALL_WAREHOUSE_DETAIL_INFO");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
+// Update Warehouse Tracking Number
+const UpdateWarehouseTrackingNumber = (data) => {
+    const method = "PATCH";
+    const url = `/update-warehouse-tracking/${data.id}`;
+    return axios({ method, url, data });
+};
+
+export const UpdateWarehouseTrackingNumberApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(UpdateWarehouseTrackingNumber, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("FETCH_ALL_WAREHOUSE_DETAIL_INFO");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
+// Update Warehouse by PATCH
+// const updateWarehouseByPatch = (data) => {
+//     const method = "PATCH";
+//     const url = `/warehouses/${data.id}/`;
+//     const headers = data instanceof FormData ? { "Content-Type": "multipart/form-data" } : {};
+//     return axios({ method, url, data, headers });
+// };
+const updateWarehousePodDocument = ({ id, formData }) => {
+    // formData.append("_method", "PATCH");
+    return axios.patch(`/warehouses/${id}/`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+};
+
+export const updateWarehousePodDocumentApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(updateWarehousePodDocument, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("FETCH_ALL_WAREHOUSE_DETAIL_INFO");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
+// Delete Warehouse Document
+const deleteWarehouseDocument = (id) => {
+    const method = "DELETE";
+    const url = `/warehouses/${id}/delete-pod-document/`;
+    return axios({ method, url });
+};
+export const deleteWarehouseDocumentApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(deleteWarehouseDocument, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("FETCH_ALL_WAREHOUSE_DETAIL_INFO");
         },
         onError: (response) => {
             HandleErrorResponse(response);

@@ -4,6 +4,11 @@ export const digitRegExp = /(\d)/;
 export const specialRegExp = /[!@#%^&*_+]/;
 export const phoneRegExp = /^[0-9]{10}$/;
 export const CommonFormValidations = {
+    shipment_number: yup
+        .string()
+        .nullable()
+        .trim()
+        .required("Shipment number is required"),
     first_name: yup
         .string()
         .nullable()
@@ -12,7 +17,14 @@ export const CommonFormValidations = {
         .matches(/^[a-zA-Z\s]+$/, "First name can only contain alphabets")
         .min(2, "First name must be at least 2 characters")
         .max(50, "First name cannot exceed 50 characters"),
-
+    company_name: yup
+        .string()
+        .nullable()
+        .trim()
+        .required("Company name is required")
+        .matches(/^[a-zA-Z\s]+$/, "Company name can only contain alphabets")
+        .min(2, "Company name must be at least 2 characters")
+        .max(150, "Company name cannot exceed 150 characters"),
     last_name: yup
         .string()
         .nullable()
@@ -95,6 +107,11 @@ export const CommonFormValidations = {
             "Freight booking reference number cannot exceed 50 characters"
         ),
     full_address: yup.string().required("Pickup Address is required"),
+    street_address: yup.string().required("Street address is required"),
+    city: yup.string().required("City is required"),
+    state: yup.string().required("State is required"),
+    country: yup.string().required("Country is required"),
+    zip_code: yup.string().required("Zip code is required"),
     supplier_contact_name: yup
         .string()
         .required("Supplier contact name is required")
