@@ -21,7 +21,7 @@ import ConfirmModal from "./ConfirmModal";
 import HeaderPage from "components/HeaderPage";
 import NavigationShipments from "components/HeaderPage/NavigationShipments";
 import Invoice from "components/Dashboard/OrderStatus/Invoice/Invoice";
-import Tracking from "components/Dashboard/OrderStatus/Tracking/Tracking";
+import Tracking from "components/Dashboard/OrderStatus/Tracking/index";
 import ContactUs from "pages/Shipper/Contact";
 
 export default function OrderStatus() {

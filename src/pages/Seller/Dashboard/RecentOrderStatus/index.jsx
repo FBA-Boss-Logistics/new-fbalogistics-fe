@@ -23,7 +23,7 @@ import { MoreVerticalIcon } from "lucide-react";
 import Loader from "components/Loader";
 import NavigationShipments from "components/HeaderPage/NavigationShipments";
 import InvoiceCustomer from "components/Dashboard/OrderStatus/Invoice/Customer/InvoiceCustomer";
-import TrackingCustomer from "components/Dashboard/OrderStatus/Tracking/Customer/TrackingCustomer";
+import Tracking from "components/Dashboard/OrderStatus/Tracking/Customer";
 import SellerOrderStatus from "pages/Seller/Booking/SellerOrderStatus";
 
 export default function SellerRecentOrderStatus() {
@@ -102,7 +102,7 @@ export default function SellerRecentOrderStatus() {
             case "Invoice":
                 return <InvoiceCustomer formId="invoice-customer-form" />;
             case "Tracking":
-                return <TrackingCustomer />;
+                return <Tracking id={id} />;
         }
     }
     return (

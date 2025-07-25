@@ -20,6 +20,8 @@ const LabelledSelectField = (props) => {
         error,
         helperText,
         className,
+        labelClassName,
+        inputClassName,
         size,
         placeholder,
         options,
@@ -38,7 +40,7 @@ const LabelledSelectField = (props) => {
     } = props;
 
     return (
-        <div className="flex flex-col">
+        <div className={`flex flex-col ${className}`}>
             <div>
                 <InputLabel
                     // shrink
@@ -49,7 +51,7 @@ const LabelledSelectField = (props) => {
                         position: "initial",
                         // fontSize: "14px",
                     }}
-                    className=" !transform-none mb-[10px] font-semibold text-sm text-[#2E2E2E]"
+                    className={` !transform-none mb-[10px] font-semibold text-sm text-[#2E2E2E] ${labelClassName}`}
                 >
                     {label}
                 </InputLabel>
@@ -74,6 +76,8 @@ const LabelledSelectField = (props) => {
                                 placeholder={placeholder}
                                 inputRef={inputRef}
                                 variant="outlined"
+                                className={inputClassName}
+                                // className={inputClassName}
                                 // style={{
                                 //     borderRadius: "4px",
                                 //     padding: ".15rem 0",
@@ -108,7 +112,9 @@ const LabelledSelectField = (props) => {
 };
 
 LabelledSelectField.defaultProps = {
-    label: "test",
+    label: "",
+    labelClassName: "",
+    inputClassName: "",
     variant: "outlined",
     ref: null,
     error: false,

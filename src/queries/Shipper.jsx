@@ -296,6 +296,94 @@ export const UpdatePackageTrackingNumberApi = () => {
         },
     });
 };
+
+// Update Warehouse Status
+const UpdateWarehousebyPatch = (data) => {
+    const method = "PATCH";
+    const url = `/warehouses/${data.id}/`;
+    return axios({ method, url, data });
+};
+export const UpdateWarehousebyPatchApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(UpdateWarehousebyPatch, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("FETCH_ALL_WAREHOUSE_DETAIL_INFO");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
+// Update Warehouse Tracking Number
+const UpdateWarehouseTrackingNumber = (data) => {
+    const method = "PATCH";
+    const url = `/update-warehouse-tracking/${data.id}`;
+    return axios({ method, url, data });
+};
+
+export const UpdateWarehouseTrackingNumberApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(UpdateWarehouseTrackingNumber, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("FETCH_ALL_WAREHOUSE_DETAIL_INFO");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
+// Update Warehouse by PATCH
+// const updateWarehouseByPatch = (data) => {
+//     const method = "PATCH";
+//     const url = `/warehouses/${data.id}/`;
+//     const headers = data instanceof FormData ? { "Content-Type": "multipart/form-data" } : {};
+//     return axios({ method, url, data, headers });
+// };
+const updateWarehousePodDocument = ({ id, formData }) => {
+    // formData.append("_method", "PATCH");
+    return axios.patch(`/warehouses/${id}/`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+};
+
+export const updateWarehousePodDocumentApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(updateWarehousePodDocument, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("FETCH_ALL_WAREHOUSE_DETAIL_INFO");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
+// Delete Warehouse Document
+const deleteWarehouseDocument = (id) => {
+    const method = "DELETE";
+    const url = `/warehouses/${id}/delete-pod-document/`;
+    return axios({ method, url });
+};
+export const deleteWarehouseDocumentApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(deleteWarehouseDocument, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("FETCH_ALL_WAREHOUSE_DETAIL_INFO");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
 // Quotation - Post Req
 
 const CreateQuotation = (data) => {
