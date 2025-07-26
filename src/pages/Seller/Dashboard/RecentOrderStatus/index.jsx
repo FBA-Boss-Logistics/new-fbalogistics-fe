@@ -98,7 +98,7 @@ export default function SellerRecentOrderStatus() {
             case "Chat":
                 return <ChatWindow />;
             case "Project":
-                return <SellerOrderStatus id={id} />;
+                return <SellerOrderStatus id={id} setActiveTab={setActiveTab} />;
             case "Invoice":
                 return <InvoiceCustomer formId="invoice-customer-form" />;
             case "Tracking":

@@ -29,7 +29,7 @@ const QuotationFormSchema = yup.object().shape({
     normal_amount,
 });
 
-export default function SellerOrderStatus() {
+export default function SellerOrderStatus({setActiveTab}) {
     const searchParams = new URLSearchParams(window.location.search);
     const srcQueryParam = searchParams.get("src");
     const [winBidAccepted, setWinBidAccepted] = useState(false);
@@ -79,10 +79,7 @@ export default function SellerOrderStatus() {
     };
 
     const handleClick = () => {
-        // navigate(
-        //     `/seller/booking/recentorderstatus/${id}/?src=currentShipments`
-        // );
-        window.location.reload();
+        setActiveTab("Chat");
     };
     
     if (isAuthorizedError) {

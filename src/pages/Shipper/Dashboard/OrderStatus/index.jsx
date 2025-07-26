@@ -15,7 +15,7 @@ import {
     usePatchStatusUpdate,
 } from "queries/Shipper";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { formatDateString } from "utils";
 import ConfirmModal from "./ConfirmModal";
 import HeaderPage from "components/HeaderPage";
@@ -99,7 +99,7 @@ export default function OrderStatus() {
             case "Invoice":
                 return <Invoice />;
             case "Tracking":
-                return <Tracking />;
+                return <Tracking setActiveTab={setActiveTab}/>;
         }
     }
     return (

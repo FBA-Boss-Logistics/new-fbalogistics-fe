@@ -235,168 +235,172 @@ const Tracking = () => {
                 </div>
             ) : (
                 <>
-                    <ModalComponent open={openModal} onClose={handleCloseModal} title="Change Status">
-                        <form onSubmit={(e) => {
-                            e.preventDefault()
-                            handleChangeStatus()
-                        }} className="flex flex-col h-full gap-4">
-                            Do you want to mark this warehouse as "{status}"?
-                            <div className="flex flex-row gap-4">
-                            <Button
-                                variant="outline"
-                                onClick={handleCloseModal}
-                                size="lg"
-                                className="rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]"
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                type="submit"
-                                size="lg"
-                                className="rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]"
-                            >
-                                Confirm
-                            </Button>
-                            </div>
-                        </form>
-                    </ModalComponent>
-                    <ModalComponent open={openModalDelete} onClose={handleCloseModalDelete} title="Delete POD Document">
-                        <form onSubmit={(e) => {
-                            e.preventDefault()
-                            handleDeleteFile()
-                        }} className="flex flex-col h-full gap-4">
-                            Do you want to delete this POD document?
-                            <div className="flex flex-row gap-4">
-                            <Button
-                                variant="outline"
-                                onClick={handleCloseModalDelete}
-                                size="lg"
-                                className="rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]"
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                type="submit"
-                                size="lg"
-                                className="rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]"
-                            >
-                                Confirm
-                            </Button>
-                            </div>
-                        </form>
-                    </ModalComponent>
-                    <div className="w-full">
-
-                        <div className="w-full">
-                                <div>
-                                    <div className="flex flex-col gap-6  font-semibold">
-                                        {/* Cargo Section */}
-                                        {warehouseData.map((field, index) => {
-                                            return (
-                                                <CardComponent className="px-6 pt-2" key={index}>
-                                                    {/* collapsable section */}
-                                                            <div className="flex items-center w-full  text-left  rounded-md">
-                                                                <div className=" flex md:flex-row flex-col gap-2 justify-between w-full">
-                                                                    <div className="flex items-center flex-row gap-4 py-[18px]">
-                                                                        <div className="bg-natural-200 rounded-full w-[30px]">
-                                                                            <img src={warehouseIcon} alt="truck" />
-                                                                        </div>
-                                                                        <div className="flex flex-col gap-[2px]">
-                                                                            <Typography color="natural.900" fontSize={18} fontWeight={600}>
-                                                                                Warehouse#{index + 1}
-                                                                            </Typography>
-                                                                            <p className="text-[#667085] text-sm font-normal">
-                                                                                Code: {field?.warehouse_code}
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <TrackingStatus status={field?.status} />
-                                                            {!field?.tracking_link ? (
-                                                                <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4 md:w-1/2 w-full  font-semibold ">
-                                                                    <Controller
-                                                                        control={control}
-                                                                        name={`warehouses.${index}.tracking_number`}
-                                                                        render={({ field: controllerField, fieldState }) => (
-                                                                            <>
-                                                                                <LabelledTextField
-                                                                                        label="Tracking #"
-                                                                                        placeholder="#"
-                                                                                        {...controllerField}
-                                                                                        onFocus={() => setActiveTrackingIndex(index)}
-                                                                                        onBlur={() => setActiveTrackingIndex(null)}
-                                                                                        disabled={field?.tracking_number ? true : false}
-                                                                                        error={!!fieldState.error}
-                                                                                        helperText={fieldState.error?.message}
-                                                                                        autoComplete="new-tracking-number"
-                                                                                        className="gap-[6px] text-sm font-semibold text-[#2E2E2E]"
-                                                                                    />
-                                                                                <div className="relative">
-                                                                                    {/* Show button only when this input is active */}
-                                                                                    {activeTrackingIndex === index && (
-                                                                                        <button
-                                                                                            type="button"
-                                                                                            onMouseDown={(e) => {
-                                                                                                e.stopPropagation();
-                                                                                                handleSubmitTracking(field?.id)
-                                                                                            }}
-                                                                                            className="absolute -right-15 top-9 px-3 py-[10px] bg-primary text-white rounded"
-                                                                                        >
-                                                                                            Submit
-                                                                                        </button>
-                                                                                    )}
-                                                                                </div>
-                                                                            </>
-                                                                        )}
-                                                                    />
-                                                                </div>
-                                                            ) : (
-                                                                <div className="mt-6">
-                                                                    <a href={field?.tracking_link} className="text-yellow-500 hover:text-yellow-600 underline">
-                                                                        <span>{field?.tracking_link}</span>
-                                                                    </a>
-                                                                </div>
-                                                            )}
-                                                            <div className="flex flex-col gap-4 my-4 w-full  font-semibold ">
-                                                                <div className="space-y-4 w-full flex flex-col gap-4">
-                                                                    <h2 className="font-semibold text-lg text-[#111827]">Documents</h2>
-
-                                                                    {/* File List */}
-                                                                    {field?.pod_document ? (
-                                                                    <div className="flex space-y-2">
-                                                                        <div
-                                                                            className="flex flex-row gap-3 items-center p-3 rounded-lg border bg-white shadow-sm"
-                                                                        >
-                                                                            <div className=" flex flex-row items-center space-x-3">
-                                                                                <img src={DocumentIcon} alt="Document" className="text-blue-600 text-xl " />
-                                                                                <span className="inline-block font-medium text-sm text-[#111827]
-                                                                                                truncate max-w-[100px] sm:max-w-none overflow-hidden whitespace-nowrap">
-                                                                                    {extractFileName(field?.pod_document)}
-                                                                                </span>
-                                                                            </div>
-                                                                            <div className="flex flex-row ms-2 items-center space-x-3">
-                                                                                <button className="text-gray-600 hover:text-gray-800" onClick={(e) => {
-                                                                                    e.stopPropagation();
-                                                                                    downloadFile(field?.pod_document)
-                                                                                }}>
-                                                                                    <FiDownload />
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    ) : (
-                                                                        <span className="text-sm text-gray-800">No document uploaded yet</span>                                                                        
-                                                                    )}
-                                                                </div>
-                                                            </div>
-                                                </CardComponent>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
+                    {warehouseData.length === 0 ? (
+                        <div className="flex justify-center items-center w-full h-[calc(100vh-400px)]">
+                            <Typography color="natural.900" fontSize={18} fontWeight={600} className="flex flex-col gap-4 items-center">
+                                Shipper has not filled in the warehouse yet, Please wait for the shipper to fill in the warehouse
+                            </Typography>
                         </div>
-                    </div>
+                    ) : (
+                        <>
+                            <ModalComponent open={openModal} onClose={handleCloseModal} title="Change Status">
+                                <form onSubmit={(e) => {
+                                    e.preventDefault()
+                                    handleChangeStatus()
+                                }} className="flex flex-col h-full gap-4">
+                                    Do you want to mark this warehouse as "{status}"?
+                                    <div className="flex flex-row gap-4">
+                                    <Button
+                                        variant="outline"
+                                        onClick={handleCloseModal}
+                                        size="lg"
+                                        className="rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]"
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        type="submit"
+                                        size="lg"
+                                        className="rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]"
+                                    >
+                                        Confirm
+                                    </Button>
+                                    </div>
+                                </form>
+                            </ModalComponent>
+                            <ModalComponent open={openModalDelete} onClose={handleCloseModalDelete} title="Delete POD Document">
+                                <form onSubmit={(e) => {
+                                    e.preventDefault()
+                                    handleDeleteFile()
+                                }} className="flex flex-col h-full gap-4">
+                                    Do you want to delete this POD document?
+                                    <div className="flex flex-row gap-4">
+                                    <Button
+                                        variant="outline"
+                                        onClick={handleCloseModalDelete}
+                                        size="lg"
+                                        className="rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]"
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        type="submit"
+                                        size="lg"
+                                        className="rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]"
+                                    >
+                                        Confirm
+                                    </Button>
+                                    </div>
+                                </form>
+                            </ModalComponent>
+                            <div className="w-full">
+                                <div className="flex flex-col gap-6  font-semibold">
+                                    {/* Cargo Section */}
+                                    {warehouseData.map((field, index) => {
+                                        return (
+                                            <CardComponent className="px-6 pt-2" key={index}>
+                                                <div className="flex items-center w-full  text-left  rounded-md">
+                                                    <div className=" flex md:flex-row flex-col gap-2 justify-between w-full">
+                                                        <div className="flex items-center flex-row gap-4 py-[18px]">
+                                                            <div className="bg-natural-200 rounded-full w-[30px]">
+                                                                <img src={warehouseIcon} alt="truck" />
+                                                            </div>
+                                                            <div className="flex flex-col gap-[2px]">
+                                                                <Typography color="natural.900" fontSize={18} fontWeight={600}>
+                                                                    Warehouse#{index + 1}
+                                                                </Typography>
+                                                                <p className="text-[#667085] text-sm font-normal">
+                                                                    Code: {field?.warehouse_code}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <TrackingStatus status={field?.status} />
+                                                {!field?.tracking_link ? (
+                                                    <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4 md:w-1/2 w-full  font-semibold ">
+                                                        <Controller
+                                                            control={control}
+                                                            name={`warehouses.${index}.tracking_number`}
+                                                            render={({ field: controllerField, fieldState }) => (
+                                                                <>
+                                                                    <LabelledTextField
+                                                                            label="Tracking #"
+                                                                            placeholder="#"
+                                                                            {...controllerField}
+                                                                            onFocus={() => setActiveTrackingIndex(index)}
+                                                                            onBlur={() => setActiveTrackingIndex(null)}
+                                                                            disabled={field?.tracking_number ? true : false}
+                                                                            error={!!fieldState.error}
+                                                                            helperText={fieldState.error?.message}
+                                                                            autoComplete="new-tracking-number"
+                                                                            className="gap-[6px] text-sm font-semibold text-[#2E2E2E]"
+                                                                        />
+                                                                    <div className="relative">
+                                                                        {/* Show button only when this input is active */}
+                                                                        {activeTrackingIndex === index && (
+                                                                            <button
+                                                                                type="button"
+                                                                                onMouseDown={(e) => {
+                                                                                    e.stopPropagation();
+                                                                                    handleSubmitTracking(field?.id)
+                                                                                }}
+                                                                                className="absolute -right-15 top-9 px-3 py-[10px] bg-primary text-white rounded"
+                                                                            >
+                                                                                Submit
+                                                                            </button>
+                                                                        )}
+                                                                    </div>
+                                                                </>
+                                                            )}
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <div className="mt-6">
+                                                        <a href={field?.tracking_link} className="text-yellow-500 hover:text-yellow-600 underline">
+                                                            <span>{field?.tracking_link}</span>
+                                                        </a>
+                                                    </div>
+                                                )}
+                                                <div className="flex flex-col gap-4 my-4 w-full  font-semibold ">
+                                                    <div className="space-y-4 w-full flex flex-col gap-4">
+                                                        <h2 className="font-semibold text-lg text-[#111827]">Documents</h2>
+
+                                                        {/* File List */}
+                                                        {field?.pod_document ? (
+                                                        <div className="flex space-y-2">
+                                                            <div
+                                                                className="flex flex-row gap-3 items-center p-3 rounded-lg border bg-white shadow-sm"
+                                                            >
+                                                                <div className=" flex flex-row items-center space-x-3">
+                                                                    <img src={DocumentIcon} alt="Document" className="text-blue-600 text-xl " />
+                                                                    <span className="inline-block font-medium text-sm text-[#111827]
+                                                                                    truncate max-w-[100px] sm:max-w-none overflow-hidden whitespace-nowrap">
+                                                                        {extractFileName(field?.pod_document)}
+                                                                    </span>
+                                                                </div>
+                                                                <div className="flex flex-row ms-2 items-center space-x-3">
+                                                                    <button className="text-gray-600 hover:text-gray-800" onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        downloadFile(field?.pod_document)
+                                                                    }}>
+                                                                        <FiDownload />
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        ) : (
+                                                            <span className="text-sm text-gray-800">No document uploaded yet</span>                                                                        
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </CardComponent>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </>
             )}
         </>
