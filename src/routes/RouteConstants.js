@@ -38,6 +38,7 @@ import SellerDashboard from '../pages/Seller/Dashboard/index';
 import AnnouncementDetail from "pages/Seller/Announcement/Detail";
 import SignInNew from "pages/Landing/new/SignIn";
 import SignUpNew from "pages/Landing/new/SignUp";
+import Calculator from "pages/Seller/Calculator";
 
 const RouteConstants = {
     HOME: "/",
@@ -225,6 +226,12 @@ export const routes = {
         title: "sample shipment",
         isPublic: false,
         element: SampleShipment,
+    },
+    SELLERCALCULATOR: {
+        pathname: "/seller/booking/calculator",
+        title: "calculator",
+        isPublic: false,
+        element: Calculator,
     },
     SELLERPENDINGORDERBOOKING: {
         pathname: "/seller/booking/pendingorders",

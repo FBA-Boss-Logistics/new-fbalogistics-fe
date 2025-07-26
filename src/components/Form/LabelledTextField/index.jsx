@@ -29,6 +29,7 @@ const LabelledTextFieldBootStrap = forwardRef((props) => {
         capitalize,
         startIcon,
         maxLength,
+        textWhite,
         ...restOfTextFieldProps
     } = props;
     return (
@@ -49,7 +50,7 @@ const LabelledTextFieldBootStrap = forwardRef((props) => {
                     position: "initial",
                     // fontSize: "14px",
                 }}
-                className=" !transform-none mb-[10px] font-semibold text-sm text-[#2E2E2E]"
+                className={` !transform-none mb-[10px] font-semibold text-sm ${textWhite ? "text-white" : "text-[#2E2E2E]"}`}
             >
                 {label}
             </Typography>
