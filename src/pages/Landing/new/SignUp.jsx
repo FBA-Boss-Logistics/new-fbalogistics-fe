@@ -53,7 +53,7 @@ const SignUp = () => {
               {
                   first_name: formData.first_name,
                   last_name: formData.last_name,
-                  email: formData.email,
+                  email: formData.email.toLowerCase(),
                   password: formData.password,
                   groups: "Seller",
               },
@@ -72,7 +72,7 @@ const SignUp = () => {
               {
                   first_name: formData.first_name,
                   last_name: formData.last_name,
-                  email: formData.email,
+                  email: formData.email.toLowerCase(),
                   password: formData.password,
                   groups: "Shipper",
               },
