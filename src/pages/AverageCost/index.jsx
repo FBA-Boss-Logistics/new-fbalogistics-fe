@@ -23,6 +23,9 @@ export default function AverageCost() {
   // Store Data
   const [tableData, setTableData] = useState([]);
   const [selectedRow, setSelectedRow] = useState([]);
+  const user = localStorage.getItem("USER_DETAILS");
+  const userData = JSON.parse(user);
+  const userRole = userData.groups;
 
   // Query
   const queryClient = useQueryClient();
@@ -223,47 +226,51 @@ export default function AverageCost() {
                 home="average-cost"
                 pathname="Average Warehouse Costs"
             />
-            <div className="hidden md:block">
-              {isAddWarehouse ? (
-                <form onSubmit={handleSubmit(submitAverageCostForm)} id="average-cost-form">
-                  <div className="flex gap-2">
-                    <Button className="bg-[#213E7B] text-white hover:bg-[#213E7B]/80 rounded-md" type="submit" form="average-cost-form">
-                      Save
-                    </Button>
-                    <Button className="bg-primary text-white hover:bg-primary/80 rounded-md" onClick={handleCancel}>
-                      Cancel
-                    </Button>
-                  </div>
-                </form>
-              ) : selectedIds.length > 0 ? (
-                <Button className="bg-red-500 text-white hover:bg-red-500/80 rounded-md" onClick={handleDeleteMultipleWarehouse}>
-                  Delete Warehouse
-                </Button>
-              ) : (
-                <Button className="bg-primary text-white hover:bg-primary/80 rounded-md" onClick={handleAddWarehouse}>
-                  Add Warehouse
-                </Button>
-              )}
-            </div>
+            {userRole === "Shipper" && (
+              <div className="hidden md:block">
+                {isAddWarehouse ? (
+                  <form onSubmit={handleSubmit(submitAverageCostForm)} id="average-cost-form">
+                    <div className="flex gap-2">
+                      <Button className="bg-[#213E7B] text-white hover:bg-[#213E7B]/80 rounded-md" type="submit" form="average-cost-form">
+                        Save
+                      </Button>
+                      <Button className="bg-primary text-white hover:bg-primary/80 rounded-md" onClick={handleCancel}>
+                        Cancel
+                      </Button>
+                    </div>
+                  </form>
+                ) : selectedIds.length > 0 ? (
+                  <Button className="bg-red-500 text-white hover:bg-red-500/80 rounded-md" onClick={handleDeleteMultipleWarehouse}>
+                    Delete Warehouse
+                  </Button>
+                ) : (
+                  <Button className="bg-primary text-white hover:bg-primary/80 rounded-md" onClick={handleAddWarehouse}>
+                    Add Warehouse
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
           {/* Desktop Version */}
           <div className="hidden md:flex flex-col gap-4 mt-6 w-full">
             <table className="table-auto bg-[#FFFFFF] border border-[#F0F1F3] w-full">
               <thead>
                 <tr className="border border-[#F0F1F3] text-left">
-                <th className="px-[22px] py-[18px]">
-                  <input
-                    type="checkbox"
-                    checked={selectedIds.length === tableData.length}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setSelectedIds(tableData.map(row => row.id));
-                      } else {
-                        setSelectedIds([]);
-                      }
-                    }}
-                  />
-                </th>
+                  {userRole === "Shipper" && (
+                    <th className="px-[22px] py-[18px]">
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.length === tableData.length}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedIds(tableData.map(row => row.id));
+                          } else {
+                            setSelectedIds([]);
+                          }
+                        }}
+                      />
+                    </th>
+                  )}
                   <th className="px-[22px] py-[18px]">Warehouse</th>
                   <th className="px-[22px] py-[18px]">Slowce</th>
                   <th className="px-[22px] py-[18px]">Fastce</th>
@@ -276,17 +283,21 @@ export default function AverageCost() {
                 )}
                 {tableData.map((row, rowIndex) => (
                   <tr key={rowIndex} className="border border-[#F0F1F3]">
-                    {[
-                      {field: "select", label: "Select"},
-                    ].map((field) => (
-                      <td key={field.field} className="px-[22px] py-[18px]">
-                        <input
-                          type="checkbox"
-                          checked={selectedIds.includes(row.id)}
-                          onChange={(e) => handleSelect(e, row.id)}
-                        />
-                      </td>
-                    ))}
+                    {userRole === "Shipper" && (
+                      <>
+                        {[
+                          {field: "select", label: "Select"},
+                          ].map((field) => (
+                          <td key={field.field} className="px-[22px] py-[18px]">
+                            <input
+                              type="checkbox"
+                              checked={selectedIds.includes(row.id)}
+                              onChange={(e) => handleSelect(e, row.id)}
+                            />
+                          </td>
+                        ))}
+                      </>
+                    )}
                     {[
                       {field: "warehouse_number", label: "Warehouse"},
                       {field: "slow_cost", label: "Slowce"},
@@ -307,8 +318,8 @@ export default function AverageCost() {
                             />
                           ) : (
                             <span
-                              className="text-[#111827] cursor-pointer"
-                              onClick={() => handleEdit(rowIndex, field.field)}
+                              className={`text-[#111827] ${userRole === "Shipper" ? "cursor-pointer" : "cursor-default"}`}
+                              onClick={() => userRole === "Shipper" && handleEdit(rowIndex, field.field)}
                             >
                               {row[field.field]}
                             </span>
@@ -323,9 +334,11 @@ export default function AverageCost() {
           </div>
           {/* Mobile Version */}
           <div className="flex md:hidden flex-col gap-4 mt-6 w-full">
-            <Button className="bg-primary text-white hover:bg-primary/80 rounded-md" onClick={()=>setOpenModal(true)}>
-              Add Warehouse
-            </Button>
+            {userRole === "Shipper" && (
+              <Button className="bg-primary text-white hover:bg-primary/80 rounded-md" onClick={()=>setOpenModal(true)}>
+                Add Warehouse
+              </Button>
+            )}
             <ModalComponent open={openDeleteModal} onClose={handleCloseDeleteModal} title="Delete Warehouse">
               <div className="flex flex-col gap-4">
                 <p className="text-sm text-gray-500">Are you sure you want to delete this warehouse {selectedRow.warehouse_number}?</p>
@@ -391,9 +404,10 @@ export default function AverageCost() {
             </ModalComponent>
             {tableData.map((row, rowIndex) => (
               <>
-                <Card className="px-4 border border-[#F2F2F2] rounded-[8px] shadow-none" key={rowIndex} onMouseDown={() => handleMouseDown(row)}
-                      onMouseUp={handleMouseUp}
-                      onMouseLeave={handleMouseLeave}>
+                <Card className="px-4 border border-[#F2F2F2] rounded-[8px] shadow-none" key={rowIndex} 
+                      onMouseDown={() => userRole === "Shipper" && handleMouseDown(row)}
+                      onMouseUp={() => userRole === "Shipper" && handleMouseUp()}
+                      onMouseLeave={() => userRole === "Shipper" && handleMouseLeave()}>
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row border-b border-[#F0F1F3] px-[22px] py-[18px] justify-between items-center gap-2">
                             <p className="text-sm font-medium">Warehouse</p>
@@ -407,7 +421,7 @@ export default function AverageCost() {
                                 className="inline-block outline-none bg-[#EDF0F4] rounded-[8px] p-3 transition-all duration-300"
                               />
                             ) : (
-                              <p className="text-sm text-gray-500" onClick={() => handleEdit(rowIndex, "warehouse_number")}>{row.warehouse_number}</p>
+                              <p className="text-sm text-gray-500" onClick={() => userRole === "Shipper" && handleEdit(rowIndex, "warehouse_number")}>{row.warehouse_number}</p>
                             )}
                         </div>
                         <div className="flex flex-row border-b border-[#F0F1F3] px-[22px] py-[18px] justify-between items-center gap-2">
@@ -422,7 +436,7 @@ export default function AverageCost() {
                                 className="inline-block outline-none bg-[#EDF0F4] rounded-[8px] p-3 transition-all duration-300"
                               />
                             ) : (
-                              <p className="text-sm text-gray-500" onClick={() => handleEdit(rowIndex, "slow_cost")}>{row.slow_cost}</p>
+                              <p className="text-sm text-gray-500" onClick={() => userRole === "Shipper" && handleEdit(rowIndex, "slow_cost")}>{row.slow_cost}</p>
                             )}
                         </div>
                         <div className="flex flex-row border-b border-[#F0F1F3] px-[22px] py-[18px] justify-between items-center gap-2">
@@ -437,7 +451,7 @@ export default function AverageCost() {
                                 className="inline-block outline-none bg-[#EDF0F4] rounded-[8px] p-3 transition-all duration-300"
                               />
                             ) : (
-                              <p className="text-sm text-gray-500" onClick={() => handleEdit(rowIndex, "fast_cost")}>{row.fast_cost}</p>
+                              <p className="text-sm text-gray-500" onClick={() => userRole === "Shipper" && handleEdit(rowIndex, "fast_cost")}>{row.fast_cost}</p>
                             )}
                         </div>
                         <div className="flex flex-row px-[22px] py-[18px] justify-between items-center gap-2">
@@ -452,7 +466,7 @@ export default function AverageCost() {
                                 className="inline-block outline-none bg-[#EDF0F4] rounded-[8px] p-3 transition-all duration-300"
                               />
                             ) : (
-                              <p className="text-sm text-gray-500" onClick={() => handleEdit(rowIndex, "air_cost")}>{row.air_cost}</p>
+                              <p className="text-sm text-gray-500" onClick={() => userRole === "Shipper" && handleEdit(rowIndex, "air_cost")}>{row.air_cost}</p>
                             )}
                         </div>
                     </div>
