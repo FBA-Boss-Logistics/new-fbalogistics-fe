@@ -21,6 +21,7 @@ import sampleIcon from 'assets/svg/sampleIcon.svg'
 import completedShipment from 'assets/svg/box-tick.svg'
 import cancelledShipment from 'assets/svg/box-remove.svg'
 import calculatorIcon from 'assets/svg/calculator.svg'
+import averageCostIcon from 'assets/svg/averageCostIcon.svg'
 import CreateSampleShipment from "pages/Seller/Booking/SampleShipment/New/CreateSampleShipment";
 import { useSeller } from "pages/Seller/Context/SellerContext";
 
@@ -64,6 +65,11 @@ const ProtectedRoutes = () => {
             label: "Calculator",
             route: routes.SELLERCALCULATOR.pathname,
         },
+        {
+            icon: averageCostIcon,
+            label: "Average Cost",
+            route: routes.AVERAGECOST.pathname,
+        }
     ]
 
     const shipperMenu=[
@@ -96,6 +102,11 @@ const ProtectedRoutes = () => {
             icon: FeedIcon,
             label: "Announcement",
             route: routes.ANNOUNCEMENT_SHIPPER.pathname,
+        },
+        {
+            icon: averageCostIcon,
+            label: "Average Cost",
+            route: routes.AVERAGECOST.pathname,
         },
     ]
     const {createSampleShipment,setSampleShipment}=useSeller()
