@@ -205,6 +205,108 @@ export const FetchAllShipmentOrderDetailApi = (id) => {
     );
 };
 
+// Average Cost
+
+const fetchAllAverageCost = () => {
+    const method = "GET";
+    const url = `/average-cost/`;
+    return axios({
+        method,
+        url,
+    });
+}
+
+export const fetchAllAverageCostApi = () => {
+    return useQuery(
+        [`FETCH_ALL_AVERAGE_COST_INFO`],
+        () => fetchAllAverageCost(),
+        {
+            enabled: Boolean(localStorage.getItem("AUTH_TOKEN")),
+            onSuccess: (data) => {
+                console.log("data", data);
+            },
+            onError: (error) => {
+                console.log("Error occurred while fetching data", error);
+            },
+        }
+    );
+};
+
+const createAverageCost = (data) => {
+    const method = "POST";
+    const url = `/average-cost/`;
+    return axios({ method, url, data });
+};
+
+export const useCreateAverageCostApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(createAverageCost, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("FETCH_ALL_AVERAGE_COST_INFO");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
+const updateAverageCost = ({ id, data }) => {
+    const method = "PATCH";
+    const url = `/average-cost/${id}/`;
+    return axios({ method, url, data });
+};
+
+export const useUpdateAverageCostApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(updateAverageCost, {
+        onSuccess: (response) => {
+            HandleSuccessResponse(response);
+            queryClient.invalidateQueries("FETCH_ALL_AVERAGE_COST_INFO");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
+const deleteMultipleAverageCost = (ids) => {
+    const method = "DELETE";
+    const url = `/average-cost/delete-multiple/`;
+    return axios({ method, url, data: { ids } });
+};
+
+export const useDeleteMultipleAverageCostApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(deleteMultipleAverageCost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("FETCH_ALL_AVERAGE_COST_INFO");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
+const deleteAverageCost = (id) => {
+    const method = "DELETE";
+    const url = `/average-cost/${id}/`;
+    return axios({ method, url });
+}
+
+export const useDeleteAverageCostApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(deleteAverageCost, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("FETCH_ALL_AVERAGE_COST_INFO");
+            HandleSuccessResponse({message: "Average Cost deleted successfully"});
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    });
+};
+
 const fetchAllWarehouseDetail = (id) => {
     const method = "GET";
     const url = `/warehouses/?shipment_id=${id}`;

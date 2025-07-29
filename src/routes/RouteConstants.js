@@ -39,6 +39,7 @@ import AnnouncementDetail from "pages/Seller/Announcement/Detail";
 import SignInNew from "pages/Landing/new/SignIn";
 import SignUpNew from "pages/Landing/new/SignUp";
 import Calculator from "pages/Seller/Calculator";
+import AverageCost from "pages/AverageCost";
 
 const RouteConstants = {
     HOME: "/",
@@ -184,6 +185,12 @@ export const routes = {
         title: "Shipper Announcement Detail",
         isPublic: false,
         element: AnnouncementShipperDetail,
+    },
+    AVERAGECOST: {
+        pathname: "/average-cost",
+        title: "Average Cost",
+        isPublic: false,
+        element: AverageCost,
     },
     DEFAULT: {
         pathname: "/dashboard/orders/default",
