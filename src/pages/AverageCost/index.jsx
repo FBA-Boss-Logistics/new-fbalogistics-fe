@@ -410,8 +410,7 @@ export default function AverageCost() {
                       onMouseLeave={() => userRole === "Shipper" && handleMouseLeave()}
                       onTouchStart={(e) => userRole === "Shipper" && handleMouseDown(e,row)}
                       onTouchEnd={() => userRole === "Shipper" && handleMouseUp()}
-                      // onTouchCancel={() => userRole === "Shipper" && handleMouseLeave()}
-                      >
+                      onTouchCancel={() => userRole === "Shipper" && handleMouseLeave()}>
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row border-b border-[#F0F1F3] px-[22px] py-[18px] justify-between items-center gap-2">
                             <p className="text-sm font-medium">Warehouse</p>
