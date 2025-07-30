@@ -3,7 +3,7 @@ import { Card } from 'components/ui/card';
 import calculatorIcon from 'assets/svg/calculatorResult.svg';
 import { Button } from 'components/ui/button';
 
-export default function Results({ result, grossWeight, volumetricWeight, submit, calculate, clearResult, handleClearResult }) {
+export default function Results({ result, grossWeight, cubicMeter, submit, calculate, clearResult, handleClearResult }) {
     return (
         <>
             <Card className='overflow-hidden p-6 bg-[#213E7B] text-white'>
@@ -19,11 +19,11 @@ export default function Results({ result, grossWeight, volumetricWeight, submit,
                         </div>
                         <div className='flex flex-col gap-[10px] w-full'>
                             <label htmlFor="kg" className='text-white font-semibold text-sm'>Volumetric/Chargeable Weight</label>
-                            <span className='text-white bg-[#213E7B7A] px-4 py-[11px] border border-[#FFFFFF14] rounded-[12px]'>{volumetricWeight ? volumetricWeight : "0"}</span>
+                            <span className='text-white bg-[#213E7B7A] px-4 py-[11px] border border-[#FFFFFF14] rounded-[12px]'>{result ? result : "0"}</span>
                         </div>
                         <div className='flex flex-col gap-[10px] w-full'>
                             <label htmlFor="quantity" className='text-white font-semibold text-sm'>Cubic Meter</label>
-                            <span className='text-white bg-[#213E7B7A] px-4 py-[11px] border border-[#FFFFFF14] rounded-[12px]'>{result ? result : "0"}</span>
+                            <span className='text-white bg-[#213E7B7A] px-4 py-[11px] border border-[#FFFFFF14] rounded-[12px]'>{cubicMeter ? cubicMeter : "0"}</span>
                         </div>
                     </div>
                 </Card>
