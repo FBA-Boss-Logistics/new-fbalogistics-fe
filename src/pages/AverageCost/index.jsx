@@ -97,12 +97,12 @@ export default function AverageCost() {
     setEditingCell({ rowIndex, field });
   };
 
-  const handleMouseDown = (row) => {
+  const handleMouseDown = (e, row) => {
+    e?.preventDefault();
     const timer = setTimeout(() => {
       setSelectedRow(row);
       setOpenDeleteModal(true);
     }, 2000);
-
     setPressTimer(timer);
   };
 
@@ -405,10 +405,10 @@ export default function AverageCost() {
             {tableData.map((row, rowIndex) => (
               <>
                 <Card className="px-4 border border-[#F2F2F2] rounded-[8px] shadow-none" key={rowIndex} 
-                      onMouseDown={() => userRole === "Shipper" && handleMouseDown(row)}
+                      onMouseDown={(e) => userRole === "Shipper" && handleMouseDown(e,row)}
                       onMouseUp={() => userRole === "Shipper" && handleMouseUp()}
                       onMouseLeave={() => userRole === "Shipper" && handleMouseLeave()}
-                      onTouchStart={() => userRole === "Shipper" && handleMouseDown(row)}
+                      onTouchStart={(e) => userRole === "Shipper" && handleMouseDown(e,row)}
                       onTouchEnd={() => userRole === "Shipper" && handleMouseUp()}
                       // onTouchCancel={() => userRole === "Shipper" && handleMouseLeave()}
                       >
