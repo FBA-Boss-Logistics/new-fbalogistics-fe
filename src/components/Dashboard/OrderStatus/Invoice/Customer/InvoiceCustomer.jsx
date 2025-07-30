@@ -238,7 +238,7 @@ export default function InvoiceCustomer({ formId }) {
                                                 placeholder="Enter your name.."
                                                 className=""
                                                 // value={shipmentData?.data[0].user.first_name}
-                                                disabled={invoiceData?.user.first_name ? true : false}
+                                                disabled={invoiceData?.user?.first_name ? true : false}
                                                 inputRef={refFirstName}
                                                 {...RegisterFirstName}
                                                 error={Boolean(errors.first_name)}
@@ -251,7 +251,7 @@ export default function InvoiceCustomer({ formId }) {
                                             <LabelledTextField
                                                 label="Company Name"
                                                 placeholder="Enter your Company Name"
-                                                disabled={invoiceData?.user.profile.company_name ? true : false}
+                                                disabled={invoiceData?.user?.profile?.company_name ? true : false}
                                                 inputRef={refCompanyName}
                                                 {...RegisterCompanyName}
                                                 error={Boolean(
@@ -267,7 +267,7 @@ export default function InvoiceCustomer({ formId }) {
                                             <LabelledTextField
                                                 label="Phone Number"
                                                 placeholder="Enter your Phone Number"
-                                                disabled={invoiceData?.user.profile.phone ? true : false}
+                                                disabled={invoiceData?.user?.profile?.phone ? true : false}
                                                 inputRef={refPhoneNumber}
                                                 {...RegisterPhoneNumber}
                                                 error={Boolean(
@@ -285,7 +285,7 @@ export default function InvoiceCustomer({ formId }) {
                                                 placeholder="Enter your email.."
                                                 className=""
                                                 // value={shipmentData?.data[0].user.email}
-                                                disabled={invoiceData?.user.email ? true : false}
+                                                disabled={invoiceData?.user?.email ? true : false}
                                                 inputRef={refEmail}
                                                 {...RegisterEmail}
                                                 error={Boolean(errors.email)}
@@ -313,7 +313,7 @@ export default function InvoiceCustomer({ formId }) {
                                                 placeholder="Enter your Address"
                                                 className=""
                                                 // value={shipmentData?.data[0].user.first_name}
-                                                disabled={invoiceData?.pickup_location.street_address ? true : false}
+                                                disabled={invoiceData?.pickup_location?.street_address ? true : false}
                                                 inputRef={refStreetAddress}
                                                 {...RegisterStreetAddress}
                                                 error={Boolean(errors.street_address)}
@@ -327,7 +327,7 @@ export default function InvoiceCustomer({ formId }) {
                                                 label="Address 2"
                                                 placeholder="Enter your Address"
                                                 // value={shipmentData?.data[0].user.profile}
-                                                disabled={invoiceData?.pickup_location.full_address ? true : false}
+                                                disabled={invoiceData?.pickup_location?.full_address ? true : false}
                                                 inputRef={refFullAddress}
                                                 {...RegisterFullAddress}
                                                 error={Boolean(
@@ -343,7 +343,7 @@ export default function InvoiceCustomer({ formId }) {
                                                 label="City"
                                                 placeholder="Enter your City"
                                                 // value={shipmentData?.data[0]?.user?.profile?.phone}
-                                                disabled={invoiceData?.pickup_location.city ? true : false}
+                                                disabled={invoiceData?.pickup_location?.city ? true : false}
                                                 inputRef={refCity}
                                                 {...RegisterCity}
                                                 error={Boolean(
@@ -360,7 +360,7 @@ export default function InvoiceCustomer({ formId }) {
                                                 placeholder="Enter your State/Province"
                                                 className=""
                                                 // value={shipmentData?.data[0].user.email}
-                                                disabled={invoiceData?.pickup_location.state ? true : false}
+                                                disabled={invoiceData?.pickup_location?.state ? true : false}
                                                 inputRef={refState}
                                                 {...RegisterState}
                                                 error={Boolean(errors.state)}
@@ -375,7 +375,7 @@ export default function InvoiceCustomer({ formId }) {
                                                 placeholder="Enter your Country"
                                                 className=""
                                                 // value={shipmentData?.data[0].user.email}
-                                                disabled={invoiceData?.pickup_location.country ? true : false}
+                                                disabled={invoiceData?.pickup_location?.country ? true : false}
                                                 inputRef={refCountry}
                                                 {...RegisterCountry}
                                                 error={Boolean(errors.country)}
@@ -390,7 +390,7 @@ export default function InvoiceCustomer({ formId }) {
                                                 placeholder="Enter your Postal Code"
                                                 className=""
                                                 // value={shipmentData?.data[0].user.email}
-                                                disabled={invoiceData?.pickup_location.zip_code ? true : false}
+                                                disabled={invoiceData?.pickup_location?.zip_code ? true : false}
                                                 inputRef={refZipCode}
                                                 {...RegisterZipCode}
                                                 error={Boolean(errors.zip_code)}
