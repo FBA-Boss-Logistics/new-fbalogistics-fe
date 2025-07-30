@@ -32,6 +32,7 @@ const QuotationFormSchema = yup.object().shape({
 export default function SellerOrderStatus({setActiveTab}) {
     const searchParams = new URLSearchParams(window.location.search);
     const srcQueryParam = searchParams.get("src");
+    const currentQueryParam = searchParams.get("current");
     const [winBidAccepted, setWinBidAccepted] = useState(false);
     const navigate = useNavigate();
 
@@ -97,8 +98,10 @@ export default function SellerOrderStatus({setActiveTab}) {
                 </div>
             ) : (
                 <div>
-                    <HeaderPage title="Active Shipment" home="seller" pathname={'Active Shipment'} />
-                    <div className="flex flex-col md:flex-row-reverse gap-4 mt-4">
+                    {currentQueryParam === "activeShipment" && (
+                        <HeaderPage title="Active Shipment" home="seller" pathname={'Active Shipment'} />
+                    )}
+                    <div className={`flex flex-col md:flex-row-reverse gap-4 ${currentQueryParam === "activeShipment" ? "mt-4" : "mt-0"}`}>
                         {srcQueryParam === "pendingorders" && (
                             
                             <div className="w-full md:max-w-[300px] ">

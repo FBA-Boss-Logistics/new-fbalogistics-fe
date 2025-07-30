@@ -88,11 +88,11 @@ export default function MyBooking() {
 
     const handleDetailShipment = (original) => {
         if(original.status === "Quotation Approved"){
-            navigate(`/seller/booking/order/status/${original.id}/?src=pendingorders`);
+            navigate(`/seller/booking/order/status/${original.id}/?src=pendingorders&current=activeShipment`);
         }else if(original.status === "Quotation Accepted"){
-            navigate(`/seller/booking/order/status/${original.id}/?src=phone`);
+            navigate(`/seller/booking/order/status/${original.id}/?src=phone&current=activeShipment`);
         }else{
-            navigate(`/seller/booking/order/status/${original.id}/?src=newshipment`);
+            navigate(`/seller/booking/order/status/${original.id}/?src=newshipment&current=activeShipment`);
         }
     }
     /** @type import('@tanstack/react-table').ColumnDef<any> */ //for autosuggestions

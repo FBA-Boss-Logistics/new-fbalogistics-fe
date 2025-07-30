@@ -221,7 +221,7 @@ export default function Orders() {
 
     const handleDetailShipment = (id) => {
         // if (srcQueryParam === "accepted") {
-            navigate(`/shipper/bid/${id}/?src=phone`);
+            navigate(`/shipper/bid/${id}/?src=phone&current=activeShipment`);
         // } else {
         //     navigate(`/shipper/bid/${id}`);
         // }
