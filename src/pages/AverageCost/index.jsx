@@ -407,7 +407,11 @@ export default function AverageCost() {
                 <Card className="px-4 border border-[#F2F2F2] rounded-[8px] shadow-none" key={rowIndex} 
                       onMouseDown={() => userRole === "Shipper" && handleMouseDown(row)}
                       onMouseUp={() => userRole === "Shipper" && handleMouseUp()}
-                      onMouseLeave={() => userRole === "Shipper" && handleMouseLeave()}>
+                      onMouseLeave={() => userRole === "Shipper" && handleMouseLeave()}
+                      onTouchStart={() => userRole === "Shipper" && handleMouseDown(row)}
+                      onTouchEnd={() => userRole === "Shipper" && handleMouseUp()}
+                      // onTouchCancel={() => userRole === "Shipper" && handleMouseLeave()}
+                      >
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row border-b border-[#F0F1F3] px-[22px] py-[18px] justify-between items-center gap-2">
                             <p className="text-sm font-medium">Warehouse</p>
