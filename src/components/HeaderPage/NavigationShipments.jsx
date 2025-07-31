@@ -64,7 +64,6 @@ export default function NavigationShipments({activeTab, setActiveTab, id}) {
                     )}
                     {warehouseData && userDetails.groups === "Shipper" && (
                         <>
-                            <PDFCustomer data={WarehousesData?.data?.data} />
                             <Button variant="outline" size="lg" className=" rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]" onClick={handleDownloadWarehouse}>
                                 <img src={DownloadInvoiceIcon} alt="Download Invoice" className="h-[16.25px] w-[16.25px]" />
                                 <span className="font-semibold text-sm">Download <span className="hidden md:inline">PDF Invoice</span></span>
