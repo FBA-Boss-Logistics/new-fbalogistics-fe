@@ -9,7 +9,7 @@ import * as yup from "yup";
 import { CommonFormValidations } from "components/Form/CommonFormValidations";
 import { useFieldArray, useForm } from "react-hook-form";
 // import SubmitModal from "./SubmitModal";
-import { useCreateShipmentQuery, useCreateInvoiceQuery } from "queries/Seller";
+import { useCreateShipmentQuery, useCreateInvoiceQuery, FetchSellerInvoiceDetailApi } from "queries/Seller";
 import { format } from "date-fns";
 import HandleErrorResponse from "utils/HandleErrorResponse";
 import { useQueryClient } from "@tanstack/react-query";
@@ -55,10 +55,14 @@ const ShipperFormSchema = yup.object().shape({
 });
 
 export default function InvoiceCustomer({ formId }) {
+    const {id} = useParams()
     // queries
     // const { mutate: CreateShipment } = useCreateShipmentQuery();
     const { mutate: CreateInvoice } = useCreateInvoiceQuery();
-    const {id} = useParams()
+    const { data: Invoices } = FetchSellerInvoiceDetailApi({shipment_id: id});
+
+    const invoice = Invoices?.data?.data[0]
+
     console.log("id", id)
 
     const { data: invoiceData, isLoading } = FetchSellerShipmentDetailByIdApi(id);
@@ -408,14 +412,18 @@ export default function InvoiceCustomer({ formId }) {
                                 </div>
                             </div>
                             <div className="md:hidden text-center flex flex-row gap-4 items-center justify-center mt-[40px]">
-                                <Button variant="outline" size="lg" className=" rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]">
-                                    <img src={DownloadInvoiceIcon} alt="Download Invoice" className="h-[16.25px] w-[16.25px]" />
-                                    <span className="font-semibold text-sm">Download <span className="hidden md:inline">PDF Invoice</span></span>
-                                </Button>
-                                <Button type="submit" form="invoice-customer-form" size="lg" className="rounded-[8px] bg-[#37A672] hover:bg-[#37A672]/90 text-white gap-[5.62px] px-[14px]" >
-                                    <img src={SaveIcon} alt="Save Document" className="h-[8.75px] w-[10.42px]" />
-                                    <span className="font-semibold text-sm">Save <span className="hidden md:inline">Document</span></span>
-                                </Button>
+                                {invoice && (
+                                    <Button variant="outline" size="lg" className=" rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]">
+                                        <img src={DownloadInvoiceIcon} alt="Download Invoice" className="h-[16.25px] w-[16.25px]" />
+                                        <span className="font-semibold text-sm">Download <span className="hidden md:inline">PDF Invoice</span></span>
+                                    </Button>
+                                )}
+                                { invoice === undefined && (
+                                    <Button type="submit" form="invoice-customer-form" size="lg" className="rounded-[8px] bg-[#37A672] hover:bg-[#37A672]/90 text-white gap-[5.62px] px-[14px]" >
+                                        <img src={SaveIcon} alt="Save Document" className="h-[8.75px] w-[10.42px]" />
+                                        <span className="font-semibold text-sm">Save <span className="hidden md:inline">Document</span></span>
+                                    </Button>
+                                )}
                             </div>
                             {/* <SubmitModal open={open} handleClose={handleCloseModal} /> */}
                         </form>

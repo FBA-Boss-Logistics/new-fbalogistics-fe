@@ -678,11 +678,13 @@ const Invoice = () => {
                                             </CardComponent>
                                     )}
                                     <div className="md:hidden text-center flex flex-row gap-4 items-center justify-center mt-[40px]">
-                                        <Button variant="outline" size="lg" className=" rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]">
-                                            <img src={DownloadInvoiceIcon} alt="Download Invoice" className="h-[16.25px] w-[16.25px]" />
-                                            <span className="font-semibold text-sm">Download <span className="hidden md:inline">PDF Invoice</span></span>
-                                        </Button>
-                                        {warehouseData === undefined && (
+                                        {warehouseData?.length > 0 && (
+                                            <Button variant="outline" size="lg" className=" rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]">
+                                                <img src={DownloadInvoiceIcon} alt="Download Invoice" className="h-[16.25px] w-[16.25px]" />
+                                                <span className="font-semibold text-sm">Download <span className="hidden md:inline">PDF Invoice</span></span>
+                                            </Button>
+                                        )}
+                                        {warehouseData?.length === 0 && (
                                             <Button type="submit" form="invoice-shipper-form" size="lg" className="rounded-[8px] bg-[#37A672] hover:bg-[#37A672]/90 text-white gap-[5.62px] px-[14px]" >
                                                 <img src={SaveIcon} alt="Save Document" className="h-[8.75px] w-[10.42px]" />
                                                 <span className="font-semibold text-sm">Save <span className="hidden md:inline">Document</span></span>
