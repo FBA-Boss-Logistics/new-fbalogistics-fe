@@ -6,7 +6,6 @@ import SaveIcon from "assets/svg/checked.svg";
 import DownloadInvoiceIcon from "assets/svg/downloadInvoice.svg";
 import { FetchSellerInvoiceDetailApi } from "queries/Seller";
 import { fetchAllWarehouseDetailApi } from "queries/Shipper";
-import PDFCustomer from "components/pdf/PDFCustomer";
 import { Select, MenuItem } from "@mui/material";
 
 export default function NavigationShipments({activeTab, setActiveTab, id}) {
