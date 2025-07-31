@@ -360,12 +360,12 @@ const Tracking = ({setActiveTab}) => {
                                                     </div>
                                                 </div>
                                                 <TrackingStatus status={field?.status} />
-                                                <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4 md:w-1/2 w-full  font-semibold ">
+                                                <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4 md:w-1/2 w-full font-semibold ">
                                                     <Controller
                                                         control={control}
                                                         name={`warehouses.${index}.tracking_number`}
                                                         render={({ field: controllerField, fieldState }) => (
-                                                            <>
+                                                            <div className="flex flex-col w-full md:flex-row gap-4">
                                                                 <LabelledTextField
                                                                         label="Tracking #"
                                                                         placeholder="#"
@@ -387,13 +387,13 @@ const Tracking = ({setActiveTab}) => {
                                                                                 e.stopPropagation();
                                                                                 handleSubmitTracking(field?.id)
                                                                             }}
-                                                                            className="absolute -right-15 top-9 px-3 py-[10px] bg-primary text-white rounded"
+                                                                            className="flex w-full justify-center md:w-auto md:absolute md:-right-15 md:top-9 px-3 py-[10px] bg-primary text-white rounded"
                                                                         >
                                                                             Submit
                                                                         </button>
                                                                     )}
                                                                 </div>
-                                                            </>
+                                                            </div>
                                                         )}
                                                     />
                                                 </div>

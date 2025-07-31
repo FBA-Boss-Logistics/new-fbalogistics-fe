@@ -26,6 +26,7 @@ const TrackingFormSchema = yup.object().shape({
 
 const Tracking = () => {
     const { id } = useParams();
+    const userDetails = JSON.parse(localStorage.getItem("USER_DETAILS"));
     const { data: WarehousesData, isLoading: isWarehousesLoading } = fetchAllWarehouseDetailApi(id);
     const { mutate: UpdateWarehouse} = UpdateWarehousebyPatchApi();
     const { mutate: UpdateWarehouseTrackingNumber } = UpdateWarehouseTrackingNumberApi();
@@ -317,7 +318,7 @@ const Tracking = () => {
                                                     </div>
                                                 </div>
                                                 <TrackingStatus status={field?.status} />
-                                                {!field?.tracking_link ? (
+                                                {!field?.tracking_link && userDetails?.groups === "shipper" ? (
                                                     <div className="flex flex-wrap lg:flex-nowrap gap-4 my-4 md:w-1/2 w-full  font-semibold ">
                                                         <Controller
                                                             control={control}
