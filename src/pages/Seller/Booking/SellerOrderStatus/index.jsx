@@ -80,7 +80,12 @@ export default function SellerOrderStatus({setActiveTab}) {
     };
 
     const handleClick = () => {
-        setActiveTab("Chat");
+        if (currentQueryParam === "activeShipment") {
+            navigate(`/seller/booking/recentorderstatus/${id}?src=currentShipment`)
+        }
+        else {
+            setActiveTab("Chat");
+        }
     };
     
     if (isAuthorizedError) {
