@@ -58,37 +58,40 @@ const TrackingStatus = ({status}) => {
           sx={{
             position: "absolute",
             top: "10px",
-            // left: "calc(16.67% + 12px)",
-            // right: "calc(16.67% + 12px)",
-            left: "0",
-            right: "0",
-            // px: "calc(16.67% / 2 + 12px)", // space around the icons
+            left: 0,
+            width: "100%",
             height: "4px",
             zIndex: 0,
+            backgroundColor: "#FAFAFA",
           }}
         >
-          {/* First connector (green) */}
-          <Box
-            sx={{
-              position: "absolute",
-              left: 0,
-              width: "50%",
-              height: "4px",
-              backgroundColor: status === "Warehouse Picked Up" || status === "Warehouse Completed" ? "#4FA683" : "#FAFAFA",
-              borderRadius: "1px",
-            }}
-          />
-          {/* Second connector (gray) */}
-          <Box
-            sx={{
-              position: "absolute",
-              left: "50%",
-              width: "50%",
-              height: "4px",
-              backgroundColor: status === "Warehouse Completed" ? "#4FA683" : "#FAFAFA",
-              borderRadius: "1px",
-            }}
-          />
+          {/* First half */}
+          {(status === "Warehouse Picked Up" || status === "Warehouse Completed") && (
+            <Box
+              sx={{
+                position: "absolute",
+                left: 0,
+                height: "4px",
+                backgroundColor: "#4FA683",
+                borderRadius: "1px",
+                animation: "expandHalf 1s ease forwards",
+              }}
+            />
+          )}
+
+          {/* Second half */}
+          {status === "Warehouse Completed" && (
+            <Box
+              sx={{
+                position: "absolute",
+                left: "50%",
+                height: "4px",
+                backgroundColor: "#4FA683",
+                borderRadius: "1px",
+                animation: "expandFull 1s ease forwards",
+              }}
+            />
+          )}
         </Box>
 
         {/* Steps */}
