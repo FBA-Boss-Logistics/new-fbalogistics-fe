@@ -98,23 +98,23 @@ export default function AverageCost() {
     setEditingCell({ rowIndex, field });
   };
 
-  const handleMouseDown = (row) => {
-    const timer = setTimeout(() => {
-      setSelectedRow(row);
-      setOpenDeleteModal(true);
-    }, 2000);
-    setPressTimer(timer);
-  };
+  // const handleMouseDown = (row) => {
+  //   const timer = setTimeout(() => {
+  //     setSelectedRow(row);
+  //     setOpenDeleteModal(true);
+  //   }, 2000);
+  //   setPressTimer(timer);
+  // };
 
-  const handleMouseUp = () => {
-    clearTimeout(pressTimer);
-    setPressTimer(null);
-  };
+  // const handleMouseUp = () => {
+  //   clearTimeout(pressTimer);
+  //   setPressTimer(null);
+  // };
 
-  const handleMouseLeave = () => {
-    clearTimeout(pressTimer);
-    setPressTimer(null);
-  };
+  // const handleMouseLeave = () => {
+  //   clearTimeout(pressTimer);
+  //   setPressTimer(null);
+  // };
 
   const handleTouchStart = (row) => {
     setIsScrolling(false);
@@ -128,6 +128,7 @@ export default function AverageCost() {
   }
 
   const handleTouchEnd = () => {
+    setIsScrolling(false);
     clearTimeout(pressTimer);
     setPressTimer(null);
   }
