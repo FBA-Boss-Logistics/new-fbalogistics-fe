@@ -128,7 +128,6 @@ export default function AverageCost() {
   }
 
   const handleTouchEnd = () => {
-    setIsScrolling(false);
     clearTimeout(pressTimer);
     setPressTimer(null);
   }
