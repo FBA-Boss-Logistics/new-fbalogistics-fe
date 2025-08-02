@@ -63,7 +63,8 @@ const TrackingStatus = ({status}) => {
             height: "4px",
             zIndex: 0,
             backgroundColor: status === "Warehouse Pending" ? "#FAFAFA" : "#4FA683",
-            animation: status === "Warehouse Pending" ? "none" : status === "Warehouse Picked Up" ? "expandFull 1s ease forwards" : "startFull 1s ease forwards",
+            animation: "none"
+            // animation: status === "Warehouse Pending" ? "none" : status === "Warehouse Picked Up" ? "expandFull 1s ease forwards" : "startFull 1s ease forwards",
           }}
         >
           {/* First half */}
