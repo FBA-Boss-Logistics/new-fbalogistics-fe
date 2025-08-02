@@ -63,8 +63,7 @@ const TrackingStatus = ({status}) => {
             height: "4px",
             zIndex: 0,
             backgroundColor: status === "Warehouse Pending" ? "#FAFAFA" : "#4FA683",
-            animation: "none"
-            // animation: status === "Warehouse Pending" ? "none" : status === "Warehouse Picked Up" ? "expandFull 1s ease forwards" : "startFull 1s ease forwards",
+            animation: status === "Warehouse Pending" ? "none" : status === "Warehouse Picked Up" ? "expandFull 1s ease forwards" : "startFull 1s ease forwards",
           }}
         >
           {/* First half */}
@@ -76,7 +75,7 @@ const TrackingStatus = ({status}) => {
                 height: "4px",
                 backgroundColor: "#4FA683",
                 borderRadius: "1px",
-                animation: "expandHalf 1s ease forwards",
+                // animation: "expandHalf 1s ease forwards",
               }}
             />
           )}
@@ -90,7 +89,7 @@ const TrackingStatus = ({status}) => {
                 height: "4px",
                 backgroundColor: "#4FA683",
                 borderRadius: "1px",
-                animation: "expandFull 1s ease forwards",
+                // animation: "expandFull 1s ease forwards",
               }}
             />
           )}
