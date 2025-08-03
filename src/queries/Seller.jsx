@@ -350,9 +350,39 @@ export const useCreateInvoiceQuery = () => {
     const queryClient = useQueryClient();   
     return useMutation(CreateInvoice, {
         onSuccess: () => {
-            queryClient.invalidateQueries(["FETCH_LOGIN_USER_INFO"]);
+            ["FETCH_SELLER_INVOICE_INFO", "FETCH_SELLER_SHIPMENT_INFO_BY_ID"].forEach((key) => queryClient.invalidateQueries([key]));
+            HandleSuccessResponse({ message: "Invoice created successfully" });
         },
         onError: (error) => console.log("Error in Login", error),
+    });
+};
+
+const DownloadPDFCustomerInvoice = (id) => {
+    const method = "GET";
+    const url = `/customer-pdf-download/${id}`;
+    return axios({ method, url, responseType: "blob" });
+};
+
+export const DownloadPDFCustomerInvoiceApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(DownloadPDFCustomerInvoice, {
+        onSuccess: (res) => {
+            const blob = new Blob([res], { type: "application/pdf" });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "customer_invoice.pdf";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+
+            HandleSuccessResponse({message: "PDF Invoice Downloaded Successfully"});
+            queryClient.invalidateQueries(["FETCH_SELLER_INVOICE_INFO"]);
+        },
+        onError: (error) => {
+            HandleErrorResponse(error);
+        }
     });
 };
 // const CreateShipment = (data) => {

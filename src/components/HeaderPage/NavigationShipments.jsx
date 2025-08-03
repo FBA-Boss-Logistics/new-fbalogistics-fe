@@ -5,7 +5,8 @@ import { routes } from "routes/RouteConstants";
 import SaveIcon from "assets/svg/checked.svg";
 import DownloadInvoiceIcon from "assets/svg/downloadInvoice.svg";
 import { FetchSellerInvoiceDetailApi } from "queries/Seller";
-import { fetchAllWarehouseDetailApi } from "queries/Shipper";
+import { fetchAllWarehouseDetailApi, downloadPDFWarehouseApi } from "queries/Shipper";
+import { DownloadPDFCustomerInvoiceApi } from "queries/Seller";
 import { Select, MenuItem } from "@mui/material";
 
 export default function NavigationShipments({activeTab, setActiveTab, id}) {
@@ -13,17 +14,19 @@ export default function NavigationShipments({activeTab, setActiveTab, id}) {
 
     const { data: Data } = FetchSellerInvoiceDetailApi({shipment_id: id});
     const { data: WarehousesData } = fetchAllWarehouseDetailApi(id);
+    const { mutate: DownloadPDFWarehouse } = downloadPDFWarehouseApi();
+    const { mutate: DownloadPDFInvoice } = DownloadPDFCustomerInvoiceApi();
     const invoiceData = Data?.data?.data[0]
     const warehouseData = WarehousesData?.data?.data[0]
     console.log("InvoiceData", invoiceData)
     console.log("WarehousesData", warehouseData)
 
     const handleDownloadInvoice = () => {
-        console.log("Download Invoice")
+        DownloadPDFInvoice(id)
     }
 
     const handleDownloadWarehouse = () => {
-        console.log("Download Warehouse")
+        DownloadPDFWarehouse(id)
     }
 
     return (

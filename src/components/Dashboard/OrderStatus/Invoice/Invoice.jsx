@@ -34,7 +34,7 @@ import HandleSuccessResponse from "utils/HandleSuccessResponse";
 import SaveIcon from "assets/svg/checked.svg";
 import InvoiceIcon from "assets/svg/invoice.svg";
 import DownloadInvoiceIcon from "assets/svg/downloadInvoice.svg";
-import { fetchAllWarehouseDetailApi } from "queries/Shipper";
+import { fetchAllWarehouseDetailApi, downloadPDFWarehouseApi } from "queries/Shipper";
 import { FetchSellerInvoiceDetailApi } from "queries/Seller";
 import Loader from "components/Loader";
 
@@ -54,10 +54,14 @@ const ShipperFormSchema = yup.object().shape({
 
 const Invoice = () => {
     const { id } = useParams();
+    // Fetch Data
     const { data: WarehousesData, isLoading: isWarehousesLoading } = fetchAllWarehouseDetailApi(id);
     const { data: CustomerInvoiceData, isLoading: isCustomerInvoiceLoading } = FetchSellerInvoiceDetailApi({shipment_id: id});
+    const { mutate: DownloadPDF } = downloadPDFWarehouseApi();
     const customerInvoice = CustomerInvoiceData?.data?.data[0]
     const warehouseData = WarehousesData?.data?.data
+
+    // State
     const [isCustomerInvoiceEmpty, setIsCustomerInvoiceEmpty] = useState(true);
     const [isWarehouseEmpty, setIsWarehouseEmpty] = useState(true);
     const [invoiceOpen, setInvoiceOpen] = useState(true)
@@ -186,6 +190,11 @@ const Invoice = () => {
         }
        
     };
+
+    const handleDownloadPDF = () => {
+        DownloadPDF(id)
+    }
+
     return (
         <>
             {isWarehousesLoading || isCustomerInvoiceLoading ? (
@@ -679,7 +688,12 @@ const Invoice = () => {
                                     )}
                                     <div className="md:hidden text-center flex flex-row gap-4 items-center justify-center mt-[40px]">
                                         {warehouseData?.length > 0 && (
-                                            <Button variant="outline" size="lg" className=" rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]">
+                                            <Button 
+                                                variant="outline"
+                                                size="lg"
+                                                className=" rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]"
+                                                onClick={handleDownloadPDF}
+                                            >
                                                 <img src={DownloadInvoiceIcon} alt="Download Invoice" className="h-[16.25px] w-[16.25px]" />
                                                 <span className="font-semibold text-sm">Download <span className="hidden md:inline">PDF Invoice</span></span>
                                             </Button>

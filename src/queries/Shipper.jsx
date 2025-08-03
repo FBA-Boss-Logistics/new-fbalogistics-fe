@@ -350,6 +350,38 @@ export const useCreateWarehouseQuery = () => {
     });
 };
 
+// download pdf invoice warehouse
+const downloadPDFWarehouse = (id) => {
+    const method = "GET"
+    const url = `/warehouse-pdf-download/${id}`
+    console.log("url", url)
+    console.log("method", method)
+    return axios({ method, url, responseType: "blob" })
+}
+
+export const downloadPDFWarehouseApi = () => {
+    const queryClient = useQueryClient();
+    return useMutation(downloadPDFWarehouse, {
+        onSuccess: (res) => {
+            const blob = new Blob([res], { type: "application/pdf" });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `invoice_warehouse.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove(); // cleanup
+            window.URL.revokeObjectURL(url);
+
+            HandleSuccessResponse({message: "PDF Invoice Downloaded Successfully"});
+            queryClient.invalidateQueries("FETCH_ALL_WAREHOUSE_DETAIL_INFO");
+        },
+        onError: (response) => {
+            HandleErrorResponse(response);
+        },
+    })
+}
+
 //PATCH Shipment Status update
 
 const UpdateShipmentStatus = (updateShipmentData) => {

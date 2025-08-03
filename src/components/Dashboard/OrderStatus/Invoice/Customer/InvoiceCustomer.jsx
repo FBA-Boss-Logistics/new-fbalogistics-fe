@@ -9,7 +9,7 @@ import * as yup from "yup";
 import { CommonFormValidations } from "components/Form/CommonFormValidations";
 import { useFieldArray, useForm } from "react-hook-form";
 // import SubmitModal from "./SubmitModal";
-import { useCreateShipmentQuery, useCreateInvoiceQuery, FetchSellerInvoiceDetailApi } from "queries/Seller";
+import { useCreateInvoiceQuery, FetchSellerInvoiceDetailApi, DownloadPDFCustomerInvoiceApi } from "queries/Seller";
 import { format } from "date-fns";
 import HandleErrorResponse from "utils/HandleErrorResponse";
 import { useQueryClient } from "@tanstack/react-query";
@@ -60,6 +60,7 @@ export default function InvoiceCustomer({ formId }) {
     // const { mutate: CreateShipment } = useCreateShipmentQuery();
     const { mutate: CreateInvoice } = useCreateInvoiceQuery();
     const { data: Invoices } = FetchSellerInvoiceDetailApi({shipment_id: id});
+    const { mutate: invoicePDF } = DownloadPDFCustomerInvoiceApi();
 
     const invoice = Invoices?.data?.data[0]
 
@@ -81,6 +82,7 @@ export default function InvoiceCustomer({ formId }) {
             setValue("zip_code", invoiceData?.pickup_location?.zip_code || null);
             setValue("full_address", invoiceData?.pickup_location?.full_address || null);
         }
+        console.log("invoiceData updated in useEffect", invoiceData);
     }, [invoiceData]);
 
     const {
@@ -134,18 +136,16 @@ export default function InvoiceCustomer({ formId }) {
     const { ref: refFullAddress, ...RegisterFullAddress } = register("full_address");
     const queryClient = useQueryClient();
     const {
-        full_address,
-        delivery_location,
-        product_name,
-        compliance,
-        main_competitor_asin,
-        supplier_contact_name,
-        detailed_product_description,
-        supplier_contact_phone,
-        packages,
         email,
         first_name,
         company_name,
+        phone_number,
+        street_address,
+        city,
+        state,
+        country,
+        zip_code,
+        full_address
     } = watch();
     const submitShipperFrom = (formData) => {
 
@@ -170,19 +170,15 @@ export default function InvoiceCustomer({ formId }) {
                 },
             },
         };
-        CreateInvoice(payload, {
-            onSuccess: () => {
-                queryClient.invalidateQueries(["FETCH_SELLER_SHIPMENT_INFO"]);
-                HandleSuccessResponse({ message: "Invoice created successfully" });
-            },
-            onError: (err) => {
-                HandleErrorResponse(err, setError);
-            },
-        });
+        CreateInvoice(payload);
     };
 
     const handleErrors = (error) => {
         console.log(error, "error");
+    };
+
+    const handleDownloadPDF = () => {
+        invoicePDF(id);
     };
 
     return (
@@ -194,7 +190,7 @@ export default function InvoiceCustomer({ formId }) {
             ) : (
                 <div className="w-full">
                     <div className="">
-                        <form id={formId} onSubmit={handleSubmit(submitShipperFrom, handleErrors)}>
+                        <form id="invoice-customer-form" onSubmit={handleSubmit(submitShipperFrom, handleErrors)}>
                             <div>
                                 <div className="flex flex-col gap-6  font-semibold w-full">
                                     {/* contact information Section */}
@@ -240,7 +236,7 @@ export default function InvoiceCustomer({ formId }) {
                                             <LabelledTextField
                                                 label="Name"
                                                 placeholder="Enter your name.."
-                                                className=""
+                                                className="mt-[8px]"
                                                 // value={shipmentData?.data[0].user.first_name}
                                                 disabled={invoiceData?.user?.first_name ? true : false}
                                                 inputRef={refFirstName}
@@ -266,7 +262,7 @@ export default function InvoiceCustomer({ formId }) {
                                                     errors.company_name.message
                                                 }
                                                 autoComplete="new-company-name"
-                                                className="gap-[6px] text-sm font-semibold text-[#2E2E2E]"
+                                                className="mt-[8px] text-sm font-semibold text-[#2E2E2E]"
                                             />
                                             <LabelledTextField
                                                 label="Phone Number"
@@ -282,12 +278,12 @@ export default function InvoiceCustomer({ formId }) {
                                                     errors.phone_number.message
                                                 }
                                                 autoComplete="new-phone-number"
-                                                className="gap-[6px] text-sm font-semibold text-[#2E2E2E]"
+                                                className="mt-[8px] text-sm font-semibold text-[#2E2E2E]"
                                             />
                                             <LabelledTextField
                                                 label="Email"
                                                 placeholder="Enter your email.."
-                                                className=""
+                                                className="mt-[8px]"
                                                 // value={shipmentData?.data[0].user.email}
                                                 disabled={invoiceData?.user?.email ? true : false}
                                                 inputRef={refEmail}
@@ -358,11 +354,12 @@ export default function InvoiceCustomer({ formId }) {
                                                     errors.city.message
                                                 }
                                                 autoComplete="new-city"
+                                                className="mt-[8px]"
                                             />
                                             <LabelledTextField
                                                 label="State/Province"
                                                 placeholder="Enter your State/Province"
-                                                className=""
+                                                className="mt-[8px]"
                                                 // value={shipmentData?.data[0].user.email}
                                                 disabled={invoiceData?.pickup_location?.state ? true : false}
                                                 inputRef={refState}
@@ -377,7 +374,7 @@ export default function InvoiceCustomer({ formId }) {
                                             <LabelledTextField
                                                 label="Country"
                                                 placeholder="Enter your Country"
-                                                className=""
+                                                className="mt-[8px]"
                                                 // value={shipmentData?.data[0].user.email}
                                                 disabled={invoiceData?.pickup_location?.country ? true : false}
                                                 inputRef={refCountry}
@@ -392,7 +389,7 @@ export default function InvoiceCustomer({ formId }) {
                                             <LabelledTextField
                                                 label="Postal Code"
                                                 placeholder="Enter your Postal Code"
-                                                className=""
+                                                className="mt-[8px]"
                                                 // value={shipmentData?.data[0].user.email}
                                                 disabled={invoiceData?.pickup_location?.zip_code ? true : false}
                                                 inputRef={refZipCode}
@@ -410,20 +407,25 @@ export default function InvoiceCustomer({ formId }) {
                                         </Collapsible>
                                     </CardComponent>
                                 </div>
-                            </div>
-                            <div className="md:hidden text-center flex flex-row gap-4 items-center justify-center mt-[40px]">
-                                {invoice && (
-                                    <Button variant="outline" size="lg" className=" rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]">
-                                        <img src={DownloadInvoiceIcon} alt="Download Invoice" className="h-[16.25px] w-[16.25px]" />
-                                        <span className="font-semibold text-sm">Download <span className="hidden md:inline">PDF Invoice</span></span>
-                                    </Button>
-                                )}
-                                { invoice === undefined && (
-                                    <Button type="submit" form="invoice-customer-form" size="lg" className="rounded-[8px] bg-[#37A672] hover:bg-[#37A672]/90 text-white gap-[5.62px] px-[14px]" >
-                                        <img src={SaveIcon} alt="Save Document" className="h-[8.75px] w-[10.42px]" />
-                                        <span className="font-semibold text-sm">Save <span className="hidden md:inline">Document</span></span>
-                                    </Button>
-                                )}
+                                <div className="md:hidden text-center flex flex-row gap-4 items-center justify-center mt-[40px]">
+                                    {invoice && (
+                                        <Button 
+                                            variant="outline" 
+                                            size="lg" 
+                                            className=" rounded-[8px] bg-[#213E7B1F] text-[#213E7B] px-[13px] hover:bg-[#213E7B1F]/20 hover:text-[#213E7B]"
+                                            onClick={handleDownloadPDF}
+                                        >
+                                            <img src={DownloadInvoiceIcon} alt="Download Invoice" className="h-[16.25px] w-[16.25px]" />
+                                            <span className="font-semibold text-sm">Download <span className="hidden md:inline">PDF Invoice</span></span>
+                                        </Button>
+                                    )}
+                                    { invoice === undefined && (
+                                        <Button type="submit" form="invoice-customer-form" size="lg" className="rounded-[8px] bg-[#37A672] hover:bg-[#37A672]/90 text-white gap-[5.62px] px-[14px]" >
+                                            <img src={SaveIcon} alt="Save Document" className="h-[8.75px] w-[10.42px]" />
+                                            <span className="font-semibold text-sm">Save <span className="hidden md:inline">Document</span></span>
+                                        </Button>
+                                    )}
+                                </div>
                             </div>
                             {/* <SubmitModal open={open} handleClose={handleCloseModal} /> */}
                         </form>
